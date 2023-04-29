@@ -1,6 +1,6 @@
 # Web Application Requirements
 
-This is our plan for the web-project. There is also pictures of how the page layout is supposed to be in the folder *PageIdea*
+This is our plan for the web-project. There is also pictures of how the page layout is supposed to be in the folder **PageIdea**
 
 ## What does the application do?
 
