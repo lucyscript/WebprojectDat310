@@ -1,5 +1,7 @@
 # Web Application Requirements
 
+This is our plan for the web-project. There is also pictures of how the page layout is supposed to be in the folder PageIdea
+
 ## What does the application do?
 
 - The platform combines a webshop and a trading platform where users can buy and sell listed items from each other.
