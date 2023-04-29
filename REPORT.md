@@ -1,6 +1,6 @@
 # Web Application Requirements
 
-This is our plan for the web-project. Early scetch for the page layout can be found in **PageIdea**
+This is our plan for the web-project. Early scetch for the page layout can be found in [PageIdea](https://github.com/dat310-2023/vanskelif/tree/main/PageIdea)
 
 ## What does the application do?
 
