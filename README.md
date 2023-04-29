@@ -1,5 +1,3 @@
-# vanskelif
-
 # Web Application Requirements
 
 ## What does the application do?
