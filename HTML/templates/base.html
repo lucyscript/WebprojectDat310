@@ -5,11 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
 </head>
 <body>
     <header>
-        <h1>Header</h1>
+        <div>
+            <h1><img src="" height="40"></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><img src="https://www.iconpacks.net/icons/2/free-home-icon-2502-thumb.png" width="20px"></a></li>
+                <li><a href="product.html"><img src="https://uxwing.com/wp-content/themes/uxwing/download/business-professional-services/product-icon.png" width="20px"></a></li>
+                <li><a href="cart.html"><img src="https://cdn-icons-png.flaticon.com/512/34/34627.png" width="20px"></a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>

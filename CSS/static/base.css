@@ -1,0 +1,32 @@
+body {
+	padding-top: 40px;
+	margin: 0;
+	padding-bottom: 75px;
+}
+
+header {
+	display: flex;
+	position: fixed;
+	top: 0;
+	background-color:#2C292C;
+	z-index: 1;
+}
+
+nav {
+	position: fixed;
+	background-color: #2C292C;
+	width: 100%;
+}
+
+nav ul {
+	list-style-type: none;
+	display: flex;
+	float: right;
+	align-items: center;
+	margin-right: 5%;
+}
+
+nav li {
+	margin-right: 15px;
+}
+
