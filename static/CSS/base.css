@@ -56,13 +56,15 @@ nav .side_menu_button {
 }
 
 #side_menu {
-	display: none;
 	position: fixed;
+	display: none;
 	top: 0;
 	left: 0;
 	width: 0%;
 	height: 100%;
 	background-color: #2C292C;
 	z-index: 2;
-	transition: 0.2s;
+	transition: 0.5s;
+	padding-top: 50px;
+	padding-left: 30px;
 }
