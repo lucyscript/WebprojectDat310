@@ -46,11 +46,23 @@ nav li {
 	margin-right: 15px;
 }
 
-nav .side_menu {
+nav .side_menu_button {
 	margin-right: auto;
 	margin-left: 0;
 	
 }
-.side_menu:hover {
+.side_menu_button:hover {
 	cursor: pointer;
+}
+
+#side_menu {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-color: #2C292C;
+	z-index: 2;
+	transition: 0.2s;
 }
