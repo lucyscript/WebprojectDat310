@@ -60,7 +60,7 @@ nav .side_menu_button {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 0;
+	width: 0%;
 	height: 100%;
 	background-color: #2C292C;
 	z-index: 2;
