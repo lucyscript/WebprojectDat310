@@ -37,10 +37,20 @@ nav ul {
 	display: flex;
 	float: right;
 	align-items: center;
-	margin-right: 5%;
+	padding-right: 5%;
+	padding-left: 5%;
+	width: 90%;
 }
 
 nav li {
 	margin-right: 15px;
 }
 
+nav .side_menu {
+	margin-right: auto;
+	margin-left: 0;
+	
+}
+.side_menu:hover {
+	cursor: pointer;
+}
