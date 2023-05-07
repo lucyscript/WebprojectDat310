@@ -36,12 +36,21 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 description TEXT NOT NULL,
                                 price REAL NOT NULL,
                                 owner_id TEXT NOT NULL,
+
+                                -- Parameters for selecting etc.
+                                size TEXT,
+                                stock INT,
+
                                 PRIMARY KEY(id),
                                 FOREIGN KEY(owner_id) REFERENCES users(id)
                             );"""
 
 
-
+sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
+                                path TEXT NOT NULL,
+                                product_id INTEGER NOT NULL
+                                FOREIGN KEY(product_id) REFERENCES items(id)
+                            )"""
 
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
