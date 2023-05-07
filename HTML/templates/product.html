@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+{% block content %}
+    <h1> {{ product.title }} </h1>
+    <form action="" method="post">
+
+        {{% if product.size != None %}}
+        <label for="product_size">Size</label>
+        <select name="product_size" id="product_size">
+            {{% for size in product.size %}}
+                <option value="{{ size }}">{{ size }}</option>
+        </select>
+    </form>
+{% endblock %}
