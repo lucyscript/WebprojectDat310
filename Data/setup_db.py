@@ -48,7 +48,7 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
 
 sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 path TEXT NOT NULL,
-                                product_id INTEGER NOT NULL
+                                product_id INTEGER NOT NULL,
                                 FOREIGN KEY(product_id) REFERENCES items(id)
                             )"""
 
@@ -67,8 +67,7 @@ def create_table(conn, create_table_sql):
 #### INSERT #########
 
 def add_user(conn, id, username, password, user_settings = ""):
-    """
-    Add a new user into the users table
+    """ Add a new user into the users table
     :param conn:
     :param id:
     :param username:
@@ -92,8 +91,7 @@ def init_users(conn):
 
 
 def add_item(conn, id, title, description, price, owner_id):
-    """
-    Add a new item into the items table
+    """ Add a new item into the items table
     :param conn:
     :param id:
     :param title:
@@ -119,7 +117,7 @@ def init_items(conn):
 
 
 def add_image(conn, path, product_id):
-    """
+    """ Add a new image into the images table
     :param conn:
     :param path:
     :param product_id:
