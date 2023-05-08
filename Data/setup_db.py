@@ -139,6 +139,8 @@ def init_images(conn):
     init = [(path + "sofa.jpg", 1),
             (path + "stol.jpg", 2),
             (path + "bord.jpg", 3)]
+    for i in init:
+        add_image(conn, i[0], i[1])
 
 #### SETUP ####
 
