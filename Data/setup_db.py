@@ -90,6 +90,7 @@ def init_users(conn):
     for u in init:
         add_user(conn, u[0], u[1], u[2])
 
+
 def add_item(conn, id, title, description, price, owner_id):
     """
     Add a new item into the items table
@@ -115,6 +116,29 @@ def init_items(conn):
             (3, "Bord", "Et fint bord", 2000, 333333)]
     for i in init:
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
+
+
+def add_image(conn, path, product_id):
+    """
+    :param conn:
+    :param path:
+    :param product_id:
+    """
+    sql = ''' INSERT INTO images(path, product_id) 
+              VALUES(?, ?)'''
+    
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (path, product_id))
+        conn.commit()
+    except Error as e:
+        print(e)
+
+def init_images(conn):
+    path = "/static/Images/ProductImages/"
+    init = [(path + "sofa.jpg", 1),
+            (path + "stol.jpg", 2),
+            (path + "bord.jpg", 3)]
 
 #### SETUP ####
 
