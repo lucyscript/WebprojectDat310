@@ -6,8 +6,10 @@
 
 {% block content %}
     <h1> {{ product.title }} </h1>
+    {{% for image in imgases %}}
+        <img src="{{ image }}">
+    {{% endfor %}}
     <form action="" method="post">
-
         {{% if product.size != None %}}
         <label for="product_size">Size</label>
         <select name="product_size" id="product_size">
