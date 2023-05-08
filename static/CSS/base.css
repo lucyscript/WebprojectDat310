@@ -69,41 +69,31 @@ nav .side_menu_button {
 	padding-left: 30px;
 }
 
-/* Style the search form */
 .search-form {
 	display: flex;
 	align-items: center;
 	margin-left: 491px;
 	margin-top: 9px;
-	z-index: 2; /* Add a higher z-index value to the search form */
-	position: relative; /* Add position relative to allow z-index to work */
+	z-index: 2; 
+	position: relative; 
   }
   
-  /* Style the search input */
   .search-form input[type="search"] {
-	padding: 10px;
+	padding: 10px 10px 10px 30px; /* Add padding on the left to make space for the image */
 	border: none;
 	border-radius: 20px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 	font-size: 16px;
 	outline: none;
-	width: 200px;
+	width: 300px;
+	background-image: url('https://static.vecteezy.com/system/resources/previews/013/475/447/original/search-magnifying-glass-icon-png.png'); 
+	background-repeat: no-repeat; /* Prevent the image from repeating */
+	background-position: 5px center; /* Position the image on the left side, vertically centered */
+	background-size: 20px; /* Set the width of the image */
+	transition: background-color 0.2s ease-in-out;
+}
+.search-form input[type="search"]:focus {
+	background-color: #52F3F6; /* Set the background color for the input field when it is in focus */
   }
   
-  /* Style the search button */
-  .search-form button[type="submit"] {
-	padding: 10px;
-	background-color: #007bff;
-	color: #fff;
-	border: none;
-	border-radius: 20px;
-	font-size: 16px;
-	cursor: pointer;
-	margin-left: 10px;
-  }
-  
-  /* Style the search button on hover */
-  .search-form button[type="submit"]:hover {
-	background-color: #0062cc;
-  }
   
