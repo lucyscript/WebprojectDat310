@@ -147,8 +147,10 @@ def setup():
     if conn is not None:
         create_table(conn, sql_create_users_table)
         create_table(conn, sql_create_items_table)
+        create_table(conn, sql_create_images_table)
         init_users(conn)
         init_items(conn)
+        init_images(conn)
 
         conn.close()
 
