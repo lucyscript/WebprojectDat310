@@ -1,21 +1,59 @@
-from flask import Flask, request, render_template, url_for, redirect
+import flask
+from flask import url_for
 import sqlite3
 
-app = Flask(__name__, template_folder='HTML/templates')
-# conn = sqlite3.connect("/Data/database.db")
-# cursor = conn.cursor()
+app = flask.Flask(__name__, template_folder='HTML/templates')
+
+# database stuff
+database = "Data/database.db"
+queryUsers = "SELECT * FROM users WHERE id = ?"
+queryItems = "SELECT * FROM items"
+queryImages = "SELECT * FROM images WHERE product_id = ?"
+
+def get_conn():
+    conn = getattr(flask.g, '_database', None)
+    if conn is None:
+        conn = flask.g._database = sqlite3.connect(database)
+    return conn
+
+@app.teardown_appcontext
+def close_connection(exception):
+    conn = getattr(flask.g, '_database', None)
+    if conn is not None:
+        conn.close()
+
+
+# Routes
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute(queryItems)
+    items = cursor.fetchall()
+
+    return flask.render_template('index.html', items=items)
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    return flask.render_template('cart.html')
 
 @app.route('/product/<product_id>')
 def product(product_id):
-    return render_template('product')
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    # Fetch product
+    cursor.execute(queryItems, product_id)
+    item = cursor.fetchone()
+
+    cursor.execute(queryImages, product_id)
+    images_raw = cursor.fetchall()
+    images = []
+    for path in images_raw:
+        images.append(path[0])
+
+    return flask.render_template('product', item=item, images=images)
 
 
 if __name__ == '__main__':
