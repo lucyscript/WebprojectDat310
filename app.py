@@ -38,7 +38,7 @@ def index():
 def cart():
     return flask.render_template('cart.html')
 
-@app.route('/product/<product_id>')
+@app.route('/product/<product_id>') 
 def product(product_id):
     conn = get_conn()
     cursor = conn.cursor()

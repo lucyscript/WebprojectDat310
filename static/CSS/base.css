@@ -1,3 +1,7 @@
+* {
+	font-family: Arial,Helvetica,sans-serif;
+}
+
 body {
 	padding-top: 40px;
 	margin: 0;
@@ -8,8 +12,8 @@ header {
 	display: flex;
 	position: fixed;
 	top: 0;
-	background-color:#2C292C;
 	z-index: 1;
+	width: 100%;
 }
 
 footer {
@@ -25,25 +29,42 @@ main {
 	height: 2000px;
 }
 
-
 nav {
 	position: fixed;
-	background-color: #2C292C;
+	background-color: rgba(186, 186, 186, 0.292);
 	width: 100%;
+	backdrop-filter: blur(10px); /*blur*/
 }
 
 nav ul {
 	list-style-type: none;
 	display: flex;
-	float: right;
+	justify-content: space-between;
 	align-items: center;
 	padding-right: 5%;
 	padding-left: 5%;
 	width: 90%;
+	height: 60px;
+	margin: 0 auto;
 }
 
 nav li {
-	margin-right: 15px;
+	margin-right: 80px;
+}
+
+nav li span {
+	font-size: 12px;
+	font-weight: 300;
+	font-family: "Roboto",Arial;
+	line-height: 20px;
+}
+
+  nav li a {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
 }
 
 nav .side_menu_button {
@@ -72,17 +93,17 @@ nav .side_menu_button {
 .search-form {
 	display: flex;
 	align-items: center;
-	margin-left: 491px;
-	margin-top: 9px;
+	justify-content: center;
 	z-index: 2; 
 	position: relative; 
-  }
+	width: 50%;
+}
   
   .search-form input[type="search"] {
 	padding: 10px 10px 10px 30px; /* Add padding on the left to make space for the image */
 	border: none;
 	border-radius: 20px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
 	font-size: 16px;
 	outline: none;
 	width: 300px;
@@ -95,5 +116,15 @@ nav .side_menu_button {
 .search-form input[type="search"]:focus {
 	background-color: #52F3F6; /* Set the background color for the input field when it is in focus */
   }
-  
+
+.center-search {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	margin: 0;
+}
+
+.logo {
+	padding-left: 5%;
+}
   
