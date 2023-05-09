@@ -99,7 +99,7 @@ nav .side_menu_button {
 	width: 50%;
 }
   
-  .search-form input[type="search"] {
+.search-form input[type="search"] {
 	padding: 10px 10px 10px 30px; /* Add padding on the left to make space for the image */
 	border: none;
 	border-radius: 20px;
@@ -115,7 +115,7 @@ nav .side_menu_button {
 }
 .search-form input[type="search"]:focus {
 	background-color: #52F3F6; /* Set the background color for the input field when it is in focus */
-  }
+}
 
 .center-search {
 	flex: 1;
