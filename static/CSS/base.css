@@ -111,6 +111,7 @@ nav .side_menu_button {
 	background-repeat: no-repeat; 
 	background-position: 5px center; 
 	background-size: 20px;
+	opacity: 0.7;
 	transition: background-color 0.2s ease-in-out;
 }
 .search-form input[type="search"]:focus {
