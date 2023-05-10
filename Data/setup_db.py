@@ -48,6 +48,7 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
 
 sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 path TEXT NOT NULL,
+                                displayOrder INT NOT NULL,
                                 product_id INTEGER NOT NULL,
                                 FOREIGN KEY(product_id) REFERENCES items(id)
                             )"""
@@ -116,29 +117,32 @@ def init_items(conn):
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
 
 
-def add_image(conn, path, product_id):
+def add_image(conn, path, displayOrder, product_id):
     """ Add a new image into the images table
     :param conn:
     :param path:
+    :param displayOrder:
     :param product_id:
     """
-    sql = ''' INSERT INTO images(path, product_id) 
-              VALUES(?, ?)'''
+    sql = ''' INSERT INTO images(path, displayOrder, product_id) 
+              VALUES(?, ?, ?)'''
     
     try:
         cur = conn.cursor()
-        cur.execute(sql, (path, product_id))
+        cur.execute(sql, (path, displayOrder, product_id))
         conn.commit()
     except Error as e:
         print(e)
 
 def init_images(conn):
     path = "/static/Images/ProductImages/"
-    init = [(path + "sofa.jpg", 1),
-            (path + "stol.jpg", 2),
-            (path + "bord.jpg", 3)]
+    init = [(path + "sofa.jpg",   1, 1),
+            (path + "sofa2.jpeg", 2, 1),
+            (path + "stol.jpg",   1, 2),
+            (path + "sofa3.jpg",  3, 1),
+            (path + "bord.jpg",   1, 3)]
     for i in init:
-        add_image(conn, i[0], i[1])
+        add_image(conn, i[0], i[1], i[2])
 
 #### SETUP ####
 
