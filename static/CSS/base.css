@@ -128,6 +128,9 @@ nav .side_menu_button {
 	padding-left: 5%;
 }
 
+
+/**** Profile dropdown ****/
+
 .dropdown {
 	position: relative;
 }
@@ -173,7 +176,6 @@ nav .side_menu_button {
 	transition-delay: 0s;
 }
 
-/* Style the columns in the dropdown content */
 .dropdown-content .column {
 	margin-left: 9px;
 	justify-content: center;
@@ -182,14 +184,12 @@ nav .side_menu_button {
 	box-sizing: border-box;
 }
 
-/* Clear floats after the columns */
 .dropdown-content:after {
 	content: "";
 	display: table;
 	clear: both;
 }
 
-/* Style the boxes inside the columns */
 .box {
 	background-color: #fff;
 	border: 1px solid #ccc;
@@ -201,7 +201,6 @@ nav .side_menu_button {
 	cursor: pointer;
 }
 
-/* Add a background color to the box when hovering over it */
 .box:hover {
 	background-color: #f2f2f2;
 	border-color: rgb(246,85,82);
