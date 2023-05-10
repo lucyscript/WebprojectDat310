@@ -45,6 +45,10 @@ def index():
 def login():
     return flask.render_template('login.html')
 
+@app.route('/registration')
+def registration():
+    return flask.render_template('registration.html')
+
 @app.route('/cart')
 def cart():
     return flask.render_template('cart.html')

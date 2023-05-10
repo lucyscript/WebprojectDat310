@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/authentication.css') }}">
 </head>
 <body>
     <header>
@@ -16,7 +16,7 @@
         </div>
     </header>
     <main>
-        <div class="login-form">
+        <div class="auth-form">
             <form method="POST">
               <h2>Login</h2>
               <div class="form-group">
@@ -29,18 +29,17 @@
               <div class="form-group">
                 <button type="submit" class="btn-primary">Log in</button>
               </div>
-              <div class="register-link">
-                Don't have an account yet? <a href="#">Register here</a>
+              <div class="auth-link">
+                Don't have an account yet? <a href="registration">Register here</a>
               </div>
             </form>
-          </div>
-        </main>
+        </div>
+    </main>
         <footer>
             <div>
                 <h3>100% safe login and registartions lul</h3>
             </div>
         </footer>
-    </body>
 
     <script src="{{ url_for('static', filename='JS/login.js') }}"></script>
 </body>

@@ -23,7 +23,7 @@ body {
     justify-content: center;
 }
 
-.login-form {
+.auth-form {
     width: 400px;
     margin: 30px auto;
     background-color: #fff;
@@ -66,28 +66,28 @@ body {
     cursor: pointer;
 }
   
-.register-link {
+.auth-link {
     margin-top: 20px;
     font-size: 14px;
     text-align: center;
 }
   
-.register-link a {
+.auth-link a {
     color: #007bff;
     text-decoration: none;
 }
   
-.register-link a:hover {
+.auth-link a:hover {
     text-decoration: underline;
 }
 
 footer {
     background-color: rgba(186, 186, 186, 0.292);
     color: #666; 
-    padding: 20px 0 20px 0; 
+    padding: 15px 0 15px 0; 
     font-size: 14px; 
     text-align: center; 
-    position: absolute; 
+    position: fixed; 
     width: 100%; 
     bottom: 0; 
 }
