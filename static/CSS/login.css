@@ -30,9 +30,9 @@ body {
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     padding: 40px;
-  }
+}
   
-  .form-control {
+.form-control {
     border: none;
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
@@ -41,14 +41,14 @@ body {
     padding: 10px 15px;
     width: 100%;
     transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
-  }
+}
   
-  .form-control:focus {
+.form-control:focus {
     background-color: #52F3F6;
     border-radius: 50px;
-  }
+}
   
-  .btn-primary {
+.btn-primary {
     background-color: rgb(246,85,82);
     border: none;
     border-radius: 20px;
@@ -58,30 +58,30 @@ body {
     padding: 10px 0;
     width: 100%;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  }
+}
   
-  .btn-primary:hover {
+.btn-primary:hover {
     background-color: #52F3F6;
     color: #fff;
     cursor: pointer;
-  }
+}
   
-  .register-link {
+.register-link {
     margin-top: 20px;
     font-size: 14px;
     text-align: center;
-  }
+}
   
-  .register-link a {
+.register-link a {
     color: #007bff;
     text-decoration: none;
-  }
+}
   
-  .register-link a:hover {
+.register-link a:hover {
     text-decoration: underline;
-  }
+}
 
-  footer {
+footer {
     background-color: rgba(186, 186, 186, 0.292);
     color: #666; 
     padding: 20px 0 20px 0; 
@@ -90,5 +90,5 @@ body {
     position: absolute; 
     width: 100%; 
     bottom: 0; 
-  }
+}
   
