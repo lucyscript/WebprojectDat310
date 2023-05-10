@@ -22,7 +22,13 @@ def close_connection(exception):
     if conn is not None:
         conn.close()
 
-
+#@app.context_processor # make cart items accessable in base.html for dropdown
+#def cart_processor():
+#    conn = get_conn()
+#    cursor = conn.cursor()
+#    cursor.execute()
+#    cart = cursor.fetchall()
+#    return dict(cart=cart)
 
 # Routes
 
@@ -34,6 +40,10 @@ def index():
     items = cursor.fetchall()
 
     return flask.render_template('index.html', items=items)
+
+@app.route('/login')
+def login():
+    return flask.render_template('login.html')
 
 @app.route('/cart')
 def cart():

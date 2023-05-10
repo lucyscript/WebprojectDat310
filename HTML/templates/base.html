@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/base.css') }}">
-    <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
 </head>
 <body>
     <header>
@@ -32,13 +31,13 @@
               </a>
             </li>
             <li class="dropdown">
-              <a href="#">
+              <a href="cart">
                 <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" width="25px">
                 <span>Cart</span>
               </a>
               <div class="dropdown-content">
                 <div class="column">
-                  <div class="box"><a href="#">View Cart</a></div>
+                  <div class="box"><a href="cart">View Cart</a></div>
                   <div class="box"><a href="#">Checkout</a></div>
                 </div>
               </div>
@@ -52,7 +51,7 @@
               </div>
               <div class="dropdown-content">
                 <div class="column">
-                  <div class="box"><a href="">Login/Logout</a></div>
+                  <div class="box"><a href="login">Login/Logout</a></div>
                   <div class="box"><a href="">Profile</a></div>
                   <div class="box"><a href="">Order history</a></div>
                 </div>
@@ -72,5 +71,7 @@
     <footer>
         <h1>Footer</h1>
     </footer>
+
+    <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
 </body>
 </html>
