@@ -242,3 +242,37 @@ nav .side_menu_button {
 	background-color: lightblue;
 	cursor: pointer;
 }
+
+
+/**** PRODUCT PAGE ****/
+
+#slide-box {
+	width: 400px;
+	height: 400px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.image-slide {
+	max-height: 100%;
+	max-width: 100%;
+	min-width: 400px;
+	min-height: 400px;
+	display: none;	
+}
+.image-slide:nth-child(2) { 
+	display: block;
+}	
+
+#back-button, #forward-button {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+}
+#back-button {
+	left: 0;
+}
+#forward-button {
+	right: 0;
+}

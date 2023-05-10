@@ -5,9 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    <h1> {{ item.title }} </h1>
+
+<div id="slide-box">
+    <div id="image-number">1/{{ images|length }}</div>
+
     {% for image in images %}
-        <img src="{{ image }}">
+        <img class="image-slide" src="{{ image }}">
     {% endfor %}
+        <button id="back-button" onclick="image_slide_change(-1, 1)">&#8592</button>
+        <button id="forward-button" onclick="image_slide_change(1, 1)">&#8594</button>
+    </div>
+</div>
+
+<h1> {{ item.title }} </h1>
+<p> {{ item.description }} </p>
 
 {% endblock %}
