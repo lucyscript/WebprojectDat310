@@ -1,20 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ product.title }}
+    {{ item.title }}
 {% endblock %}
 
 {% block content %}
-    <h1> {{ product.title }} </h1>
-    {{% for image in imgases %}}
+    <h1> {{ item.title }} </h1>
+    {% for image in images %}
         <img src="{{ image }}">
-    {{% endfor %}}
-    <form action="" method="post">
-        {{% if product.size != None %}}
-        <label for="product_size">Size</label>
-        <select name="product_size" id="product_size">
-            {{% for size in product.size %}}
-                <option value="{{ size }}">{{ size }}</option>
-        </select>
-    </form>
+    {% endfor %}
+
 {% endblock %}

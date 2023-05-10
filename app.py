@@ -7,7 +7,7 @@ app = flask.Flask(__name__, template_folder='HTML/templates')
 # database stuff
 database = "Data/database.db"
 queryUsers = "SELECT * FROM users WHERE id = ?"
-queryItems = "SELECT * FROM items"
+queryItems = "SELECT * FROM items WHERE id = ?"
 queryImages = "SELECT * FROM images WHERE product_id = ?"
 
 def get_conn():
@@ -23,13 +23,14 @@ def close_connection(exception):
         conn.close()
 
 
+
 # Routes
 
 @app.route('/')
 def index():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute('SELECT items.id, items.title, images.path FROM items JOIN images ON items.id = images.product_id')
+    cursor.execute('SELECT items.id, items.title, images.path FROM items JOIN images ON items.id = images.product_id WHERE images.displayOrder = 1')
     items = cursor.fetchall()
 
     return flask.render_template('index.html', items=items)
@@ -53,7 +54,7 @@ def product(product_id):
     for path in images_raw:
         images.append(path[0])
 
-    return flask.render_template('product', item=item, images=images)
+    return flask.render_template('product.html', item=item, images=images)
 
 
 if __name__ == '__main__':
