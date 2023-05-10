@@ -161,4 +161,5 @@ nav .side_menu_button {
 }
 .product-box:hover {
 	background-color: lightblue;
+	cursor: pointer;
 }
