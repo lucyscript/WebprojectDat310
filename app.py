@@ -29,7 +29,7 @@ def close_connection(exception):
 def index():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute(queryItems)
+    cursor.execute('SELECT items.id, items.title, images.path FROM items JOIN images ON items.id = images.product_id')
     items = cursor.fetchall()
 
     return flask.render_template('index.html', items=items)

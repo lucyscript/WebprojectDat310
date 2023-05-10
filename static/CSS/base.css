@@ -27,10 +27,10 @@ footer {
 
 main {
 	height: 2000px;
+	margin-top: 80px;
 }
 
 nav {
-	position: fixed;
 	background-color: rgba(186, 186, 186, 0.292);
 	width: 100%;
 	backdrop-filter: blur(10px); /*blur*/
@@ -128,3 +128,38 @@ nav .side_menu_button {
 	padding-left: 5%;
 }
   
+
+
+/**** MAIN PAGE PRODUCTS ****/
+
+#product-grid {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 10px;
+	
+}
+
+.product-box {
+	border: 2px lightblue;
+	padding: 20px;
+	width: 240px;
+	height: 300px;
+	align-items: center center;
+}
+
+.product-box img {
+	border: 1px solid grey;
+	width: 240px;
+	height: 240px;
+}
+.product-box h3 {
+	width: 240px;
+	margin-right: 0;
+}
+
+.product-box:hover {
+	background-color: lightblue;
+}
