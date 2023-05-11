@@ -66,11 +66,7 @@ def create_table(conn, create_table_sql):
 
 #### INSERT #########
 
-<<<<<<< HEAD
 def add_user(conn, id, username, password):
-=======
-def add_user(conn, id, username, password = ""):
->>>>>>> 20cd6ae5290cba705cfa1e63cb5f25bbe40dc339
     """ Add a new user into the users table
     :param conn:
     :param id:
