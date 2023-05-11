@@ -259,9 +259,11 @@ nav .side_menu_button {
 	width: 100%;
 	height: 100%;
 	grid-template-areas: 
-		"a a a"
-		"b c c"
-		"b c c";
+		"image 	     . a a   . "
+		"image		 . c c   . "
+		"title		 . price . "
+		"description . order-button order-button"
+		"description . c c   . ";
 	grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
 	grid-template-rows: 200px 200px 200px;
 }
@@ -280,6 +282,8 @@ nav .side_menu_button {
 	max-width: 100%;
 	min-height: 400px;
 	display: none;	
+	margin-left: auto;
+	margin-right: auto;
 }
 .image-slide:nth-child(2) { 
 	display: block;
