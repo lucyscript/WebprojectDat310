@@ -111,12 +111,12 @@ def registration():
         username = request.form.get("username").strip()
         if len(username) < 4:
             error = 'Username must be more than 3 characters!'
-            return render_template("login.html", error=error)
+            return render_template("registration.html", error=error)
 
         password = request.form.get("password")
         if len(password) < 5:
             error = 'Password must be more than 4 characters!'
-            return render_template('login.html', error=error) 
+            return render_template('registration.html', error=error) 
         
         hash = generate_password_hash(password)
 
