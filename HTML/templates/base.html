@@ -44,10 +44,10 @@
         </li>            
         <li class="dropdown">
           <div id="profile">
-            <a href="{{ url_for('login') }}">
+            <a href="{{ url_for('profile') }}">
               <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png" width="25px">
-              {% if session %}
-                <span>{{ user }}</span>
+              {% if 'userid' in session %}
+                <span>{{ user.username }}</span>
               {% else %}
                 <span>Profile</span>
               {% endif %}

@@ -13,6 +13,46 @@ queryUsers = "SELECT * FROM users WHERE id = ?"
 queryItems = "SELECT * FROM items WHERE id = ?"
 queryImages = "SELECT * FROM images WHERE product_id = ?"
 
+# Functions
+
+def get_user():
+    try:
+        conn = get_conn()
+        cursor = conn.cursor()
+        user_id = flask.session['userid']
+        cursor.execute(queryUsers, (user_id,))
+        user_raw = cursor.fetchone()
+        columns = [column[0] for column in cursor.description]
+        user = dict(zip(columns, user_raw))
+        return user
+    except:
+        return None
+
+def get_product(product_id):
+    try:
+        conn = get_conn()
+        cursor = conn.cursor()
+        cursor.execute(queryItems, product_id)
+        product_raw = cursor.fetchone()
+        columns = [column[0] for column in cursor.description]
+        product = dict(zip(columns, product_raw))
+        return product
+    except:
+        return None
+
+def get_images(product_id):
+    try:
+        conn = get_conn()
+        cursor = conn.cursor()
+        cursor.execute(queryImages, product_id)
+        images_raw = cursor.fetchall()
+        images = []
+        for path in images_raw:
+            images.append(path[0])
+        return images
+    except:
+        return None
+
 def generate_id():
     return random.randint(100000, 999999)
 
@@ -22,6 +62,8 @@ def get_conn():
         conn = flask.g._database = sqlite3.connect(database)
     return conn
 
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     conn = getattr(flask.g, '_database', None)
@@ -30,8 +72,10 @@ def close_connection(exception):
 
 @app.context_processor 
 def logged_in_user():
-    user = flask.session.get('username')
+    user = get_user()
     return dict(user=user)
+
+
 
 # Routes
 
@@ -68,7 +112,7 @@ def registration():
         id = generate_id()
         cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, password))
         conn.commit()
-        flask.session['username'] = username
+        flask.session['userid'] = id
         return flask.redirect(flask.url_for('index'))
     
     return flask.render_template('registration.html')
@@ -86,7 +130,7 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            flask.session['username'] = user[1]
+            flask.session['userid'] = user[0]
             return flask.redirect(flask.url_for('index'))
         else:
             error = 'Invalid login credentials.'
@@ -96,8 +140,17 @@ def login():
 
 @app.route('/logout')
 def logout():
-    flask.session.pop('username', None)
+    flask.session.pop('userid', None)
     return flask.redirect(flask.url_for('index'))
+
+@app.route('/profile')
+def profile():
+    user = get_user()
+    if user != None:
+        return flask.render_template('profile.html', user=user)
+    else:
+        return flask.redirect(flask.url_for('login'))
+
 
 @app.route('/cart')
 def cart():

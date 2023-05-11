@@ -23,7 +23,7 @@ def create_connection(db_file):
 
 
 sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
-                                id TEXT UNIQUE NOT NULL,
+                                id INTEGER UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
                                 PRIMARY KEY(id)
