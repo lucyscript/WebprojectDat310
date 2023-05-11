@@ -138,9 +138,9 @@ nav .side_menu_button {
 
 .dropdown-content {
 	position: absolute;
-	margin-left: -50px;
+	margin-left: -40px;
 	padding-top: 4px;
-	width: 150px;
+	width: 115px;
 	background-color: rgba(255, 255, 255, 0.2);
 	border: 1px solid #ccc;
 	border-radius: 4px;
@@ -178,7 +178,7 @@ nav .side_menu_button {
 }
 
 .dropdown-content .column {
-	margin-left: 9px;
+	margin-left: -6px;
 	justify-content: center;
 	width: 33.33%;
 	padding: 0 10px;
