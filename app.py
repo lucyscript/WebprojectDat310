@@ -60,7 +60,9 @@ def product(product_id):
 
     # Fetch product
     cursor.execute(queryItems, product_id)
-    item = cursor.fetchone()
+    item_raw = cursor.fetchone()
+    columns = [column[0] for column in cursor.description]
+    item = dict(zip(columns, item_raw))
 
     cursor.execute(queryImages, product_id)
     images_raw = cursor.fetchall()
