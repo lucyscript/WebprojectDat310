@@ -73,11 +73,11 @@ def add_user(conn, id, username, password, user_settings = ""):
     :param username:
     :param password:
     """
-    sql = ''' INSERT INTO users(id, username, password, user_settings)
-              VALUES(?,?,?,?) '''
+    sql = ''' INSERT INTO users(id, username, password)
+              VALUES(?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (id, username, password, user_settings))
+        cur.execute(sql, (id, username, password))
         conn.commit()
     except Error as e:
         print(e)
