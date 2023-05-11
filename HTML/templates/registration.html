@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/authentication.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="https://icon-library.com/images/trade-icon-transparent/trade-icon-transparent-7.jpg" width="50px">
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="auth-form">
+            <form method="POST">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" name="username" required="required">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required="required">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">Register</button>
+                </div>
+                {% if error %}
+                    <div class="alert">{{ error }}</div>
+                {% endif %}
+                <div class="auth-link">
+                    Already have an account? <a href="login">Log in here</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div>
+            <h3>100% safe login and registrations lul</h3>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='JS/registration.js') }}"></script>
+</body>
+</html>

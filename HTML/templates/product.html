@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ item.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box">
+<div id="product-content-page">
+
+<div id="slide-box">
+    {% for image in images %}
+    <img class="image-slide" src="{{ image }}">
+    {% endfor %}
+    {% if images|length > 1 %}
+    <div id="image-number">1/{{ images|length }}</div>
+        <button id="back-button" onclick="image_slide_change(-1, 1)">&#8592</button>
+        <button id="forward-button" onclick="image_slide_change(1, 1)">&#8594</button>
+    {% endif %}
+</div>
+
+<div id="title-box">
+    <h1 id="title">Title: {{ item.title }}</h1>
+    <h2 id="price">Price: {{ item.price }} kr</h2>
+</div>
+<div id="description-box">
+    <p id="description">Description: {{ item.description }}</p>
+</div>
+
+</div>
+</div>
+{% endblock %}

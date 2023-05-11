@@ -23,10 +23,9 @@ def create_connection(db_file):
 
 
 sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
-                                id TEXT UNIQUE NOT NULL,
+                                id INTEGER UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                user_settings TEXT NOT NULL,
                                 PRIMARY KEY(id)
                             );"""
 
@@ -36,12 +35,22 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 description TEXT NOT NULL,
                                 price REAL NOT NULL,
                                 owner_id TEXT NOT NULL,
+
+                                -- Parameters for selecting etc.
+                                size TEXT,
+                                stock INT,
+
                                 PRIMARY KEY(id),
                                 FOREIGN KEY(owner_id) REFERENCES users(id)
                             );"""
 
 
-
+sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
+                                path TEXT NOT NULL,
+                                displayOrder INT NOT NULL,
+                                product_id INTEGER NOT NULL,
+                                FOREIGN KEY(product_id) REFERENCES items(id)
+                            )"""
 
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
@@ -57,19 +66,18 @@ def create_table(conn, create_table_sql):
 
 #### INSERT #########
 
-def add_user(conn, id, username, password, user_settings = ""):
-    """
-    Add a new user into the users table
+def add_user(conn, id, username, password):
+    """ Add a new user into the users table
     :param conn:
     :param id:
     :param username:
     :param password:
     """
-    sql = ''' INSERT INTO users(id, username, password, user_settings)
-              VALUES(?,?,?,?) '''
+    sql = ''' INSERT INTO users(id, username, password)
+              VALUES(?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (id, username, password, user_settings))
+        cur.execute(sql, (id, username, password))
         conn.commit()
     except Error as e:
         print(e)
@@ -81,9 +89,9 @@ def init_users(conn):
     for u in init:
         add_user(conn, u[0], u[1], u[2])
 
+
 def add_item(conn, id, title, description, price, owner_id):
-    """
-    Add a new item into the items table
+    """ Add a new item into the items table
     :param conn:
     :param id:
     :param title:
@@ -107,6 +115,34 @@ def init_items(conn):
     for i in init:
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
 
+
+def add_image(conn, path, displayOrder, product_id):
+    """ Add a new image into the images table
+    :param conn:
+    :param path:
+    :param displayOrder:
+    :param product_id:
+    """
+    sql = ''' INSERT INTO images(path, displayOrder, product_id) 
+              VALUES(?, ?, ?)'''
+    
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (path, displayOrder, product_id))
+        conn.commit()
+    except Error as e:
+        print(e)
+
+def init_images(conn):
+    path = "/static/Images/ProductImages/"
+    init = [(path + "sofa.jpg",   1, 1),
+            (path + "sofa2.jpeg", 2, 1),
+            (path + "stol.jpg",   1, 2),
+            (path + "sofa3.jpg",  3, 1),
+            (path + "bord.jpg",   1, 3)]
+    for i in init:
+        add_image(conn, i[0], i[1], i[2])
+
 #### SETUP ####
 
 def setup():
@@ -114,8 +150,10 @@ def setup():
     if conn is not None:
         create_table(conn, sql_create_users_table)
         create_table(conn, sql_create_items_table)
+        create_table(conn, sql_create_images_table)
         init_users(conn)
         init_items(conn)
+        init_images(conn)
 
         conn.close()
 

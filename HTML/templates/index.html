@@ -4,5 +4,12 @@
 {% endblock %}
 
 {% block content %}
-<h1>HELLO WORLD</h1>
+    <div id="product-grid">
+        {% for item in items %}
+            <div class="product-box" onclick="location.href='/product/{{item[0]}}'">
+                <img src="{{ item[2] }}" alt="{{ item[1] }}">
+                <h3>{{ item[1] }}</h3>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

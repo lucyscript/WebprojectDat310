@@ -6,23 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/base.css') }}">
-    <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li class="side_menu_button"><img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/hamburger-menu-icon.png" width="20px" onclick="side_menu_open()"></li>
-                <li><a href=""><img src="https://www.iconpacks.net/icons/2/free-home-icon-2502-thumb.png" width="20px"></a></li>
-                <li><a href=""><img src="https://uxwing.com/wp-content/themes/uxwing/download/business-professional-services/product-icon.png" width="20px"></a></li>
-                <li><a href=""><img src="https://cdn-icons-png.flaticon.com/512/34/34627.png" width="20px"></a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div id="side_menu">
-        <img class="side_menu_button" src="https://uxwing.com/wp-content/themes/uxwing/download/education-school/x-alphabet-round-icon.png" width="40px" onclick="side_menu_close()">
-    </div>
+  <header>
+    <nav>
+      <ul>
+        <li class="side_menu_button">
+          <img src="https://cdn-icons-png.flaticon.com/512/2801/2801909.png" width="20px" onclick="side_menu_open()">
+        </li>
+        <li class="logo">
+          <a href="/">
+            <img src="https://icon-library.com/images/trade-icon-transparent/trade-icon-transparent-7.jpg" width="55px">
+          </a>
+        </li>
+        <li class="center-search">
+          <form class="search-form" action="#" method="get">
+            <input type="search" name="search" placeholder="Search...">
+          </form>
+        </li>
+        <li>
+          <a href="product">
+            <img src="https://cdn3.iconfinder.com/data/icons/general-icons-set-2/32/add-512.png" width="25px">
+            <span>New AD</span>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="{{ url_for('cart') }}">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" width="25px">
+            <span>Cart</span>
+          </a>
+          <div class="dropdown-content">
+            <div class="column">
+              <div class="box"><a href="cart">View Cart</a></div>
+              <div class="box"><a href="#">Checkout</a></div>
+            </div>
+          </div>
+        </li>            
+        <li class="dropdown">
+          <div id="profile">
+            <a href="{{ url_for('profile') }}">
+              <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png" width="25px">
+              {% if 'userid' in session %}
+                <span>{{ user.username }}</span>
+              {% else %}
+                <span>Profile</span>
+              {% endif %}
+            </a>
+          </div>
+          <div class="dropdown-content">
+            <div class="column">
+              <div class="box">
+                {% if session %}
+                    <a href="{{ url_for('logout') }}">Log out</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Log in</a>
+                {% endif %}
+              </div>
+              <div class="box"><a href="{{ url_for('profile') }}">Profile</a></div>
+              <div class="box"><a href="">Order history</a></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>      
+  <div id="side_menu">
+      <img class="side_menu_button" src="https://cdn-icons-png.flaticon.com/512/7693/7693271.png" width="40px" onclick="side_menu_close()">
+  </div>
 
     <main>
         {% block content %}
@@ -32,5 +82,7 @@
     <footer>
         <h1>Footer</h1>
     </footer>
+
+    <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
 </body>
 </html>
