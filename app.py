@@ -1,9 +1,9 @@
-import flask
-from flask import url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session, g, abort
 import sqlite3
 import random
+from werkzeug.security import generate_password_hash, check_password_hash
 
-app = flask.Flask(__name__, template_folder='HTML/templates')
+app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
 app.config['DATABASE'] = 'Data/database.db'
 
@@ -14,12 +14,26 @@ queryItems = "SELECT * FROM items WHERE id = ?"
 queryImages = "SELECT * FROM images WHERE product_id = ?"
 
 # Functions
+def valid_auth(username, password):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+
+    user = cursor.fetchone()
+    hash = user[2]
+
+    if user and hash:
+            return check_password_hash(hash, password)
+
+    return False
+
+
 
 def get_user():
     try:
         conn = get_conn()
         cursor = conn.cursor()
-        user_id = flask.session['userid']
+        user_id = session['userid']
         cursor.execute(queryUsers, (user_id,))
         user_raw = cursor.fetchone()
         columns = [column[0] for column in cursor.description]
@@ -57,16 +71,16 @@ def generate_id():
     return random.randint(100000, 999999)
 
 def get_conn():
-    conn = getattr(flask.g, '_database', None)
+    conn = getattr(g, '_database', None)
     if conn is None:
-        conn = flask.g._database = sqlite3.connect(database)
+        conn = g._database = sqlite3.connect(database)
     return conn
 
 
 
 @app.teardown_appcontext
 def close_connection(exception):
-    conn = getattr(flask.g, '_database', None)
+    conn = getattr(g, '_database', None)
     if conn is not None:
         conn.close()
 
@@ -86,75 +100,86 @@ def index():
     cursor.execute('SELECT items.id, items.title, images.path FROM items JOIN images ON items.id = images.product_id WHERE images.displayOrder = 1')
     items = cursor.fetchall()
 
-    return flask.render_template('index.html', items=items)
+    return render_template('index.html', items=items)
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
-    if flask.request.method == 'POST':
+    if request.method == 'POST':
         conn = get_conn()
         cursor = conn.cursor()
 
-        username = flask.request.form['username']
-        password = flask.request.form['password']
-        confirm_password = flask.request.form['confirm_password']
+        username = request.form.get("username").strip()
+        if len(username) < 4:
+            error = 'Username must be more than 3 characters!'
+            return render_template("login.html", error=error)
+
+        password = request.form.get("password")
+        if len(password) < 5:
+            error = 'Password must be more than 4 characters!'
+            return render_template('login.html', error=error) 
+        
+        hash = generate_password_hash(password)
+
+        confirm_password = request.form['confirm_password']
 
         if password != confirm_password:
             error = 'Passwords do not match'
-            return flask.render_template('registration.html', error=error)
+            return render_template('registration.html', error=error)
         
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
         user = cursor.fetchone()
 
         if user:
             error = 'Username already exists.'
-            return flask.render_template('registration.html', error=error)
+            return render_template('registration.html', error=error)
         
         id = generate_id()
-        cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, password))
+        cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, hash))
         conn.commit()
-        flask.session['userid'] = id
-        return flask.redirect(flask.url_for('index'))
+        session['userid'] = id
+        return redirect(url_for('index'))
     
-    return flask.render_template('registration.html')
+    return render_template('registration.html')
 
 @app.route('/login', methods=["GET", 'POST'])
 def login():
-    if flask.request.method == 'POST':
-        conn = get_conn()
-        cursor = conn.cursor()
-        
-        username = flask.request.form['username']
-        password = flask.request.form['password']
+    if request.method == 'POST':
 
-        cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password))
-        user = cursor.fetchone()
+        username = request.form['username']
+        password = request.form['password']
 
-        if user:
-            flask.session['userid'] = user[0]
-            return flask.redirect(flask.url_for('index'))
+        if valid_auth(username, password): 
+            conn = get_conn()
+            cursor = conn.cursor()
+            
+            cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+            user = cursor.fetchone()
+            if user:
+                session['userid'] = user[0]
+                return redirect(url_for('index'))
         else:
             error = 'Invalid login credentials.'
-            return flask.render_template('login.html', error=error)
+            return render_template('login.html', error=error)
         
-    return flask.render_template('login.html')
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-    flask.session.pop('userid', None)
-    return flask.redirect(flask.url_for('index'))
+    session.pop('userid', None)
+    return redirect(url_for('index'))
 
 @app.route('/profile')
 def profile():
     user = get_user()
     if user != None:
-        return flask.render_template('profile.html', user=user)
+        return render_template('profile.html', user=user)
     else:
-        return flask.redirect(flask.url_for('login'))
+        return redirect(url_for('login'))
 
 
 @app.route('/cart')
 def cart():
-    return flask.render_template('cart.html')
+    return render_template('cart.html')
 
 @app.route('/product/<product_id>') 
 def product(product_id):
@@ -173,7 +198,7 @@ def product(product_id):
     for path in images_raw:
         images.append(path[0])
 
-    return flask.render_template('product.html', item=item, images=images)
+    return render_template('product.html', item=item, images=images)
 
 
 if __name__ == '__main__':
