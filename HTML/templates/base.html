@@ -51,7 +51,13 @@
           </div>
           <div class="dropdown-content">
             <div class="column">
-              <div class="box"><a href="login">Login/Logout</a></div>
+              <div class="box">
+                {% if session %}
+                    <a href="{{ url_for('logout') }}">Log out</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Log in</a>
+                {% endif %}
+              </div>
               <div class="box"><a href="">Profile</a></div>
               <div class="box"><a href="">Order history</a></div>
             </div>

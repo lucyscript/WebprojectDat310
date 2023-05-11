@@ -26,7 +26,6 @@ sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
                                 id TEXT UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                user_settings TEXT NOT NULL,
                                 PRIMARY KEY(id)
                             );"""
 
