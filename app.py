@@ -28,13 +28,10 @@ def close_connection(exception):
     if conn is not None:
         conn.close()
 
-#@app.context_processor # make cart items accessable in base.html for dropdown
-#def cart_processor():
-#    conn = get_conn()
-#    cursor = conn.cursor()
-#    cursor.execute()
-#    cart = cursor.fetchall()
-#    return dict(cart=cart)
+@app.context_processor 
+def logged_in_user():
+    user = flask.session.get('username')
+    return dict(user=user)
 
 # Routes
 

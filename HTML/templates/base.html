@@ -46,7 +46,11 @@
           <div id="profile">
             <a href="{{ url_for('login') }}">
               <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png" width="25px">
-              <span>Profile</span>
+              {% if session %}
+                <span>{{ user }}</span>
+              {% else %}
+                <span>Profile</span>
+              {% endif %}
             </a>
           </div>
           <div class="dropdown-content">
