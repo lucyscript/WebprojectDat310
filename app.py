@@ -20,10 +20,10 @@ def valid_auth(username, password):
     cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
 
     user = cursor.fetchone()
-    hash = user[2]
 
-    if user and hash:
-            return check_password_hash(hash, password)
+    if user:
+        hash = user[2]
+        return check_password_hash(hash, password)
 
     return False
 
