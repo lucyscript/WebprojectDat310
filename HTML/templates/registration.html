@@ -20,18 +20,18 @@
             <form method="POST">
                 <h2>Register</h2>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" name="username" required="required">
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
                 </div>
                 <br>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+                    <input type="password" class="form-control" id="pw" placeholder="Password" name="password">
                 </div>
                 <br>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required="required">
+                    <input type="password" class="form-control" id="confirm_pw" placeholder="Confirm Password" name="confirm_password">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn-primary">Register</button>
+                    <button type="submit" class="btn-primary" id="btn">Register</button>
                 </div>
                 {% if error %}
                     <div class="alert">{{ error }}</div>
