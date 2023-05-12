@@ -306,3 +306,16 @@ nav .side_menu_button {
 	top: -100px;
 	width: 100%;
 }
+
+
+.image_preview_image {
+	object-fit: cover;
+	height: 200px;
+	max-width: 200px;
+}
+
+#image_preview_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}

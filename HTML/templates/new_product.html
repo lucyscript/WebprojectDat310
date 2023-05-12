@@ -5,18 +5,59 @@
 {% endblock %}
 
 {% block content %}
-    <div id="new_product_content">
-        <h3> bong bong </h3>
-    </div>
     <div id="new_product_load">
         <img src="https://macstores.vn/tin-tuc/wp-content/uploads/2022/07/20220721_62d9720320fe2.gif" alt="loading">
     </div>
+    
+    <div id="new_product_content">
+        <form method="post" name="new_product_form">
+            <ul>
+                <li>
+                    <div class="title_input">
+                        <h3>Title:</h3>
+                        <input class="title_imput_container input_element_border" type="text" name="title">
+                    </div>
+                </li>
+                <li>
+                    <div class="description_input">
+                        <h3>Description:</h3>
+                        <input class="description_input_container input_element_border" type="text" name="description">
+                    </div>
+                </li>
+                <li>
+                    <div class="price_input">
+                        <h3>Price:</h3>
+                        <input class="price_input_container input_element_border" type="text" name="price">
+                    </div>
+                </li>
+                <li>
+                    <div class="image_input">
+                        <h3>Add images:</h3>
+                        <input class="image_input_container input_element_border" data-image-input type="file" name="image" accept="image/*" oninput="add_image_preview(event)" multiple>
+                    </div>
+                </li>
+                <li>
+                    <div id="image_preview">
+                        <h3>Image preview:</h3>
+                        <div id="image_preview_container">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="submit_button">
+                        <input class="submit_button_container" type="submit" value="Submit">
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+
     <script>
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
      }
     async function load(){
-        await sleep(3000)
+        await sleep(30)
         document.getElementById("new_product_load").style.display = "none";
         document.getElementById("new_product_content").style.display = "block";
     }

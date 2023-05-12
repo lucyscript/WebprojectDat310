@@ -28,3 +28,47 @@ function image_slide_change(n, image_index) {
     document.getElementById("back-button").onclick = function () { image_slide_change(-1, image_index) };
     document.getElementById("forward-button").onclick = function () { image_slide_change(1, image_index) };
 }
+
+function add_image_preview(upload) {
+    // TODO: Save the images, as everytime a file is uploaded it deletes the previous upload from the form
+
+    const images = upload.target.files;
+    const upload_box = document.getElementById("image_preview");
+    const upload_container = document.getElementById("image_preview_container");
+    upload_box.style.display = "block";
+
+    console.log(images)
+
+    for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+        const reader = new FileReader();
+
+        reader.readAsDataURL(image);
+        reader.onload = function (e) {
+            const container = document.createElement("div");
+            container.classList.add("image_preview_image_container");
+
+            const img = document.createElement("img");
+            img.classList.add("image_preview_image");
+
+            img.src = e.target.result;
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove");
+            removeButton.setAttribute("type", "button");
+            removeButton.setAttribute("aria-label", "Remove");
+            removeButton.innerHTML = "<span aria-hidden='true'>&times;</span>";
+            removeButton.addEventListener("click", function () { 
+                remove_image_preview(this);
+            });
+            
+            container.appendChild(img);
+            container.appendChild(removeButton);
+            upload_container.appendChild(container);
+        }
+    }
+}
+
+function remove_image_preview(image) {
+    image.parentNode.remove();
+}
