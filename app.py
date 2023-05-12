@@ -200,6 +200,23 @@ def product(product_id):
 
     return render_template('product.html', item=item, images=images)
 
+@app.route('/new_product', methods=['GET', 'POST'])
+def new_product():
+    if request.method == 'POST':
+        conn = get_conn()
+        cursor = conn.cursor()
+
+        title = request.form['title']
+        description = request.form['description']
+        price = request.form['price']
+        stock = request.form['stock']
+
+        cursor.execute('INSERT INTO items (title, description, price, stock) VALUES (?, ?, ?, ?)', (title, description, price, stock))
+        conn.commit()
+
+        return redirect(url_for('index'))
+    else:
+        return render_template('new_product.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
