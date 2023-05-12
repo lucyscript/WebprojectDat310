@@ -108,37 +108,26 @@ def registration():
         conn = get_conn()
         cursor = conn.cursor()
 
-        username = request.form.get("username").strip()
-        if len(username) < 4:
-            error = 'Username must be more than 3 characters!'
-            return render_template("registration.html", error=error)
-
+        username = request.form.get("username")
         password = request.form.get("password")
-        if len(password) < 5:
-            error = 'Password must be more than 4 characters!'
-            return render_template('registration.html', error=error) 
         
         hash = generate_password_hash(password)
 
-        confirm_password = request.form['confirm_password']
-
-        if password != confirm_password:
-            error = 'Passwords do not match'
-            return render_template('registration.html', error=error)
-        
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
         user = cursor.fetchone()
-
-        if user:
-            error = 'Username already exists.'
-            return render_template('registration.html', error=error)
         
         id = generate_id()
-        cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, hash))
-        conn.commit()
-        session['userid'] = id
-        return redirect(url_for('index'))
-    
+
+        if user is None:
+            cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, hash))
+            conn.commit()
+            session['userid'] = id
+            return redirect(url_for('index'))
+        else:
+            error = 'Username already exists.'
+            return render_template('registration.html', error=error)
+            
+
     return render_template('registration.html')
 
 @app.route('/login', methods=["GET", 'POST'])
