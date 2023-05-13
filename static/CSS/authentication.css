@@ -47,6 +47,11 @@ body {
     background-color: #52F3F6;
     border-radius: 50px;
 }
+
+.btn-primary:disabled {
+    background-color: #b3b3b3;
+    cursor: default;
+}
   
 .btn-primary {
     background-color: rgb(246,85,82);
@@ -60,7 +65,7 @@ body {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
   
-.btn-primary:hover {
+.btn-primary:not(:disabled):hover {
     background-color: #52F3F6;
     color: #fff;
     cursor: pointer;
@@ -91,8 +96,10 @@ footer {
     width: 100%; 
     bottom: 0; 
 }
-  
-.alert {
+
+.error {
     color: rgb(255, 0, 0);
     font-weight: bold;
+    font-size: 12px;
+    margin-top: 5px;
 }
