@@ -153,10 +153,9 @@ def login():
             user = cursor.fetchone()
             if user:
                 session['userid'] = user[0]
-                return redirect(url_for('index'))
+                return jsonify({'success': True})
         else:
-            error = 'Invalid login credentials.'
-            return render_template('login.html', error=error)
+            return jsonify({'sucess': False})
         
     return render_template('login.html')
 

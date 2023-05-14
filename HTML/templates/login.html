@@ -21,16 +21,17 @@
       <form method="POST" id="login-form">
         <h2>Login</h2>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Username" name="username">
+          <input type="text" class="form-control" id="username" placeholder="Username" name="username">
         </div>
         <br>
         <div class="form-group">
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password">
         </div>
         <div class="form-group">
           <button type="submit" class="btn-primary" id="login-button" disabled>Log in</button>
         </div>
         <div id="login-error" class="error"></div>
+        <div id="invalid-form" class="error"></div>
         <div class="auth-link">
           Don't have an account yet? <a href="registration">Register here</a>
         </div>
