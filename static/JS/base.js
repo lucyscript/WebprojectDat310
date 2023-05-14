@@ -29,6 +29,8 @@ function image_slide_change(n, image_index) {
     document.getElementById("forward-button").onclick = function () { image_slide_change(1, image_index) };
 }
 
+
+// NEW PRODUCT
 function add_image_preview(upload) {
     // TODO: Save the images, as everytime a file is uploaded it deletes the previous upload from the form
 
