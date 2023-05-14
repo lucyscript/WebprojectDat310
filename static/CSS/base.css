@@ -316,6 +316,22 @@ nav .side_menu_button {
 
 #image_preview_container {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: wrap;	
 	justify-content: center;
+}
+
+.image_preview_image_container {
+	margin: 5px;
+	position: relative;
+	height: 220px;
+}
+.remove {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 20px;
+	color: white;
+	padding:10px;
+	background-color: rgba(0, 0, 0, 0.5);
 }
