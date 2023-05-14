@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/base.css') }}">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/base.css') }}">
+  {% block head %}{% endblock %}
 </head>
 <body>
   <header>
@@ -74,15 +75,15 @@
       <img class="side_menu_button" src="https://cdn-icons-png.flaticon.com/512/7693/7693271.png" width="40px" onclick="side_menu_close()">
   </div>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+  <main>
+      {% block content %}
+      {% endblock %}
+  </main>
 
-    <footer>
-        <h1>Footer</h1>
-    </footer>
+  <footer>
+      <h1>Footer</h1>
+  </footer>
 
-    <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
+  <script src="{{ url_for('static', filename='JS/base.js') }}"></script>
 </body>
 </html>

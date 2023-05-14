@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/authentication.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -22,6 +23,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control" id="username" placeholder="Username" name="username">
                     <div id="username-error" class="error"></div>
+                    <div id="username-taken" class="error"></div>
                 </div>
                 <br>
                 <div class="form-group">
@@ -36,9 +38,6 @@
                 <div class="form-group">
                     <button type="submit" class="btn-primary" id="btn" disabled>Register</button>
                 </div>
-                {% if error %}
-                    <div class="error">{{ error }}</div>
-                {% endif %}
                 <div class="auth-link">
                     Already have an account? <a href="login">Log in here</a>
                 </div>

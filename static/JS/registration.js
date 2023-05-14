@@ -6,12 +6,15 @@ let username_error = document.getElementById('username-error');
 let password_error = document.getElementById('password-error');
 let confirm_password_error = document.getElementById('confirm-password-error');
 
+let usernameTaken = false;
+
 username.addEventListener('input', function() {
     if (username.value.length < 4) {
         username_error.innerHTML = "Username must be at least 4 characters long";
     } else {
         username_error.innerHTML = "";
     }
+    updateRegisterBtn();
 });
 
 password.addEventListener('input', function() {
@@ -20,6 +23,7 @@ password.addEventListener('input', function() {
     } else {
         password_error.innerHTML = "";
     }
+    updateRegisterBtn();
 });
 
 confirm_password.addEventListener('input', function() {
@@ -28,17 +32,35 @@ confirm_password.addEventListener('input', function() {
     } else {
         confirm_password_error.innerHTML = "";
     }
+    updateRegisterBtn();
 });
 
-username.addEventListener('input', updateLoginButton);
-password.addEventListener('input', updateLoginButton);
-confirm_password.addEventListener('input', updateLoginButton);
+$(document).ready(function() {
+    $('#username').on('keyup', function() {
+        let new_username = $(this).val();
+        $.ajax({
+            url: '/check_username',
+            method: 'GET',
+            data: {username: new_username},
+            success: function(response) {
+                if (response.success) {
+                    $('#username-taken').text('');
+                    usernameTaken = false;
+                } else {
+                    $('#username-taken').text('Username is already taken.');
+                    usernameTaken = true;
+                }
+                updateRegisterBtn(); 
+            }
+        });
+    });
+});
 
-function updateLoginButton() {
-    const login_button = document.getElementById('btn');
-    if (username.value.length < 4 || password.value.length < 5 || password.value !== confirm_password.value) {
-        login_button.disabled = true;
+function updateRegisterBtn() {
+    const register_btn = document.getElementById('btn');
+    if (username.value.length < 4 || password.value.length < 5 || password.value !== confirm_password.value || usernameTaken) {
+        register_btn.disabled = true;
     } else {
-        login_button.disabled = false;
+        register_btn.disabled = false;
     }
 }

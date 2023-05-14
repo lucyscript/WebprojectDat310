@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, g, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, session, g, abort, jsonify
 import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
@@ -26,8 +27,6 @@ def valid_auth(username, password):
         return check_password_hash(hash, password)
 
     return False
-
-
 
 def get_user():
     try:
@@ -123,12 +122,21 @@ def registration():
             conn.commit()
             session['userid'] = id
             return redirect(url_for('index'))
-        else:
-            error = 'Username already exists.'
-            return render_template('registration.html', error=error)
-            
-
+                
     return render_template('registration.html')
+
+@app.route('/check_username')
+def check_username():
+    username = request.args.get("username")
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+    user = cursor.fetchone()
+    if user is None:
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
 
 @app.route('/login', methods=["GET", 'POST'])
 def login():
