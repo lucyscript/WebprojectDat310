@@ -45,14 +45,18 @@
         </li>            
         <li class="dropdown">
           <div id="profile">
-            <a href="{{ url_for('profile') }}">
+            {% if 'userid' in session and user %}
+              <a href="{{ url_for('profile', user_id=user.user_id) }}">
+            {% else %}
+              <a href="{{ url_for('login') }}">
+            {% endif %}
               <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png" width="25px">
-              {% if 'userid' in session %}
+              {% if 'userid' in session and user %}
                 <span>{{ user.username }}</span>
               {% else %}
                 <span>Profile</span>
               {% endif %}
-            </a>
+            </a>          
           </div>
           <div class="dropdown-content">
             <div class="column">
@@ -63,7 +67,14 @@
                     <a href="{{ url_for('login') }}">Log in</a>
                 {% endif %}
               </div>
-              <div class="box"><a href="{{ url_for('profile') }}">Profile</a></div>
+              <div class="box">
+                {% if 'userid' in session and user %}
+                  <a href="{{ url_for('profile', user_id=user.user_id) }}">
+                {% else %}
+                  <a href="{{ url_for('login') }}">
+                {% endif %}
+                Profile</a>
+              </div>
               <div class="box"><a href="">Order history</a></div>
             </div>
           </div>

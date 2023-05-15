@@ -9,5 +9,15 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ user.username }}</h1>
+    <h1>{{ user.username }}</h1>
+
+    {% for order in orders %}
+        <p>Order ID: {{ order.order_id }}</p>
+        <p>Order Date: {{ order.order_date }}</p>
+        <p>User ID: {{ order.user_id }}</p>
+        <p>Product ID: {{ order.product_id }}</p>
+        <p>Quantity: {{ order.quantity }}</p>
+        <p>Total Amount: {{ order.total_amount }}</p>
+    {% endfor %}
+
 {% endblock %}

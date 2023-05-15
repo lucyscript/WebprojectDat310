@@ -23,14 +23,14 @@ def create_connection(db_file):
 
 
 sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
-                                id INTEGER UNIQUE NOT NULL,
+                                user_id INTEGER UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                PRIMARY KEY(id)
+                                PRIMARY KEY(user_id)
                             );"""
 
 sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
-                                id INTEGER UNIQUE NOT NULL,
+                                item_id INTEGER UNIQUE NOT NULL,
                                 title TEXT NOT NULL,
                                 description TEXT NOT NULL,
                                 price REAL NOT NULL,
@@ -40,29 +40,29 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 size TEXT,
                                 stock INT,
 
-                                PRIMARY KEY(id),
-                                FOREIGN KEY(owner_id) REFERENCES users(id)
+                                PRIMARY KEY(item_id),
+                                FOREIGN KEY(owner_id) REFERENCES users(user_id)
                             );"""
 
 sql_create_orders_table = """CREATE TABLE IF NOT EXISTS orders (
                                 order_id INTEGER UNIQUE NOT NULL,
                                 order_date DATE NOT NULL,
-                                customer_id INTEGER NOT NULL,
+                                user_id INTEGER NOT NULL,
                                 product_id INTEGER NOT NULL,
                                 -- Other important features for the order table
                                 quantity INTEGER NOT NULL,
                                 total_amount REAL NOT NULL,
 
                                 PRIMARY KEY(order_id),
-                                FOREIGN KEY(customer_id) REFERENCES users(id),
-                                FOREIGN KEY(product_id) REFERENCES items(id)
+                                FOREIGN KEY(user_id) REFERENCES users(user_id),
+                                FOREIGN KEY(product_id) REFERENCES items(item_id)
                             );"""
 
 sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 path TEXT NOT NULL,
                                 displayOrder INT NOT NULL,
                                 product_id INTEGER NOT NULL,
-                                FOREIGN KEY(product_id) REFERENCES items(id)
+                                FOREIGN KEY(product_id) REFERENCES items(item_id)
                             )"""
 
 def create_table(conn, create_table_sql):
@@ -79,18 +79,18 @@ def create_table(conn, create_table_sql):
 
 #### INSERT #########
 
-def add_user(conn, id, username, password):
+def add_user(conn, user_id, username, password):
     """ Add a new user into the users table
     :param conn:
-    :param id:
+    :param user_id:
     :param username:
     :param password:
     """
-    sql = ''' INSERT INTO users(id, username, password)
+    sql = ''' INSERT INTO users(user_id, username, password)
               VALUES(?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (id, username, password))
+        cur.execute(sql, (user_id, username, password))
         conn.commit()
     except Error as e:
         print(e)
@@ -98,25 +98,26 @@ def add_user(conn, id, username, password):
 def init_users(conn):
     init = [(111111,"Dany","1234"),
             (222222,"Sveinung","4321"),
-            (333333,"Kongen","0000")]
+            (333333,"Kongen","0000"),
+            (969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad")]
     for u in init:
         add_user(conn, u[0], u[1], u[2])
 
 
-def add_item(conn, id, title, description, price, owner_id):
+def add_item(conn, item_id, title, description, price, owner_id):
     """ Add a new item into the items table
     :param conn:
-    :param id:
+    :param item_id:
     :param title:
     :param description:
     :param price:
     :param owner_id:
     """
-    sql = ''' INSERT INTO items(id, title, description, price, owner_id)
+    sql = ''' INSERT INTO items(item_id, title, description, price, owner_id)
               VALUES(?,?,?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (id, title, description, price, owner_id))
+        cur.execute(sql, (item_id, title, description, price, owner_id))
         conn.commit()
     except Error as e:
         print(e)
@@ -127,6 +128,34 @@ def init_items(conn):
             (3, "Bord", "Et fint bord", 2000, 333333)]
     for i in init:
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
+
+
+def add_order(conn, order_id, order_date, user_id, product_id, quantity, total_amount):
+    """
+    Add a new order into the orders table
+    :param conn: SQLite connection object
+    :param order_id: Order ID
+    :param order_date: Order date
+    :param user_id: User ID associated with the order
+    :param product_id: Product ID associated with the order
+    :param quantity: Quantity of the product in the order
+    :param total_amount: Total amount of the order
+    """
+    sql = ''' INSERT INTO orders(order_id, order_date, user_id, product_id, quantity, total_amount)
+              VALUES(?,?,?,?,?,?) '''
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, (order_id, order_date, user_id, product_id, quantity, total_amount))
+        conn.commit()
+    except Error as e:
+        print(e)
+
+def init_orders(conn):
+    init = [(1, '2023-05-01', 969001, 1, 2, 19.99),
+            (2, '2023-05-02', 969001, 2, 3, 35.99),
+            (3, '2023-05-03', 969001, 1, 1, 9.99)]
+    for o in init:
+        add_order(conn, o[0], o[1], o[2], o[3], o[4], o[5])
 
 
 def add_image(conn, path, displayOrder, product_id):
@@ -163,9 +192,11 @@ def setup():
     if conn is not None:
         create_table(conn, sql_create_users_table)
         create_table(conn, sql_create_items_table)
+        create_table(conn, sql_create_orders_table)
         create_table(conn, sql_create_images_table)
         init_users(conn)
         init_items(conn)
+        init_orders(conn)
         init_images(conn)
 
         conn.close()
@@ -174,4 +205,3 @@ def setup():
 if __name__ == '__main__':
     # If executed as main, this will create tables and insert initial data
     setup()
-

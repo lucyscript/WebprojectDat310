@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
-import json
+from datetime import datetime
 
 app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
@@ -10,8 +10,9 @@ app.config['DATABASE'] = 'Data/database.db'
 
 # database stuff
 database = "Data/database.db"
-queryUsers = "SELECT * FROM users WHERE id = ?"
-queryItems = "SELECT * FROM items WHERE id = ?"
+queryUsers = "SELECT * FROM users WHERE user_id = ?"
+queryItems = "SELECT * FROM items WHERE item_id = ?"
+queryOrders = "SELECT * FROM orders WHERE user_id = ?"
 queryImages = "SELECT * FROM images WHERE product_id = ?"
 
 # Functions
@@ -52,6 +53,21 @@ def get_product(product_id):
         return product
     except:
         return None
+    
+def get_orders(user_id):
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute(queryOrders, (user_id,))
+        rows = cur.fetchall()
+        columns = [column[0] for column in cur.description]
+        orders = []
+        for row in rows:
+            order = dict(zip(columns, row))
+            orders.append(order)
+        return orders
+    except:
+        return None
 
 def get_images(product_id):
     try:
@@ -83,11 +99,13 @@ def close_connection(exception):
     if conn is not None:
         conn.close()
 
-@app.context_processor 
+@app.context_processor
 def logged_in_user():
     user = get_user()
-    return dict(user=user)
-
+    if user:
+        return dict(user=user)
+    else:
+        return dict(user=None)
 
 
 # Routes
@@ -96,7 +114,7 @@ def logged_in_user():
 def index():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute('SELECT items.id, items.title, images.path FROM items JOIN images ON items.id = images.product_id WHERE images.displayOrder = 1')
+    cursor.execute('SELECT items.item_id, items.title, images.path FROM items JOIN images ON items.item_id = images.product_id WHERE images.displayOrder = 1')
     items = cursor.fetchall()
 
     return render_template('index.html', items=items)
@@ -118,7 +136,7 @@ def registration():
         id = generate_id()
 
         if user is None:
-            cursor.execute('INSERT INTO users (id, username, password) VALUES (?, ?, ?)', (id, username, hash))
+            cursor.execute('INSERT INTO users (user_id, username, password) VALUES (?, ?, ?)', (id, username, hash))
             conn.commit()
             session['userid'] = id
             return redirect(url_for('index'))
@@ -164,14 +182,14 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile')
-def profile():
+@app.route('/profile/<int:user_id>')
+def profile(user_id):
     user = get_user()
     if user != None:
-        return render_template('profile.html', user=user)
+        orders = get_orders(user_id)
+        return render_template('profile.html', user=user, orders=orders)
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/cart')
 def cart():
