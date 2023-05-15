@@ -44,6 +44,19 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 FOREIGN KEY(owner_id) REFERENCES users(id)
                             );"""
 
+sql_create_items_table = """CREATE TABLE IF NOT EXISTS orders (
+                                order_id INTEGER UNIQUE NOT NULL,
+                                order_date DATE NOT NULL,
+                                customer_id INTEGER NOT NULL,
+                                product_id INTEGER NOT NULL,
+                                -- Other important features for the order table
+                                quantity INTEGER NOT NULL,
+                                total_amount REAL NOT NULL,
+
+                                PRIMARY KEY(order_id),
+                                FOREIGN KEY(customer_id) REFERENCES users(id),
+                                FOREIGN KEY(product_id) REFERENCES items(id)
+                            );"""
 
 sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 path TEXT NOT NULL,
