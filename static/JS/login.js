@@ -20,6 +20,8 @@ $(document).ready(function() {
         event.preventDefault();
         let username = $('#username').val();
         let password = $('#password').val();
+        $('#loading img').attr('src', 'https://gregoryuniversityuturu.edu.ng/portal/assets/scholars/images/ajax-loader.gif');
+        $('#loading img').show();
         $.ajax({
             method: 'POST',
             url: '/login',
@@ -30,6 +32,10 @@ $(document).ready(function() {
                 } else {
                     $('#invalid-form').text('Invalid login credentials');
                 }
+            },
+            complete: function() {
+                $('#loading img').hide();
+                $('#loading img').attr('src', '');
             }
         });
     });
