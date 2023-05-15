@@ -44,7 +44,7 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 FOREIGN KEY(owner_id) REFERENCES users(id)
                             );"""
 
-sql_create_items_table = """CREATE TABLE IF NOT EXISTS orders (
+sql_create_orders_table = """CREATE TABLE IF NOT EXISTS orders (
                                 order_id INTEGER UNIQUE NOT NULL,
                                 order_date DATE NOT NULL,
                                 customer_id INTEGER NOT NULL,
