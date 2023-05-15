@@ -38,23 +38,42 @@ confirm_password.addEventListener('input', function() {
 $(document).ready(function() {
     $('#username').on('keyup', function() {
         let new_username = $(this).val();
+        if (new_username.length > 3) {
+            $('#username').css('background-image', 'url("https://sales.ufaber.com/public/static/img/loader-orange.gif")');
+        }
         $.ajax({
             url: '/check_username',
             method: 'GET',
             data: {username: new_username},
             success: function(response) {
                 if (response.success) {
-                    $('#username-taken').text('');
                     usernameTaken = false;
+                    if (new_username.length > 3) {
+                        $('#username-taken').text('');
+                        $('#username-available').text('Username is available');
+                    } else {
+                        $('#username-taken').text('');
+                        $('#username-available').text('');
+                    }
                 } else {
-                    $('#username-taken').text('Username is already taken.');
                     usernameTaken = true;
+                    if (new_username.length > 3) {
+                        $('#username-available').text('');
+                        $('#username-taken').text('Username is already taken.');
+                    } else {
+                        $('#username-taken').text('');
+                        $('#username-available').text('');
+                    }
                 }
                 updateRegisterBtn(); 
+            },
+            complete: function() {
+                $('#username').css('background-image', 'url("")');
             }
         });
     });
 });
+
 
 function updateRegisterBtn() {
     const register_btn = document.getElementById('btn');

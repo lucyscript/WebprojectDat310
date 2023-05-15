@@ -21,7 +21,7 @@ $(document).ready(function() {
         let username = $('#username').val();
         let password = $('#password').val();
         $.ajax({
-            type: 'POST',
+            method: 'POST',
             url: '/login',
             data: {username: username, password: password},
             success: function(response) {

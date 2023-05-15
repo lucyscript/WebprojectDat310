@@ -107,3 +107,16 @@ footer {
     font-size: 12px;
     margin-top: 5px;
 }
+
+.success {
+    color: rgb(0, 255, 0);
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+#username {
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 20px;
+}
