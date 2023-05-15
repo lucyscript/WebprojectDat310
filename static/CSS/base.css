@@ -250,11 +250,11 @@ nav .side_menu_button {
 
 
 #slide-box {
-	position:absolute;
-	width: 400px;
+	display: block;
+	position: absolute;
+	width: 500px;
 	height: 400px;
-	left: calc(50% - 200px); /* Temporary position */
-	margin: 0;
+	border: #ccc 1px solid;
 }
 .image-slide {
 	max-height: 100%;
