@@ -209,6 +209,18 @@ def transactions(user_id):
         return render_template('transactions.html', user=user, orders=orders)
     else:
         return redirect(url_for('login'))
+    
+@app.route('/delete_user/<int:user_id>')
+def delete_user(user_id):
+    user = get_user()
+    if user:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
+        conn.commit()
+        return redirect(url_for('logout'))
+    else:
+        return None
 
 @app.route('/product/<product_id>') 
 def product(product_id):

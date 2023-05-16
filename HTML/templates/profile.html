@@ -6,6 +6,8 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/delete_button.css') }}">
+    <script src="{{ url_for('static', filename='JS/delete_button.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +18,7 @@
             <p>User ID: {{ user.user_id }}</p>
             <a href="#" class="edit-button">Edit</a>
         </div>
-        <a href="#" class="delete-button">Delete Account</a>
+        <a href="#" class="delete-button" onclick="confirmDelete('{{ user.user_id }}')">Delete Account</a>
     </div>
     <div class="transaction-table">
         <h2>Transaction History</h2>
