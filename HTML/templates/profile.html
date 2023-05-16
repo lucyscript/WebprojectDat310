@@ -9,15 +9,34 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ user.username }}</h1>
-
-    {% for order in orders %}
-        <p>Order ID: {{ order.order_id }}</p>
-        <p>Order Date: {{ order.order_date }}</p>
-        <p>User ID: {{ order.user_id }}</p>
-        <p>Product ID: {{ order.product_id }}</p>
-        <p>Quantity: {{ order.quantity }}</p>
-        <p>Total Amount: {{ order.total_amount }}</p>
-    {% endfor %}
-
+    <div class="profile-content">
+        <div class="profile-header">
+            <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png">
+            <h1>{{ user.username }}</h1>
+            <p>User ID: {{ user.user_id }}</p>
+            <a href="#" class="edit-button">Edit</a>
+        </div>
+        <a href="#" class="delete-button">Delete Account</a>
+    </div>
+    <div class="transaction-table">
+        <h2>Transaction History</h2>
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Quantity</th>
+                <th>Title</th>
+                <th>Total Amount</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td><a href="{{ url_for('transactions', user_id=user.user_id)}}">{{ order.order_id }}</a></td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.title }}</td>
+                <td>${{ order.total_amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}

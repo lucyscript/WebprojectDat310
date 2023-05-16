@@ -1,0 +1,33 @@
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+.transaction-table {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #52F3F6;
+}
+
+th {
+    border-bottom: 1px solid rgb(246,85,82);
+}
+
+td img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

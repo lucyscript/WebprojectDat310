@@ -58,7 +58,13 @@ def get_orders(user_id):
     try:
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(queryOrders, (user_id,))
+        cur.execute("""
+            SELECT orders.*, items.title, items.description, images.path
+            FROM orders
+            INNER JOIN items ON orders.product_id = items.item_id
+            INNER JOIN images ON items.item_id = images.product_id
+            WHERE orders.user_id = ? AND images.displayOrder = 1
+        """, (user_id,))
         rows = cur.fetchall()
         columns = [column[0] for column in cur.description]
         orders = []
@@ -194,6 +200,15 @@ def profile(user_id):
 @app.route('/cart')
 def cart():
     return render_template('cart.html')
+
+@app.route('/transactions/<int:user_id>')
+def transactions(user_id):
+    user = get_user()
+    if user != None:
+        orders = get_orders(user_id)
+        return render_template('transactions.html', user=user, orders=orders)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/product/<product_id>') 
 def product(product_id):
