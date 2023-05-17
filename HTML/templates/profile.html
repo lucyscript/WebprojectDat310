@@ -8,37 +8,52 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/delete_button.css') }}">
     <script src="{{ url_for('static', filename='JS/delete_button.js') }}"></script>
+    <script src="{{ url_for('static', filename='JS/edit_profile.js') }}"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="profile-content">
-        <div class="profile-header">
-            <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png">
-            <h1>{{ user.username }}</h1>
-            <p>User ID: {{ user.user_id }}</p>
-            <a href="#" class="edit-button">Edit</a>
+    <div class="profile-container">
+        <div class="profile-content">
+            <div class="profile-header">
+                <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png">
+                <h1>{{ user.username }}</h1>
+                <p>User ID: {{ user.user_id }}</p>
+                <div class="edit-button">Edit profile</div>
+            </div>
+            <div class="info-section">
+                <h3>Bio</h3>
+                <p>{{ user.bio }}</p>
+            </div>
+            <div class="info-section">
+                <h3>Address</h3>
+                <p>{{ user.address }}</p>
+            </div>
+            <div class="info-section">
+                <h3>Phone Number</h3>
+                <p>{{ user.phone }}</p>
+            </div>
         </div>
-        <a href="#" class="delete-button" onclick="confirmDelete('{{ user.user_id }}')">Delete Account</a>
+        <div class="transaction-table">
+            <h2>Transaction History</h2>
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Quantity</th>
+                    <th>Title</th>
+                    <th>Total Amount</th>
+                </tr>
+                {% for order in orders %}
+                <tr>
+                    <td><a href="{{ url_for('transactions', user_id=user.user_id) }}">{{ order.order_id }}</a></td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.title }}</td>
+                    <td>${{ order.total_amount }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
-    <div class="transaction-table">
-        <h2>Transaction History</h2>
-        <table>
-            <tr>
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Quantity</th>
-                <th>Title</th>
-                <th>Total Amount</th>
-            </tr>
-            {% for order in orders %}
-            <tr>
-                <td><a href="{{ url_for('transactions', user_id=user.user_id)}}">{{ order.order_id }}</a></td>
-                <td>{{ order.order_date }}</td>
-                <td>{{ order.quantity }}</td>
-                <td>{{ order.title }}</td>
-                <td>${{ order.total_amount }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+    <div class="delete-button" onclick="confirmDelete('{{ user.user_id }}')">Delete Account</div>
 {% endblock %}

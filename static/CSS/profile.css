@@ -1,14 +1,19 @@
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 .profile-content {
-    display: flex;
-    flex-direction: column;
-    float: left;
+    display: grid;
+    grid-template-rows: auto;
+    gap: 10px;
 }
 
 .profile-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .profile-header img {
@@ -26,7 +31,7 @@
 .profile-header p {
     font-size: 16px;
     color: #888;
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
 }
 
 .edit-button,
@@ -38,18 +43,36 @@
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    }
+}
 
 .edit-button:hover,
 .delete-button:hover {
     background-color: #52F3F6;
+    cursor: pointer;
+}
+
+.info-section {
+    border: 1px solid rgb(246,85,82);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.info-section h3 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
+.info-section p {
+    margin: 0;
 }
 
 .transaction-table {
-    width: 100%;
-    max-width: 75%;
-    float: right;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 .transaction-table h2 {
     font-size: 20px;
@@ -61,7 +84,7 @@
     border-collapse: collapse;
 }
 
-.transaction-table th, 
+.transaction-table th,
 .transaction-table td {
     padding: 10px;
     text-align: center;
@@ -72,11 +95,11 @@
 }
 
 .transaction-table td {
-    vertical-align: middle;
+vertical-align: middle;
     border-bottom: 1px solid #52F3F6;
 }
 
 .delete-button {
-    margin-top: 70px;
+    margin-top: 20px;
     float: left;
 }

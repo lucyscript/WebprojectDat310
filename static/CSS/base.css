@@ -27,7 +27,7 @@ footer {
 
 main {
 	height: 2000px;
-	margin: 80px 10% 0 10%;
+	margin: 80px 5% 0 5%;
 }
 
 nav {
@@ -165,7 +165,7 @@ nav .side_menu_button {
 }
 
 .box {
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.9);
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

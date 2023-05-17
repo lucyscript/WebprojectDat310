@@ -28,5 +28,6 @@ function confirmDelete(user_id) {
     popupContent.appendChild(cancelButton);
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
+    
     return false;
 }

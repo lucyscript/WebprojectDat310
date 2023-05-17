@@ -26,6 +26,9 @@ sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
                                 user_id INTEGER UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
+                                bio TEXT NOT NULL,
+                                address TEXT NOT NULL,
+                                phone INTEGER NOT NULL,
                                 PRIMARY KEY(user_id)
                             );"""
 
@@ -79,29 +82,29 @@ def create_table(conn, create_table_sql):
 
 #### INSERT #########
 
-def add_user(conn, user_id, username, password):
+def add_user(conn, user_id, username, password, bio, address, phone):
     """ Add a new user into the users table
     :param conn:
     :param user_id:
     :param username:
     :param password:
+    :param bio:
+    :param address:
+    :param phone:
     """
-    sql = ''' INSERT INTO users(user_id, username, password)
-              VALUES(?,?,?) '''
+    sql = ''' INSERT INTO users(user_id, username, password, bio, address, phone)
+              VALUES(?,?,?,?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (user_id, username, password))
+        cur.execute(sql, (user_id, username, password, bio, address, phone))
         conn.commit()
     except Error as e:
         print(e)
 
 def init_users(conn):
-    init = [(111111,"Dany","1234"),
-            (222222,"Sveinung","4321"),
-            (333333,"Kongen","0000"),
-            (969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad")]
+    init = [(969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad", "Experienced trader with over 10 years of experience in the finance industry. Skilled in analyzing market trends and making profitable trades. MBA from XYZ University. Enjoys hiking and reading in free time. Passionate about helping others achieve financial success. Currently working as a financial advisor at ABC Company.", "Wonderland slums", "152 40 420")]
     for u in init:
-        add_user(conn, u[0], u[1], u[2])
+        add_user(conn, u[0], u[1], u[2], u[3], u[4], u[5])
 
 
 def add_item(conn, item_id, title, description, price, owner_id):

@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.delete-button:hover {
+    cursor: pointer;
+}
+
 .popup button:hover {
     background-color: #52F3F6;
 }
