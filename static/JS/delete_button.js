@@ -1,6 +1,4 @@
-
 function confirmDelete(user_id) {
-    
     let popup = document.createElement('div');
     popup.className = 'popup';
 
@@ -14,7 +12,7 @@ function confirmDelete(user_id) {
     confirmButton.textContent = 'Yes';
     confirmButton.addEventListener('click', function() {
         document.body.removeChild(popup);
-        window.location.href = `/delete_user/${user_id}`;
+        deleteUser(user_id);   
     });
 
     let cancelButton = document.createElement('button');
@@ -28,6 +26,19 @@ function confirmDelete(user_id) {
     popupContent.appendChild(cancelButton);
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
-    
+
     return false;
+}
+  
+function deleteUser(user_id) {
+    fetch(`/delete_user/${user_id}`, {
+        method: 'DELETE'
+    })
+    .then(function(response) {
+        if (response.ok) {
+            window.location.href = '/logout';
+        } else {
+            throw new Error('Failed to delete user.');
+        }
+    });
 }

@@ -116,7 +116,7 @@ def logged_in_user():
 
 # Routes
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST', 'DELETE'])
 def index():
     conn = get_conn()
     cursor = conn.cursor()
@@ -183,7 +183,7 @@ def login():
         
     return render_template('login.html')
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST', 'DELETE'])
 def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
@@ -210,17 +210,18 @@ def transactions(user_id):
     else:
         return redirect(url_for('login'))
     
-@app.route('/delete_user/<int:user_id>')
+@app.route('/delete_user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = get_user()
-    if user:
-        conn = get_conn()
-        cur = conn.cursor()
-        cur.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
-        conn.commit()
-        return redirect(url_for('logout'))
-    else:
-        return None
+    if request.method == 'DELETE':
+        user = get_user()
+        if user:
+            conn = get_conn()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
+            conn.commit()
+            return redirect(url_for('logout'))
+        else:
+            return None
 
 @app.route('/product/<product_id>') 
 def product(product_id):
