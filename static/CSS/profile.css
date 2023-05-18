@@ -103,3 +103,14 @@ vertical-align: middle;
     margin-top: 20px;
     float: left;
 }
+
+input {
+    border: 1px solid rgb(246, 85, 82);
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #52F3F6;
+}

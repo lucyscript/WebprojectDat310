@@ -188,10 +188,24 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile/<int:user_id>')
+@app.route('/profile/<int:user_id>', methods=['GET', 'POST', 'PUT'])
 def profile(user_id):
+    if request.method == 'PUT':
+        conn = get_conn()
+        cursor = conn.cursor()
+
+        data = request.json
+        bio = data['bio']
+        address = data['address']
+        phone = data['phone']
+
+        cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user_id))
+        conn.commit()
+
+        return jsonify({'message': 'Profile content updated successfully'})
+
     user = get_user()
-    if user != None:
+    if user is not None:
         orders = get_orders(user_id)
         return render_template('profile.html', user=user, orders=orders)
     else:

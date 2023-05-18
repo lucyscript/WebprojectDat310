@@ -26,9 +26,6 @@ sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
                                 user_id INTEGER UNIQUE NOT NULL,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                bio TEXT NOT NULL,
-                                address TEXT NOT NULL,
-                                phone INTEGER NOT NULL,
                                 PRIMARY KEY(user_id)
                             );"""
 
@@ -66,7 +63,7 @@ sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 displayOrder INT NOT NULL,
                                 product_id INTEGER NOT NULL,
                                 FOREIGN KEY(product_id) REFERENCES items(item_id)
-                            )"""
+                            );"""
 
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
@@ -82,29 +79,26 @@ def create_table(conn, create_table_sql):
 
 #### INSERT #########
 
-def add_user(conn, user_id, username, password, bio, address, phone):
+def add_user(conn, user_id, username, password):
     """ Add a new user into the users table
     :param conn:
     :param user_id:
     :param username:
     :param password:
-    :param bio:
-    :param address:
-    :param phone:
     """
-    sql = ''' INSERT INTO users(user_id, username, password, bio, address, phone)
-              VALUES(?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO users(user_id, username, password)
+              VALUES(?,?,?) '''
     try:
         cur = conn.cursor()
-        cur.execute(sql, (user_id, username, password, bio, address, phone))
+        cur.execute(sql, (user_id, username, password))
         conn.commit()
     except Error as e:
         print(e)
 
 def init_users(conn):
-    init = [(969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad", "Experienced trader with over 10 years of experience in the finance industry. Skilled in analyzing market trends and making profitable trades. MBA from XYZ University. Enjoys hiking and reading in free time. Passionate about helping others achieve financial success. Currently working as a financial advisor at ABC Company.", "Wonderland slums", "152 40 420")]
+    init = [(969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad")]
     for u in init:
-        add_user(conn, u[0], u[1], u[2], u[3], u[4], u[5])
+        add_user(conn, u[0], u[1], u[2])
 
 
 def add_item(conn, item_id, title, description, price, owner_id):
@@ -188,6 +182,33 @@ def init_images(conn):
     for i in init:
         add_image(conn, i[0], i[1], i[2])
 
+def alter_table(conn, bio, address, phone, user_id):
+    try:
+        c = conn.cursor()
+        c.execute("PRAGMA table_info(users)")
+        columns = [column[1] for column in c.fetchall()]
+
+        if 'bio' not in columns:
+            c.execute("ALTER TABLE users ADD COLUMN bio TEXT;")
+        if 'address' not in columns:
+            c.execute("ALTER TABLE users ADD COLUMN address TEXT;")
+        if 'phone' not in columns:
+            c.execute("ALTER TABLE users ADD COLUMN phone INTEGER;")
+
+
+        c.execute("UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?",
+                  (bio, address, phone, user_id))
+        
+        conn.commit()
+    except Error as e:
+        print(e)
+
+def init_usercontent(conn):
+    init = [('Happy', 'In the clouds <3', 42015210, 969001)]
+    for i in init:
+        alter_table(conn, i[0], i[1], i[2], i[3])
+
+
 #### SETUP ####
 
 def setup():
@@ -201,6 +222,7 @@ def setup():
         init_items(conn)
         init_orders(conn)
         init_images(conn)
+        init_usercontent(conn)
 
         conn.close()
 
