@@ -22,8 +22,13 @@
             </div>
             <div class="info-section" id="bio">
                 <h3>Bio</h3>
-                <p>{{ user.bio }}</p>
-                <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
+                {% if user.bio is not none %}
+                    <p>{{ user.bio }}</p>
+                    <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
+                {% else %}
+                    <p>{{ get_init_bio(user.created_at) }}</p> 
+                    <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
+                {% endif %}
             </div>
             <div class="info-section" id="address">
                 <h3>Address</h3>

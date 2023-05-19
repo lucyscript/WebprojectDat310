@@ -113,6 +113,25 @@ def logged_in_user():
     else:
         return dict(user=None)
 
+@app.context_processor
+def init_bio_processor():
+    def get_init_bio(user_created_at):
+        init_bio = [
+            f"Trading addict since {user_created_at}. Beware, I might start bartering for your snacks!",
+            f"From {user_created_at}, I've been on a quest to outsmart the market. Join me as we trade like financial ninjas!",
+            f"Since {user_created_at}, I've been the self-proclaimed captain of the trading ship. Get ready for a wild ride!",
+            f"Trading is my superpower since {user_created_at}. Ready to turn pennies into fortunes and spreadsheets into comedy!",
+            f"Since {user_created_at}, I've traded more stocks than Pokémon cards. Let's catch 'em all... I mean, make some profits!",
+            f"Trading aficionado since {user_created_at}. I've got more charts and graphs than a conspiracy theorist!",
+            f"From {user_created_at}, I've been on a quest to find the holy grail of trading strategies. Join me on this epic treasure hunt!",
+            f"Trading magician in training since {user_created_at}. Watch as I turn market fluctuations into pure entertainment!",
+            f"Since {user_created_at}, I've been a proud member of the Trading League. Together, we'll conquer the financial universe!",
+            f"Calling myself a trader since {user_created_at}. My financial predictions are as accurate as a weather forecast!"
+        ]
+        return random.choice(init_bio)
+
+    return {'get_init_bio': get_init_bio}
+
 
 # Routes
 
@@ -142,7 +161,8 @@ def registration():
         id = generate_id()
 
         if user is None:
-            cursor.execute('INSERT INTO users (user_id, username, password) VALUES (?, ?, ?)', (id, username, hash))
+            created_at = datetime.now().date().strftime("%B %Y")
+            cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (id, username, hash, created_at))
             conn.commit()
             session['userid'] = id
             return redirect(url_for('index'))
