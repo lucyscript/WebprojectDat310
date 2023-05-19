@@ -215,12 +215,12 @@ def profile(user_id):
 def cart():
     return render_template('cart.html')
 
-@app.route('/transactions/<int:user_id>')
-def transactions(user_id):
+@app.route('/order_history/<int:user_id>')
+def order_history(user_id):
     user = get_user()
     if user != None:
         orders = get_orders(user_id)
-        return render_template('transactions.html', user=user, orders=orders)
+        return render_template('order_history.html', user=user, orders=orders)
     else:
         return redirect(url_for('login'))
     
@@ -273,6 +273,20 @@ def new_product():
         return redirect(url_for('index'))
     else:
         return render_template('new_product.html')
+
+@app.route('/search_orders/<int:user_id>', methods=['GET'])
+def search_orders(user_id):
+    if request.method == 'GET':
+        query = request.args.get('query') 
+
+        orders = get_orders(user_id)
+        filtered_orders = []
+
+        for order in orders:
+            if query.lower() in order['title'].lower(): 
+                filtered_orders.append(order)
+        
+        return render_template('order_history.html', orders=filtered_orders)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,16 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ user.username }}'s Transactions
+    {{ user.username }}'s Orders
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/transactions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/order_history.css') }}">
 {% endblock %}
 
 {% block content %}
     <h2>{{ user.username }}'s order history</h2>
-    <div class="transaction-table">
+
+    <div class="search-bar">
+        <form class="order-search" action="{{ url_for('search_orders', user_id=user.user_id) }}" method="GET">
+          <input type="text" name="query" placeholder="Search for your orders">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      
+    <div class="order-table">
         <table>
             <thead>
                 <tr>

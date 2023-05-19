@@ -48,7 +48,7 @@
                 </tr>
                 {% for order in orders %}
                 <tr>
-                    <td><a href="{{ url_for('transactions', user_id=user.user_id) }}">{{ order.order_id }}</a></td>
+                    <td>{{ order.order_id }}</td>
                     <td>{{ order.order_date }}</td>
                     <td>{{ order.quantity }}</td>
                     <td>{{ order.title }}</td>
