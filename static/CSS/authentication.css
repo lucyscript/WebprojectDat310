@@ -117,7 +117,7 @@ footer {
 
 #username {
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: right 5px center;
     background-size: 20px;
 }
 

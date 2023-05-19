@@ -6,19 +6,19 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/order_history.css') }}">
+    <script src="{{ url_for('static', filename='JS/order_history.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <h2>{{ user.username }}'s order history</h2>
 
     <div class="search-bar">
-        <form class="order-search" action="{{ url_for('search_orders', user_id=user.user_id) }}" method="GET">
-          <input type="text" name="query" placeholder="Search for your orders">
-          <button type="submit">Search</button>
+        <form class="order-search">
+          <input id="search-input" type="text" placeholder="Search for your orders">
         </form>
-      </div>
+    </div>
       
-    <div class="order-table">
+    <div class="order-table" id="order-table">
         <table>
             <thead>
                 <tr>

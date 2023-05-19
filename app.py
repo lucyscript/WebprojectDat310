@@ -277,16 +277,19 @@ def new_product():
 @app.route('/search_orders/<int:user_id>', methods=['GET'])
 def search_orders(user_id):
     if request.method == 'GET':
-        query = request.args.get('query') 
+        query = request.args.get('query')
 
         orders = get_orders(user_id)
         filtered_orders = []
 
-        for order in orders:
-            if query.lower() in order['title'].lower(): 
-                filtered_orders.append(order)
-        
-        return render_template('order_history.html', orders=filtered_orders)
+        if query:
+            for order in orders:
+                if query.lower() in order['title'].lower():
+                    filtered_orders.append(order)
+        else:
+            filtered_orders = orders
+
+        return jsonify(filtered_orders)
 
 if __name__ == '__main__':
     app.run(debug=True)
