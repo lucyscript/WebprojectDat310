@@ -310,6 +310,22 @@ def search_orders(user_id):
             filtered_orders = orders
 
         return jsonify(filtered_orders)
+    
 
-if __name__ == '__main__':
+@app.route('/search/<search_query>', methods=['GET'])
+def search(search_query):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute('''
+                SELECT items.item_id, items.title, items.price, images.path
+                FROM items
+                JOIN images ON items.item_id = images.product_id
+                WHERE items.title LIKE ? AND images.displayOrder = 1
+                ''', ('%' + search_query + '%',))
+    items = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    items = [dict(zip(columns, item)) for item in items]
+    return jsonify(items)
+
+if __name__ == '__main__': 
     app.run(debug=True)

@@ -94,7 +94,7 @@ nav .side_menu_button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 2; 
+	z-index: 3; 
 	position: relative; 
 	width: 50%;
 }
@@ -111,11 +111,12 @@ nav .side_menu_button {
 	background-repeat: no-repeat; 
 	background-position: 5px center; 
 	background-size: 20px;
-	opacity: 0.7;
+	opacity: 1;
 	transition: background-color 0.2s ease-in-out;
+	z-index: 2;
 }
 .search-form input[type="search"]:focus {
-	background-color: #52F3F6; 
+	background-color: lightblue; 
 }
 
 .center-search {
@@ -124,6 +125,49 @@ nav .side_menu_button {
 	justify-content: center;
 	margin: 0;
 }
+
+#drop-down-suggestion {
+	position: absolute;
+	z-index: 1;
+	width: 300px;
+	top: 17px;
+}
+
+#drop-down-suggestion table {
+	width: 100%;
+	border: 1px lightblue solid;
+	border-top: none;
+	background-color: white;
+	border-spacing: 0px;
+}
+
+#drop-down-suggestion table:first-child {
+	padding-top: 30px
+}
+
+#drop-down-suggestion tr {
+	width: 100%;
+	height: 75px;
+	border-bottom: black 2px solid;
+}
+
+#drop-down-suggestion th, #drop-down-suggestion td {
+	border-bottom: lightblue 1px solid;
+	height: 75px;
+	width: calc(100% / 3);
+}
+
+#drop-down-suggestion tr:hover {
+	background-color: lightblue;
+	cursor: pointer;
+}
+
+#drop-down-suggestion img {
+	height: 100%;
+	max-width: 100%;
+}
+
+
 
 .logo {
 	padding-left: 5%;

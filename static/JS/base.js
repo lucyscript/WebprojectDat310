@@ -74,3 +74,48 @@ function add_image_preview(upload) {
 function remove_image_preview(image) {
     image.parentNode.remove();
 }
+
+
+
+// SEARCH RECOMEND
+const search = document.getElementById("searchbar-form");
+search.addEventListener("input", function(event){
+    const xhttp = new XMLHttpRequest();
+    xhttp.responseType = "json";
+    xhttp.onload = function() {
+        const items = this.response;
+        container = document.getElementById("drop-down-suggestion")
+        container.innerHTML = "";
+
+        const table = document.createElement("table");
+        
+        console.log(items)
+        
+        for (let i = 0; i < items.length; i++) {
+            const tr = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const th = document.createElement("th");
+            const img = document.createElement("img");
+            
+            const item = items[i];
+            tr.innerHTML = "";
+            tr.onclick = function() {
+                window.location.href = "/product/" + item.id;
+            }
+            img.src = item.path;
+            td1.appendChild(img);
+            th.innerHTML = item.title;
+            td2.innerHTML = item.price;
+            
+            tr.appendChild(td1);
+            tr.appendChild(th);
+            tr.appendChild(td2);
+            
+            table.appendChild(tr);
+        }
+        container.appendChild(table);
+      }
+    xhttp.open("GET", "/search/" + event.target.value, true);
+    xhttp.send();
+});

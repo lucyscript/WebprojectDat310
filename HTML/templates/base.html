@@ -22,9 +22,28 @@
           </a>
         </li>
         <li class="center-search">
-          <form class="search-form" action="#" method="get">
+          <form id="searchbar-form" class="search-form" action="#" method="get">
             <input type="search" name="search" placeholder="Search...">
+
+            <div id="drop-down-suggestion">
+                <!-- 
+              <table>
+                <tr>
+                  <td align="center"><img src="/static/Images/ProductImages/sofa.jpg"></td>
+                  <th> Sofa </th>
+                  <td> 1000kr </td>
+                </tr>
+                <tr>
+                  <td align="center"><img src="/static/Images/ProductImages/stol.jpg"> </td>
+                  <th> Stol </th>
+                  <td> 500kr </td>
+                </tr>
+              </table>
+            -->
+            </div>
           </form>
+
+
         </li>
         <li>
           <a href="{{ url_for('new_product') }}">
