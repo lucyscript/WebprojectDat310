@@ -293,7 +293,11 @@ def new_product():
 
         return redirect(url_for('index'))
     else:
-        return render_template('new_product.html')
+        user = get_user()
+        if user:
+            return render_template('new_product.html')
+        else:
+            return redirect(url_for('login'))
 
 @app.route('/search_orders', methods=['GET'])
 def search_orders():
