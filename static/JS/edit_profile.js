@@ -19,13 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function submitButtonClickHandler() {
-        const path = window.location.pathname;
-
         const bioValue = bioElement.querySelector('input').value;
         const addressValue = addressElement.querySelector('input').value;
         const phoneValue = phoneElement.querySelector('input').value;
 
-        fetch(`${path}`, {
+        fetch('/profile', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

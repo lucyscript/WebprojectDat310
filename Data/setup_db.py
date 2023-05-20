@@ -47,7 +47,7 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
 
 sql_create_orders_table = """CREATE TABLE IF NOT EXISTS orders (
                                 order_id INTEGER UNIQUE NOT NULL,
-                                order_date DATE NOT NULL,
+                                order_date DATETIME NOT NULL,
                                 user_id INTEGER NOT NULL,
                                 product_id INTEGER NOT NULL,
                                 -- Other important features for the order table

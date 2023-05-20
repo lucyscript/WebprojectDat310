@@ -111,12 +111,13 @@ nav .side_menu_button {
 	background-repeat: no-repeat; 
 	background-position: 5px center; 
 	background-size: 20px;
-	opacity: 1;
-	transition: background-color 0.2s ease-in-out;
+	opacity: 0.7;
+	transition: border-color 0.2s ease-in-out;
 	z-index: 2;
 }
 .search-form input[type="search"]:focus {
-	background-color: lightblue; 
+	opacity: 1;
+	border: 1px solid #52F3F6;
 }
 
 .center-search {
@@ -135,7 +136,7 @@ nav .side_menu_button {
 
 #drop-down-suggestion table {
 	width: 100%;
-	border: 1px lightblue solid;
+	border: 1px #52F3F6 solid;
 	border-top: none;
 	background-color: white;
 	border-spacing: 0px;
