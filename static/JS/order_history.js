@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   $('#search-input').on('keyup', function() {
     let query = $(this).val();
-    searchOrders(user_id, query);
+    searchOrders(query);
   });
 
   function searchOrders(query) {

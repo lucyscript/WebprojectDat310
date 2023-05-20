@@ -4,6 +4,8 @@ import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
+used_ids = set()
+
 app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
 app.config['DATABASE'] = 'Data/database.db'
@@ -88,8 +90,12 @@ def get_images(product_id):
     except:
         return None
 
-def generate_id():
-    return random.randint(100000, 999999)
+def generate_userid():
+        user_id = random.randint(100000, 999999)
+        if user_id not in used_ids:
+            used_ids.add(user_id)
+            return user_id
+
 
 def get_conn():
     conn = getattr(g, '_database', None)
@@ -158,11 +164,11 @@ def registration():
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
         user = cursor.fetchone()
         
-        id = generate_id()
+        user_id = generate_userid()
 
         if user is None:
             created_at = datetime.now().date().strftime("%d %B %Y")
-            cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (id, username, hash, created_at))
+            cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (user_id, username, hash, created_at))
             conn.commit()
             session['userid'] = id
             return redirect(url_for('index'))
@@ -301,9 +307,10 @@ def new_product():
 
 @app.route('/search_orders', methods=['GET'])
 def search_orders():
-    user = get_user()
-    if user:
-        if request.method == 'GET':
+
+    if request.method == 'GET':
+        user = get_user()
+        if user:
             query = request.args.get('query')
 
             orders = get_orders(user['user_id'])
@@ -317,7 +324,7 @@ def search_orders():
                 filtered_orders = orders
 
             return jsonify(filtered_orders)
-    
+
 
 @app.route('/search/<search_query>', methods=['GET'])
 def search(search_query):
