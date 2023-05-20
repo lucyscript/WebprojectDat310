@@ -343,18 +343,8 @@ nav .side_menu_button {
 
 
 #new_product_content {
-	display: none;
 	width: 100%;
 	height: 100%;
-}
-
-#new_product_load {
-	width: 100%;
-}
-#new_product_load img {
-	position: absolute;
-	top: -100px;
-	width: 100%;
 }
 
 

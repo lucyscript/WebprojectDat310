@@ -5,10 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <div id="new_product_load">
-        <img src="https://macstores.vn/tin-tuc/wp-content/uploads/2022/07/20220721_62d9720320fe2.gif" alt="loading">
-    </div>
-    
     <div id="new_product_content">
         <form method="post" name="new_product_form">
             <ul>
@@ -51,16 +47,4 @@
             </ul>
         </form>
     </div>
-
-    <script>
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-     }
-    async function load(){
-        await sleep(30)
-        document.getElementById("new_product_load").style.display = "none";
-        document.getElementById("new_product_content").style.display = "block";
-    }
-    load()
-    </script>
 {% endblock %}
