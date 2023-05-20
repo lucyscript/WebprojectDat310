@@ -170,7 +170,7 @@ def registration():
             created_at = datetime.now().date().strftime("%d %B %Y")
             cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (user_id, username, hash, created_at))
             conn.commit()
-            session['userid'] = id
+            session['userid'] = user_id
             return redirect(url_for('index'))
                 
     return render_template('registration.html')
