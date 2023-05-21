@@ -91,10 +91,11 @@ def get_images(product_id):
         return None
 
 def generate_userid():
-        user_id = random.randint(100000, 999999)
-        if user_id not in used_ids:
-            used_ids.add(user_id)
-            return user_id
+        while True:
+            user_id = random.randint(100000, 999999)
+            if user_id not in used_ids:
+                used_ids.add(user_id)
+                return user_id
 
 
 def get_conn():

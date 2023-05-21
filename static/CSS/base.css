@@ -2,6 +2,23 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+:root {
+	--background-color: rgb(255, 255, 255); /* Default light mode background color */
+	--text-color: rgb(000, 000, 000); /* Default light mode text color */
+}
+  
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: rgb(000, 000, 000); /* Dark mode background color */
+		--text-color: rgb(255, 255, 255); /* Dark mode text color */
+	}
+}
+
+html {
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
 body {
 	padding-top: 40px;
 	margin: 0;
@@ -33,7 +50,7 @@ main {
 nav {
 	background-color: rgba(186, 186, 186, 0.292);
 	width: 100%;
-	backdrop-filter: blur(10px); /*blur*/
+	backdrop-filter: blur(10px);
 }
 
 nav ul {
@@ -111,6 +128,7 @@ nav .side_menu_button {
 	background-repeat: no-repeat; 
 	background-position: 5px center; 
 	background-size: 20px;
+	background-color: var(--background-color);
 	opacity: 0.7;
 	transition: border-color 0.2s ease-in-out;
 	z-index: 2;
@@ -210,7 +228,7 @@ nav .side_menu_button {
 }
 
 .box {
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: var(--background-color);
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -222,7 +240,8 @@ nav .side_menu_button {
 }
 
 .box:hover {
-	background-color: #f2f2f2;
+	background-color: var(--background-color);
+	color: var(--text-color);
 	border-color: rgb(246,85,82);
 	border-width: 1px;
 }
@@ -247,14 +266,14 @@ nav .side_menu_button {
 }
 
 .product-box {
-	border: 2px lightblue;
+	border: 2px rgb(246,85,82);
 	padding: 20px;
 	width: 240px;
 	height: 300px;
 	border-radius: 24px;
 }
 .product-box img {
-	border: 1px solid lightblue;
+	border: 1px solid rgb(246,85,82);
 	width: 240px;
 	height: 240px;
 	border-radius: 10px;
@@ -264,7 +283,7 @@ nav .side_menu_button {
 	margin-right: 0;
 }
 .product-box:hover {
-	background-color: lightblue;
+	background-color: rgb(246,85,82);
 	cursor: pointer;
 }
 

@@ -2,6 +2,23 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+:root {
+	--background-color: rgb(255, 255, 255); /* Default light mode background color */
+	--text-color: rgb(000, 000, 000); /* Default light mode text color */
+}
+  
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: rgb(000, 000, 000); /* Dark mode background color */
+		--text-color: rgb(255, 255, 255); /* Dark mode text color */
+	}
+}
+
+html {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
 main {
 	height: 650px;
 }
@@ -21,7 +38,6 @@ header {
 }
 
 body {
-	background-color: #f0f0f0;
     margin-top: 90px;
     display: flex;
     justify-content: center;
@@ -30,7 +46,7 @@ body {
 .auth-form {
     width: 400px;
     margin: 30px auto;
-    background-color: #fff;
+    background-color: rgb(30, 30, 30);
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     padding: 40px;
@@ -40,6 +56,8 @@ body {
     border: none;
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-size: 16px;
     outline: none;
     padding: 10px 15px;
