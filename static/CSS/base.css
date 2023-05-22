@@ -2,21 +2,8 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
-:root {
-	--background-color: rgb(255, 255, 255); /* Default light mode background color */
-	--text-color: rgb(000, 000, 000); /* Default light mode text color */
-}
-  
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background-color: rgb(000, 000, 000); /* Dark mode background color */
-		--text-color: rgb(255, 255, 255); /* Dark mode text color */
-	}
-}
-
 html {
 	background-color: var(--background-color);
-	color: var(--text-color);
 }
 
 body {
@@ -73,6 +60,7 @@ nav li span {
 	font-size: 12px;
 	font-weight: 300;
 	font-family: "Roboto",Arial;
+    color: var(--text-color);
 	line-height: 20px;
 }
 
@@ -233,6 +221,7 @@ nav .side_menu_button {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
 	padding: 3px;
 	margin-bottom: 5px;
 	width: 100px;
@@ -241,8 +230,6 @@ nav .side_menu_button {
 }
 
 .box:hover {
-	background-color: var(--background-color);
-	color: var(--text-color);
 	border-color: rgb(246,85,82);
 	border-width: 1px;
 }
