@@ -263,12 +263,12 @@ def product(product_id):
     cursor = conn.cursor()
 
     # Fetch product
-    cursor.execute(queryItems, product_id)
+    cursor.execute(queryItems, (product_id,))
     item_raw = cursor.fetchone()
     columns = [column[0] for column in cursor.description]
     item = dict(zip(columns, item_raw))
 
-    cursor.execute(queryImages, product_id)
+    cursor.execute(queryImages, (product_id,))
     images_raw = cursor.fetchall()
     images = []
     for path in images_raw:
@@ -276,27 +276,57 @@ def product(product_id):
 
     return render_template('product.html', item=item, images=images)
 
-@app.route('/new_product', methods=['GET', 'POST'])
+@app.route('/new_product', methods=['GET'])
 def new_product():
-    if request.method == 'POST':
-        conn = get_conn()
-        cursor = conn.cursor()
-
-        title = request.form['title']
-        description = request.form['description']
-        price = request.form['price']
-        stock = request.form['stock']
-
-        cursor.execute('INSERT INTO items (title, description, price, stock) VALUES (?, ?, ?, ?)', (title, description, price, stock))
-        conn.commit()
-
-        return redirect(url_for('index'))
+    user = get_user()
+    if user:
+        return render_template('new_product.html')
     else:
-        user = get_user()
-        if user:
-            return render_template('new_product.html')
-        else:
-            return redirect(url_for('login'))
+        return redirect(url_for('login'))
+        
+@app.route('/handle_upload', methods=['POST'])
+def handle_upload():
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    title = request.form['title']
+    description = request.form['description']
+    price = request.form['price']
+    images = request.files.getlist('imageValues[]')
+    test = request.form.getlist('imageValues[]')
+    imagePaths = []
+    n = 0
+    for image in images:
+        imagePaths.append('static/images/ProductImages/' + datetime.now().strftime("%Y%m%d%H%M%S") + image.filename)
+        image.save(imagePaths[n])
+        n += 1
+    owner_id = get_user().get('user_id')
+    item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
+    cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
+    print("Hello")
+    print(test)
+    #print(test[0].filename)
+    print(item_id, owner_id, title, description, price)
+    print(images)
+    i = 1
+    n = 0
+    for image in images:
+        cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + imagePaths[n], i))
+        i += 1
+        n += 1
+    conn.commit()
+    print("Bye")
+
+    return redirect(url_for('index')) # Does not work for some reason
+
+@app.route('/test', methods=['POST'])
+def test():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
+    cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
+    conn.commit()
+    return "hello"
 
 @app.route('/search_orders/<int:user_id>', methods=['GET'])
 def search_orders(user_id):

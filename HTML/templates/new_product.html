@@ -6,7 +6,7 @@
 
 {% block content %}
     <div id="new_product_content">
-        <form method="post" name="new_product_form">
+        <form id="new_product_form" method="post" name="new_product_form" enctype="multipart/form-data">
             <ul>
                 <li>
                     <div class="title_input">
@@ -29,7 +29,7 @@
                 <li>
                     <div class="image_input">
                         <h3>Add images:</h3>
-                        <input class="image_input_container input_element_border" data-image-input type="file" name="image" accept="image/*" oninput="add_image_preview(event)" multiple>
+                        <input id="image_upload" class="image_input_container input_element_border" data-image-input type="file" name="image" accept="image/*" oninput="add_image_preview(event)" multiple>
                     </div>
                 </li>
                 <li>
@@ -41,10 +41,12 @@
                 </li>
                 <li>
                     <div class="submit_button">
-                        <input class="submit_button_container" type="submit" value="Submit">
+                        <input class="submit_button_container" type="submit" value="Upload">
                     </div>
                 </li>
             </ul>
         </form>
+        <button onclick="log()">Log</button>
     </div>
+    <script src="{{ url_for('static', filename='JS/new_product.js') }}"></script>
 {% endblock %}
