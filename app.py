@@ -335,10 +335,16 @@ def handle_upload():
 def test():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
-    cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
-    conn.commit()
-    return "hello"
+    #cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
+    try:
+        #cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
+        #cursor.execute('DELETE FROM images WHERE product_id NOT IN (?, ?, ?)', (1, 2, 3))
+        #conn.commit()
+        print(cursor.rowcount, "rows deleted")
+        return "hello"
+    except Exception as e:
+        print("Error:", e)
+        return "Error: " + str(e)
 
 @app.route('/search_orders', methods=['GET'])
 def search_orders():

@@ -9,40 +9,7 @@ function add_image_preview(upload) {
     const upload_box = document.getElementById("image_preview");
     upload_box.style.display = "block";
 
-
-    //try {
-    //    const hiddenInput = document.getElementById("hiddenImageValues");
-    //    hiddenInput.remove();
-    //} catch (error) {
-    //    console.log(error);
-    //}
-    //const hiddenInput = document.createElement('input');
-    //hiddenInput.type = 'file';
-    //hiddenInput.name = 'imageValues[]';
-    //hiddenInput.id = 'hiddenImageValues';
-    //hiddenInput.style.display = "none";
-
     const image_upload = document.getElementById("image_upload");
-
-    const onload_complete = function () {
-        const filenames = [];
-        for (let i = 0; i < uploadedImages.length; i++) {
-            const image = uploadedImages[i];
-            const filename = image.name;
-            hiddenInput.files[i] = image;
-            console.log("hiddenInput.files[i]:", hiddenInput.files[i]);
-            filenames.push(filename);
-            console.log("image in onload:", image);
-            console.log("filename in onload:", filename);
-        }
-        form = document.getElementById("new_product_form");
-        form.appendChild(hiddenInput);
-        image_upload.value = "";
-
-        console.log("this should do it") 
-        console.log("Stored image names:", hiddenInput.files);
-
-    } // Function onload_complete end
 
     let loadedImages = 0;
     for (let i = 0; i < images.length; i++) {
@@ -113,6 +80,7 @@ form.addEventListener("submit", function (e) {
         }
     };
     xhr.send(formData);
+    uploadedImages = [];
 });
 
 
