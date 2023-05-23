@@ -159,6 +159,8 @@ def registration():
 
         username = request.form.get("username")
         password = request.form.get("password")
+        if not username or not password:
+            return render_template('registration.html', error="Please fill out all fields.")
         
         hash = generate_password_hash(password)
 
@@ -215,7 +217,8 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile', methods=['GET', 'POST', 'PUT'])
+
+@app.route('/profile', methods=['GET', 'PUT'])
 def profile():
     user = get_user()
     if user:
@@ -224,15 +227,17 @@ def profile():
             cursor = conn.cursor()
 
             data = request.json
-            bio = data['bio']
-            address = data['address']
-            phone = data['phone']
+            if data is not None:
+                bio = data['bio']
+                address = data['address']
+                phone = data['phone']
 
-            cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user['user_id']))
-            conn.commit()
+                cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user['user_id']))
+                conn.commit()
 
-            return jsonify({'message': 'Profile content updated successfully'})
-
+                return jsonify({'message': 'Profile content updated successfully'})
+            else:
+                return jsonify({'message': 'No data received'})
         else:
             orders = get_orders(user['user_id'])
             return render_template('profile.html', user=user, orders=orders)
@@ -254,16 +259,15 @@ def order_history():
     
 @app.route('/delete_user', methods=['DELETE'])
 def delete_user():
-    if request.method == 'DELETE':
-        user = get_user()
-        if user:
-            conn = get_conn()
-            cur = conn.cursor()
-            cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
-            conn.commit()
-            return redirect(url_for('logout'))
-        else:
-            return None
+    user = get_user()
+    if user:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
+        conn.commit()
+        return redirect(url_for('logout'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/product/<product_id>') 
 def product(product_id):
@@ -305,7 +309,7 @@ def handle_upload():
     imagePaths = []
     n = 0
     for image in images:
-        imagePaths.append('static/images/ProductImages/' + datetime.now().strftime("%Y%m%d%H%M%S") + image.filename)
+        imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
         image.save(imagePaths[n])
         n += 1
     owner_id = get_user().get('user_id')
@@ -338,23 +342,20 @@ def test():
 
 @app.route('/search_orders', methods=['GET'])
 def search_orders():
-
-    if request.method == 'GET':
-        user = get_user()
-        if user:
-            query = request.args.get('query')
-
-            orders = get_orders(user['user_id'])
-            filtered_orders = []
-
-            if query:
-                for order in orders:
-                    if query.lower() in order['title'].lower():
-                        filtered_orders.append(order)
-            else:
-                filtered_orders = orders
-
-            return jsonify(filtered_orders)
+    user = get_user()
+    if user:
+        query = request.args.get('query')
+        orders = get_orders(user['user_id'])
+        filtered_orders = []
+        if query:
+            for order in orders:
+                if query.lower() in order['title'].lower():
+                    filtered_orders.append(order)
+        else:
+            filtered_orders = orders
+        return jsonify(filtered_orders)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/search/<search_query>', methods=['GET'])
