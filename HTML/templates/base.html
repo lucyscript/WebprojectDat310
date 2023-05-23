@@ -58,15 +58,15 @@
           </a>
           <div class="dropdown-content">
             <div class="column">
-              <div class="box"><a href="cart">View Cart</a></div>
-              <div class="box"><a href="#">Checkout</a></div>
+              <div class="box"><a href="{{ url_for('cart') }}">View Cart</a></div>
+              <div class="box"><a href="{{ url_for('checkout') }}">Checkout</a></div>
             </div>
           </div>
         </li>            
         <li class="dropdown">
           <div id="profile">
             {% if 'userid' in session and user %}
-              <a href="{{ url_for('profile', user_id=user.user_id) }}">
+              <a href="{{ url_for('profile') }}">
             {% else %}
               <a href="{{ url_for('login') }}">
             {% endif %}
@@ -89,14 +89,14 @@
               </div>
               <div class="box">
                 {% if 'userid' in session and user %}
-                  <a href="{{ url_for('profile', user_id=user.user_id) }}">
+                  <a href="{{ url_for('profile') }}">
                 {% else %}
                   <a href="{{ url_for('login') }}">
                 {% endif %}
                 Profile</a>
               </div>
               {% if 'userid' in session and user %}
-                <div class="box"><a href="{{ url_for('order_history', user_id=user.user_id) }}">Order history</a></div>
+                <div class="box"><a href="{{ url_for('order_history') }}">Order history</a></div>
               {% else %}
                 <div class="box"><a href="{{ url_for('login') }}">Order history</a></div>
               {% endif %}

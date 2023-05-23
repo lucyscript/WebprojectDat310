@@ -4,6 +4,8 @@ import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
+used_ids = set()
+
 app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
 app.config['DATABASE'] = 'Data/database.db'
@@ -88,8 +90,13 @@ def get_images(product_id):
     except:
         return None
 
-def generate_id():
-    return random.randint(100000, 999999)
+def generate_userid():
+        while True:
+            user_id = random.randint(100000, 999999)
+            if user_id not in used_ids:
+                used_ids.add(user_id)
+                return user_id
+
 
 def get_conn():
     conn = getattr(g, '_database', None)
@@ -117,16 +124,16 @@ def logged_in_user():
 def init_bio_processor():
     def get_init_bio(user_created_at):
         init_bio = [
-            f"Trading addict since {user_created_at}. Beware, I might start bartering for your snacks!",
-            f"From {user_created_at}, I've been on a quest to outsmart the market. Join me as we trade like financial ninjas!",
-            f"Since {user_created_at}, I've been the self-proclaimed captain of the trading ship. Get ready for a wild ride!",
-            f"Trading is my superpower since {user_created_at}. Ready to turn pennies into fortunes and spreadsheets into comedy!",
-            f"Since {user_created_at}, I've traded more stocks than Pokémon cards. Let's catch 'em all... I mean, make some profits!",
-            f"Trading aficionado since {user_created_at}. I've got more charts and graphs than a conspiracy theorist!",
-            f"From {user_created_at}, I've been on a quest to find the holy grail of trading strategies. Join me on this epic treasure hunt!",
-            f"Trading magician in training since {user_created_at}. Watch as I turn market fluctuations into pure entertainment!",
-            f"Since {user_created_at}, I've been a proud member of the Trading League. Together, we'll conquer the financial universe!",
-            f"Calling myself a trader since {user_created_at}. My financial predictions are as accurate as a weather forecast!"
+            f"Trading addict since {user_created_at}.",
+            f"From {user_created_at}, I've been on a quest to outsmart the market.",
+            f"Since {user_created_at}, I've been the self-proclaimed captain of the trading ship.",
+            f"Warning! I've been trading since {user_created_at}.",
+            f"Attention, world! Trading extraordinaire since {user_created_at} reporting for duty.",
+            f"Trading aficionado since {user_created_at}.",
+            f"From {user_created_at}, I've been on a quest to find the holy grail of trading strategies.",
+            f"Trading magician in training since {user_created_at}.",
+            f"Buckle up, trading novices! Since {user_created_at}, I've been honing my skills to perfection.",
+            f"Calling myself a trader since {user_created_at}."
         ]
         return random.choice(init_bio)
 
@@ -158,13 +165,13 @@ def registration():
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
         user = cursor.fetchone()
         
-        id = generate_id()
+        user_id = generate_userid()
 
         if user is None:
-            created_at = datetime.now().date().strftime("%B %Y")
-            cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (id, username, hash, created_at))
+            created_at = datetime.now().date().strftime("%d %B %Y")
+            cursor.execute('INSERT INTO users (user_id, username, password, created_at) VALUES (?, ?, ?, ?)', (user_id, username, hash, created_at))
             conn.commit()
-            session['userid'] = id
+            session['userid'] = user_id
             return redirect(url_for('index'))
                 
     return render_template('registration.html')
@@ -208,50 +215,51 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile/<int:user_id>', methods=['GET', 'POST', 'PUT'])
-def profile(user_id):
-    if request.method == 'PUT':
-        conn = get_conn()
-        cursor = conn.cursor()
-
-        data = request.json
-        bio = data['bio']
-        address = data['address']
-        phone = data['phone']
-
-        cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user_id))
-        conn.commit()
-
-        return jsonify({'message': 'Profile content updated successfully'})
-
+@app.route('/profile', methods=['GET', 'POST', 'PUT'])
+def profile():
     user = get_user()
-    if user is not None:
-        orders = get_orders(user_id)
-        return render_template('profile.html', user=user, orders=orders)
-    else:
-        return redirect(url_for('login'))
+    if user:
+        if request.method == 'PUT':
+            conn = get_conn()
+            cursor = conn.cursor()
+
+            data = request.json
+            bio = data['bio']
+            address = data['address']
+            phone = data['phone']
+
+            cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user['user_id']))
+            conn.commit()
+
+            return jsonify({'message': 'Profile content updated successfully'})
+
+        else:
+            orders = get_orders(user['user_id'])
+            return render_template('profile.html', user=user, orders=orders)
+
+    return redirect(url_for('login'))
 
 @app.route('/cart')
 def cart():
     return render_template('cart.html')
 
-@app.route('/order_history/<int:user_id>')
-def order_history(user_id):
+@app.route('/order_history')
+def order_history():
     user = get_user()
     if user != None:
-        orders = get_orders(user_id)
+        orders = get_orders(user['user_id'])
         return render_template('order_history.html', user=user, orders=orders)
     else:
         return redirect(url_for('login'))
     
-@app.route('/delete_user/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
     if request.method == 'DELETE':
         user = get_user()
         if user:
             conn = get_conn()
             cur = conn.cursor()
-            cur.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
+            cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
             conn.commit()
             return redirect(url_for('logout'))
         else:
@@ -328,23 +336,26 @@ def test():
     conn.commit()
     return "hello"
 
-@app.route('/search_orders/<int:user_id>', methods=['GET'])
-def search_orders(user_id):
+@app.route('/search_orders', methods=['GET'])
+def search_orders():
+
     if request.method == 'GET':
-        query = request.args.get('query')
+        user = get_user()
+        if user:
+            query = request.args.get('query')
 
-        orders = get_orders(user_id)
-        filtered_orders = []
+            orders = get_orders(user['user_id'])
+            filtered_orders = []
 
-        if query:
-            for order in orders:
-                if query.lower() in order['title'].lower():
-                    filtered_orders.append(order)
-        else:
-            filtered_orders = orders
+            if query:
+                for order in orders:
+                    if query.lower() in order['title'].lower():
+                        filtered_orders.append(order)
+            else:
+                filtered_orders = orders
 
-        return jsonify(filtered_orders)
-    
+            return jsonify(filtered_orders)
+
 
 @app.route('/search/<search_query>', methods=['GET'])
 def search(search_query):
@@ -360,6 +371,24 @@ def search(search_query):
     columns = [column[0] for column in cursor.description]
     items = [dict(zip(columns, item)) for item in items]
     return jsonify(items)
+
+@app.route('/checkout')
+def checkout():
+    user = get_user()
+    if user: 
+        orders = get_orders(user['user_id'])
+        return render_template('checkout.html', orders=orders)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/settings')
+def settings():
+    user = get_user()
+    if user:
+        return render_template('settings.html')
+    else:
+        return redirect(url_for('login'))
+
 
 if __name__ == '__main__': 
     app.run(debug=True)

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/checkout.css') }}">
+    <script src="{{ url_for('static', filename='JS/checkout.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Checkout</h1>
+
+{% for order in orders %}
+    <h1>New Product</h1>
+    <p>{{order.user_id}}</p>
+    <p>{{order.product_id}}</p>
+    <p>{{order.quantity}}</p>
+    <p>{{order.total_amount}}</p>
+    <p>{{order.order_date}}</p>
+{% endfor %}
+
+{% endblock %}

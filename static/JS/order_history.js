@@ -6,21 +6,14 @@ $(document).ready(function() {
   });
 
   $('#search-input').on('keyup', function() {
-    let user_id = getUserId();
     let query = $(this).val();
-    searchOrders(user_id, query);
+    searchOrders(query);
   });
 
-  function getUserId() {
-    let url = window.location.href;
-    let user_id = url.substring(url.lastIndexOf('/') + 1);
-    return user_id;
-  }
-
-  function searchOrders(user_id, query) {
+  function searchOrders(query) {
     $('.order-search input[type="text"]').css('background-image', 'url("https://sales.ufaber.com/public/static/img/loader-orange.gif")');
     $.ajax({
-      url: `/search_orders/${user_id}`,
+      url: `/search_orders`,
       method: 'GET',
       data: { query: query },
       success: function(response) {

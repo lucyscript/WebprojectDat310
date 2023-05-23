@@ -30,8 +30,8 @@ function confirmDelete(user_id) {
     return false;
 }
   
-function deleteUser(user_id) {
-    fetch(`/delete_user/${user_id}`, {
+function deleteUser() {
+    fetch('/delete_user', {
         method: 'DELETE'
     })
     .then(function(response) {

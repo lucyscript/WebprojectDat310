@@ -2,6 +2,10 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+html {
+    background-color: var(--background-color);
+}
+
 main {
 	height: 650px;
 }
@@ -21,7 +25,6 @@ header {
 }
 
 body {
-	background-color: #f0f0f0;
     margin-top: 90px;
     display: flex;
     justify-content: center;
@@ -30,26 +33,29 @@ body {
 .auth-form {
     width: 400px;
     margin: 30px auto;
-    background-color: #fff;
+    background-color: rgb(30, 30, 30);
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     padding: 40px;
 }
   
 .form-control {
-    border: none;
+    border: 1px solid black;
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-size: 16px;
     outline: none;
     padding: 10px 15px;
     width: 100%;
-    transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    transition: border-color 0.1s ease-in-out;
+
 }
   
 .form-control:focus {
-    background-color: #52F3F6;
     border-radius: 50px;
+    border-color:#52F3F6;
 }
 
 .btn-primary:disabled {

@@ -2,6 +2,10 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+html {
+	background-color: var(--background-color);
+}
+
 body {
 	padding-top: 40px;
 	margin: 0;
@@ -33,7 +37,7 @@ main {
 nav {
 	background-color: rgba(186, 186, 186, 0.292);
 	width: 100%;
-	backdrop-filter: blur(10px); /*blur*/
+	backdrop-filter: blur(10px);
 }
 
 nav ul {
@@ -56,6 +60,7 @@ nav li span {
 	font-size: 12px;
 	font-weight: 300;
 	font-family: "Roboto",Arial;
+    color: var(--text-color);
 	line-height: 20px;
 }
 
@@ -111,12 +116,15 @@ nav .side_menu_button {
 	background-repeat: no-repeat; 
 	background-position: 5px center; 
 	background-size: 20px;
-	opacity: 1;
-	transition: background-color 0.2s ease-in-out;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	opacity: 0.7;
+	transition: border-color 0.2s ease-in-out;
 	z-index: 2;
 }
 .search-form input[type="search"]:focus {
-	background-color: lightblue; 
+	opacity: 1;
+	border: 1px solid #52F3F6;
 }
 
 .center-search {
@@ -135,7 +143,7 @@ nav .side_menu_button {
 
 #drop-down-suggestion table {
 	width: 100%;
-	border: 1px lightblue solid;
+	border: 1px #52F3F6 solid;
 	border-top: none;
 	background-color: white;
 	border-spacing: 0px;
@@ -209,10 +217,11 @@ nav .side_menu_button {
 }
 
 .box {
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: var(--background-color);
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
 	padding: 3px;
 	margin-bottom: 5px;
 	width: 100px;
@@ -221,7 +230,6 @@ nav .side_menu_button {
 }
 
 .box:hover {
-	background-color: #f2f2f2;
 	border-color: rgb(246,85,82);
 	border-width: 1px;
 }
@@ -246,14 +254,14 @@ nav .side_menu_button {
 }
 
 .product-box {
-	border: 2px lightblue;
+	border: 2px rgb(246,85,82);
 	padding: 20px;
 	width: 240px;
 	height: 300px;
 	border-radius: 24px;
 }
 .product-box img {
-	border: 1px solid lightblue;
+	border: 1px solid rgb(246,85,82);
 	width: 240px;
 	height: 240px;
 	border-radius: 10px;
@@ -263,7 +271,7 @@ nav .side_menu_button {
 	margin-right: 0;
 }
 .product-box:hover {
-	background-color: lightblue;
+	background-color: rgb(246,85,82);
 	cursor: pointer;
 }
 
