@@ -6,17 +6,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const isDarkMode = toggle.checked;
 
         if (isDarkMode) {
-            root.style.setProperty("--background-color", "var(--background-color-dark)");
-            root.style.setProperty("--text-color", "var(--text-color-dark)");
+            root.classList.add("dark-theme");
         } else {
-            root.style.setProperty("--background-color", "var(--background-color-light)");
-            root.style.setProperty("--text-color", "var(--text-color-light)");
+            root.classList.remove("dark-theme");
         }
 
         localStorage.setItem("colorScheme", isDarkMode ? "dark" : "light");
     }
 
     toggle.addEventListener("change", applyColorScheme);
+    
 
     const savedColorScheme = localStorage.getItem("colorScheme");
     if (savedColorScheme === "dark") {

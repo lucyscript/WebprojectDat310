@@ -39,7 +39,7 @@
     display: inline-block;
     padding: 10px 20px;
     background-color: rgb(246,85,82);
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -56,6 +56,8 @@
     padding: 10px;
     border-radius: 5px;
     margin-top: 10px;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .info-section h3 {
@@ -72,6 +74,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .transaction-table h2 {
@@ -95,7 +99,7 @@
 }
 
 .transaction-table td {
-vertical-align: middle;
+    vertical-align: middle;
     border-bottom: 1px solid #52F3F6;
 }
 
@@ -109,6 +113,8 @@ input {
 	border: none;
 	border-radius: 5px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    background-color: #888;
+    color: var(--text-color);
 	font-size: 16px;
 	outline: none;
 	width: 100%;
@@ -118,4 +124,6 @@ input {
 
 input:focus {
 	border: 1px solid #52F3F6; 
+    background-color: var(--background-color);
+    color: var(--text-color);
 }

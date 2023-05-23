@@ -1,12 +1,3 @@
-:root {
-    --background-color: rgb(255, 255, 255); 
-    --text-color: rgb(0, 0, 0); 
-    --background-color-dark: rgb(0, 0, 0);
-    --text-color-dark: rgb(255, 255, 255);
-    --background-color-light: rgb(255, 255, 255); 
-    --text-color-light: rgb(0, 0, 0);
-}
-
 h1 {
     background-color: var(--background-color);
     color: var(--text-color);
