@@ -74,7 +74,6 @@ search.addEventListener("input", function(event){
     xhttp.send();
 });
 
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function() {
     const root = document.documentElement;
 
@@ -85,6 +84,3 @@ document.addEventListener("DOMContentLoaded", function() {
         root.classList.remove("dark-theme");
     }
 });
-=======
-
->>>>>>> 144bef8573773ab2da069f1d174fea13953776f2
