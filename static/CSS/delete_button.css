@@ -12,7 +12,7 @@
 }
 
 .popup-content {
-    background-color: #fff;
+    background-color: #f1f1f1;
     padding: 20px;
     border-radius: 5px;
     text-align: center;
@@ -23,7 +23,7 @@
     padding: 8px 16px;
     border-radius: 4px;
     background-color: rgb(246,85,82);
-    color: #fff;
+    color: var(--text-color);
     border: none;
     cursor: pointer;
 }
