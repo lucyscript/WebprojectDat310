@@ -28,8 +28,8 @@ body {
 
 .circle {
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 1px;
+    left: 1px;
     width: 26px;
     height: 26px;
     border: 1px solid #fff;
