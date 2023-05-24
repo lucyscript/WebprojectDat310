@@ -71,14 +71,3 @@ search.addEventListener("input", function(event){
     xhttp.open("GET", "/search/" + event.target.value, true);
     xhttp.send();
 });
-
-document.addEventListener("DOMContentLoaded", function() {
-    const root = document.documentElement;
-
-    const savedColorScheme = localStorage.getItem("colorScheme");
-    if (savedColorScheme === "dark") {
-        root.classList.add("dark-theme");
-    } else {
-        root.classList.remove("dark-theme");
-    }
-});

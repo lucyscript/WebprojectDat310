@@ -24,27 +24,6 @@ body {
     border-radius: 30px;
     cursor: pointer;
     overflow: hidden;
-    transition: background-color 0.3s ease;
-}
-
-.darkmode-image,
-.lightmode-image {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.darkmode-image {
-    right: 0;
-    opacity: 0;
-}
-
-.lightmode-image {
-    left: 0;
-    opacity: 1;
 }
 
 .circle {
@@ -53,9 +32,23 @@ body {
     left: 2px;
     width: 26px;
     height: 26px;
-    background-color: #52F3F6;
+    border: 1px solid #fff;
     border-radius: 50%;
-    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
+    transition: transform 0.3s ease;
+    z-index: 2;
+}
+
+.indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #52F3F6;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .checkbox {
@@ -72,10 +65,41 @@ body {
     transform: translateX(30px);
 }
 
+.checkbox:checked + .switch .indicator {
+    transform: scaleX(1);
+}
+
 .checkbox:checked + .switch .darkmode-image {
     opacity: 1;
+    z-index: 3;
+    transform: translateX(30px);
 }
 
 .checkbox:checked + .switch .lightmode-image {
     opacity: 0;
+    z-index: 3;
+    transform: translateX(-30px);
+}
+
+.darkmode-image,
+.lightmode-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.darkmode-image {
+    opacity: 0;
+    right: 0;
+}
+
+.lightmode-image {
+    opacity: 1;
+    left: 0;
 }
