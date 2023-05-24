@@ -42,9 +42,7 @@ search.addEventListener("input", function(event){
         container.innerHTML = "";
 
         const table = document.createElement("table");
-        
-        console.log(items)
-        
+
         for (let i = 0; i < items.length; i++) {
             const tr = document.createElement("tr");
             const td1 = document.createElement("td");

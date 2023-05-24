@@ -315,11 +315,7 @@ def handle_upload():
     owner_id = get_user().get('user_id')
     item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
     cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
-    print("Hello")
-    print(test)
-    #print(test[0].filename)
-    print(item_id, owner_id, title, description, price)
-    print(images)
+
     i = 1
     n = 0
     for image in images:
@@ -327,7 +323,6 @@ def handle_upload():
         i += 1
         n += 1
     conn.commit()
-    print("Bye")
 
     return redirect(url_for('index')) # Does not work for some reason
 
