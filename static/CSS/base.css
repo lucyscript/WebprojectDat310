@@ -155,7 +155,8 @@ nav .side_menu_button {
 	width: 100%;
 	border: 1px #52F3F6 solid;
 	border-top: none;
-	background-color: white;
+	background-color: var(--background-color);
+    color: var(--text-color);	
 	border-spacing: 0px;
 }
 
@@ -176,13 +177,18 @@ nav .side_menu_button {
 }
 
 #drop-down-suggestion tr:hover {
-	background-color: lightblue;
+	background-color: rgb(246,85,82);
 	cursor: pointer;
 }
 
 #drop-down-suggestion img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	height: 100%;
+	padding: 5px;
 	max-width: 100%;
+	border-radius: 10%;
 }
 
 
@@ -291,10 +297,12 @@ nav .side_menu_button {
 /**** PRODUCT PAGE ****/
 
 .content-box {
-	border: 4px solid lightblue;
+	border: 4px solid rgb(246,85,82);
 	margin-right: 20px;
 	margin-left: 20px;
 	height: fit-content;
+	background-color: var(--background-color);
+    color: var(--text-color);
 }
 #product-content-page {
 	display: grid;
@@ -338,6 +346,8 @@ nav .side_menu_button {
 }	
 
 #back-button, #forward-button {
+	background-color: var(--background-color);
+    color: var(--text-color);
 	cursor: pointer;
 	position: absolute;
 	top: 50%;
@@ -355,7 +365,7 @@ nav .side_menu_button {
 	left: 50%;
 	transform: translateX(-50%);
 	font-size: 20px;
-	color: white;
+    color: var(--text-color);
 	padding:10px;
 	background-color: rgba(0, 0, 0, 0.5);
 }
@@ -364,6 +374,8 @@ nav .side_menu_button {
 #new_product_content {
 	width: 100%;
 	height: 100%;
+	background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 
@@ -390,7 +402,7 @@ nav .side_menu_button {
 	left: 50%;
 	transform: translateX(-50%);
 	font-size: 20px;
-	color: white;
+    color: var(--text-color);
 	padding:10px;
 	background-color: rgba(0, 0, 0, 0.5);
 }
