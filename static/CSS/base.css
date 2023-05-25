@@ -90,7 +90,7 @@ nav li span {
 	line-height: 20px;
 }
 
-  nav li a {
+nav li a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -510,14 +510,6 @@ nav .side_menu_button {
 
 .darkmode-image {
     opacity: 0;
-    right: 0;
-}
-
-.lightmode-image {
-    opacity: 1;
-    left: 0;
-}
-opacity: 0;
     right: 0;
 }
 
