@@ -10,16 +10,6 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-  <script>
-    const root = document.documentElement;
-
-    const savedColorScheme = localStorage.getItem("colorScheme");
-    if (savedColorScheme === "dark") {
-        root.classList.add("dark-theme");
-    } else {
-        root.classList.remove("dark-theme");
-    }
-  </script>
   <header>
     <nav>
       <ul>
@@ -37,7 +27,17 @@
                 <img src="https://static.thenounproject.com/png/4514193-200.png" class="lightmode-image">
                 <img src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png" class="darkmode-image">
             </label>
-          </div>
+          <script>
+            const root = document.documentElement;
+            const savedColorScheme = localStorage.getItem("colorScheme");
+            if (savedColorScheme === "dark") {
+                root.classList.add("dark-theme");
+                toggle.checked = true;
+            } else {
+                root.classList.remove("dark-theme");
+                toggle.checked = false;
+            }
+          </script>
         </li>
         <li class="center-search">
           <form id="searchbar-form" class="search-form" action="#" method="get">

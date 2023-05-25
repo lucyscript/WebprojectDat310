@@ -89,12 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     toggle.addEventListener("change", applyColorScheme);
-    
-
-    const savedColorScheme = localStorage.getItem("colorScheme");
-    if (savedColorScheme === "dark") {
-        toggle.checked = true;
-    }
 
     applyColorScheme();
 });
