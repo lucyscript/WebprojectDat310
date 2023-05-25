@@ -378,21 +378,5 @@ def new_product():
         return redirect(url_for('login'))
 
 
-@app.route('/test', methods=['POST']) # Not in final version
-def test():
-    conn = get_conn()
-    cursor = conn.cursor()
-    #cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
-    try:
-        #cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
-        #cursor.execute('DELETE FROM images WHERE product_id NOT IN (?, ?, ?)', (1, 2, 3))
-        #conn.commit()
-        print(cursor.rowcount, "rows deleted")
-        return "hello"
-    except Exception as e:
-        print("Error:", e)
-        return "Error: " + str(e)
-
-
 if __name__ == '__main__': 
     app.run(debug=True)
