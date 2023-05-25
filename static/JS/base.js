@@ -80,14 +80,23 @@ search.addEventListener("input", function(event){
 document.addEventListener("DOMContentLoaded", function() {
     const toggle = document.getElementById("toggle");
     const root = document.documentElement;
-
+    
+    
     function applyColorScheme() {
         const isDarkMode = toggle.checked;
+        const header_icons = document.getElementsByClassName("header_icon");
 
         if (isDarkMode) {
             root.classList.add("dark-theme");
+            for (let i = 0; i < header_icons.length; i++) {
+                header_icons[i].style.filter = "invert(1)";
+              }
+
         } else {
             root.classList.remove("dark-theme");
+            for (let i = 0; i < header_icons.length; i++) {
+                header_icons[i].style.filter = "invert(0)";
+              }
         }
 
         localStorage.setItem("colorScheme", isDarkMode ? "dark" : "light");
