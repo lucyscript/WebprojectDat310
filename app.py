@@ -266,42 +266,15 @@ def profile():
 
     return redirect(url_for('login'))
 
-@app.route('/cart')
-def cart():
-    return render_template('cart.html')
-
-@app.route('/order_history')
-def order_history():
-    user = get_user()
-    if user != None:
-        orders = get_orders(user['user_id'])
-        return render_template('order_history.html', user=user, orders=orders)
-    else:
-        return redirect(url_for('login'))
-
-@app.route('/search_orders')
-def search_orders():
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
     user = get_user()
     if user:
-        query = request.args.get('query')
-        orders = get_orders(user['user_id'])
-        filtered_orders = []
-        if query:
-            for order in orders:
-                if query.lower() in order['title'].lower():
-                    filtered_orders.append(order)
-        else:
-            filtered_orders = orders
-        return jsonify(filtered_orders)
-    else:
-        return redirect(url_for('login'))
-
-@app.route('/checkout')
-def checkout():
-    user = get_user()
-    if user: 
-        orders = get_orders(user['user_id'])
-        return render_template('checkout.html', orders=orders)
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
+        conn.commit()
+        return redirect(url_for('logout'))
     else:
         return redirect(url_for('login'))
 
