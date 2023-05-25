@@ -58,7 +58,7 @@ search.addEventListener("input", function(event){
             img.src = item.path;
             td1.appendChild(img);
             th.innerHTML = item.title;
-            td2.innerHTML = `$${item.price}`;
+            td2.innerHTML = item.price;
             
             tr.appendChild(td1);
             tr.appendChild(th);
@@ -70,31 +70,4 @@ search.addEventListener("input", function(event){
       }
     xhttp.open("GET", "/search/" + event.target.value, true);
     xhttp.send();
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const toggle = document.getElementById("toggle");
-    const root = document.documentElement;
-
-    function applyColorScheme() {
-        const isDarkMode = toggle.checked;
-
-        if (isDarkMode) {
-            root.classList.add("dark-theme");
-        } else {
-            root.classList.remove("dark-theme");
-        }
-
-        localStorage.setItem("colorScheme", isDarkMode ? "dark" : "light");
-    }
-
-    toggle.addEventListener("change", applyColorScheme);
-    
-
-    const savedColorScheme = localStorage.getItem("colorScheme");
-    if (savedColorScheme === "dark") {
-        toggle.checked = true;
-    }
-
-    applyColorScheme();
 });

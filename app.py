@@ -266,53 +266,22 @@ def profile():
 
     return redirect(url_for('login'))
 
-@app.route('/cart')
-def cart():
-    return render_template('cart.html')
-
-@app.route('/order_history')
-def order_history():
-    user = get_user()
-    if user != None:
-        orders = get_orders(user['user_id'])
-        return render_template('order_history.html', user=user, orders=orders)
-    else:
-        return redirect(url_for('login'))
-
-@app.route('/search_orders')
-def search_orders():
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
     user = get_user()
     if user:
-        query = request.args.get('query')
-        orders = get_orders(user['user_id'])
-        filtered_orders = []
-        if query:
-            for order in orders:
-                if query.lower() in order['title'].lower():
-                    filtered_orders.append(order)
-        else:
-            filtered_orders = orders
-        return jsonify(filtered_orders)
-    else:
-        return redirect(url_for('login'))
-
-@app.route('/checkout')
-def checkout():
-    user = get_user()
-    if user: 
-        orders = get_orders(user['user_id'])
-        return render_template('checkout.html', orders=orders)
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
+        conn.commit()
+        return redirect(url_for('logout'))
     else:
         return redirect(url_for('login'))
 
 # User specific product routes
 @app.route('/cart')
 def cart():
-    user = get_user()
-    if user:
-        return render_template('cart.html')
-    else:
-        return redirect(url_for('login'))
+    return render_template('cart.html')
 
 @app.route('/order_history')
 def order_history():
@@ -407,22 +376,6 @@ def new_product():
         else: return redirect(url_for('index')) # Just in case :)   
     else:
         return redirect(url_for('login'))
-
-
-@app.route('/test', methods=['POST']) # Not in final version
-def test():
-    conn = get_conn()
-    cursor = conn.cursor()
-    #cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
-    try:
-        #cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
-        #cursor.execute('DELETE FROM images WHERE product_id NOT IN (?, ?, ?)', (1, 2, 3))
-        #conn.commit()
-        print(cursor.rowcount, "rows deleted")
-        return "hello"
-    except Exception as e:
-        print("Error:", e)
-        return "Error: " + str(e)
 
 
 if __name__ == '__main__': 
