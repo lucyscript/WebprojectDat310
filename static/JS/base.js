@@ -32,6 +32,11 @@ function image_slide_change(n, image_index) {
 
 
 // SEARCH RECOMEND
+$('#search').on('keydown', function(event) {
+    if (event.keyCode === 13) {
+    event.preventDefault(); 
+    }
+});
 const search = document.getElementById("searchbar-form");
 search.addEventListener("input", function(event){
     const xhttp = new XMLHttpRequest();
