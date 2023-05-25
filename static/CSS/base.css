@@ -42,7 +42,9 @@ footer {
 
 main {
 	height: 2000px;
-	margin: 80px 5% 0 5%;
+	width: 775px;	
+	margin: auto;
+	margin-top: 40px;
 }
 
 nav {
@@ -64,7 +66,7 @@ nav ul {
 }
 
 nav li {
-	margin-right: 80px;
+	margin-right: 50px;
 }
 
 @media (max-width: 900px) {
@@ -274,21 +276,20 @@ nav .side_menu_button {
 	flex-direction: row;
 	box-sizing: border-box;
 	width: 100%;
-	margin: 10px;
-	
+	margin: 0;	
 }
 
 .product-box {
 	border: 2px rgb(246,85,82);
 	padding: 20px;
-	width: 240px;
+	width: 215px;
 	height: 300px;
 	border-radius: 24px;
 }
 .product-box img {
 	border: 1px solid rgb(246,85,82);
-	width: 240px;
-	height: 240px;
+	width: 215px;
+	height: 215px;
 	border-radius: 10px;
 }
 .product-box h3 {
