@@ -430,7 +430,8 @@ nav .side_menu_button {
     border-radius: 30px;
     cursor: pointer;
     overflow: hidden;
-	opacity: 0.7;
+	opacity: 0.5;
+	background-color: #fff;
 }
 
 .circle {
@@ -439,7 +440,7 @@ nav .side_menu_button {
     left: 1px;
     width: 26px;
     height: 26px;
-    border: 1px solid #fff;
+    border: 1px solid #000;
     border-radius: 50%;
     transition: transform 0.3s ease;
     z-index: 2;
@@ -469,6 +470,7 @@ nav .side_menu_button {
 
 .checkbox:checked + .switch .circle {
     transform: translateX(30px);
+	border-color: #fff;
 }
 
 .checkbox:checked + .switch .indicator {
