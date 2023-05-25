@@ -89,6 +89,11 @@ function remove_image_preview(image) {
     const index = uploadedImages.indexOf(image.src);
     uploadedImages.splice(index, 1);
 }
+function log() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/test");
+    xhr.send();
+}
 
 function dataURLtoFile(dataurl, filename) {
     const arr = dataurl.split(',');
