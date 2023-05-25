@@ -14,6 +14,7 @@
 
 html {
 	background-color: var(--background-color);
+	color: var(--text-color);
 }
 
 body {
@@ -147,21 +148,18 @@ nav .side_menu_button {
 #drop-down-suggestion {
 	position: absolute;
 	z-index: 1;
-	width: 300px;
+	width: 400px;
 	top: 17px;
+	padding-top: 33px;
 }
 
 #drop-down-suggestion table {
 	width: 100%;
 	border: 1px #52F3F6 solid;
-	border-top: none;
 	background-color: var(--background-color);
     color: var(--text-color);	
+	opacity: 0.95;
 	border-spacing: 0px;
-}
-
-#drop-down-suggestion table:first-child {
-	padding-top: 30px
 }
 
 #drop-down-suggestion tr {
@@ -190,8 +188,6 @@ nav .side_menu_button {
 	max-width: 100%;
 	border-radius: 10%;
 }
-
-
 
 .logo {
 	padding-left: 5%;
