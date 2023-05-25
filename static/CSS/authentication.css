@@ -2,6 +2,21 @@
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+:root {
+    --background-color: rgb(255, 255, 255);
+    --text-color: rgb(0, 0, 0);
+}
+  
+:root.dark-theme {
+    --background-color: rgb(0, 0, 0);
+    --text-color: rgb(255, 255, 255);
+}
+
+html {
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
 main {
 	height: 650px;
 }
@@ -29,7 +44,7 @@ body {
 .auth-form {
     width: 400px;
     margin: 30px auto;
-    background-color: #f1f1f1;
+    background-color: rgba(186, 186, 186, 0.292);
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     padding: 40px;
@@ -39,7 +54,8 @@ body {
     border: 1px solid black;
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
-    color: #000;
+    background-color: var(--background-color);
+	color: var(--text-color);
     font-size: 16px;
     outline: none;
     padding: 10px 15px;

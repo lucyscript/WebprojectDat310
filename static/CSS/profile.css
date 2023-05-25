@@ -21,6 +21,7 @@
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+    background-color: rgb(246,85,82);
 }
 
 .profile-header h1 {
