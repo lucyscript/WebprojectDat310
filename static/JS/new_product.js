@@ -73,7 +73,7 @@ form.addEventListener("submit", function (e) {
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/handle_upload");
+    xhr.open("POST", "/new_product");
     xhr.onload = function() {
         if (xhr.status === 200) {
             window.location.href = xhr.responseURL;
@@ -88,11 +88,6 @@ function remove_image_preview(image) {
     image.parentNode.remove();
     const index = uploadedImages.indexOf(image.src);
     uploadedImages.splice(index, 1);
-}
-function log() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/test");
-    xhr.send();
 }
 
 function dataURLtoFile(dataurl, filename) {

@@ -10,14 +10,20 @@ app = Flask(__name__, template_folder='HTML/templates')
 app.secret_key = 'klinkekule'
 app.config['DATABASE'] = 'Data/database.db'
 
-# database stuff
+# Database SELECT queries
 database = "Data/database.db"
 queryUsers = "SELECT * FROM users WHERE user_id = ?"
 queryItems = "SELECT * FROM items WHERE item_id = ?"
 queryOrders = "SELECT * FROM orders WHERE user_id = ?"
 queryImages = "SELECT * FROM images WHERE product_id = ?"
 
-# Functions
+# General functions
+def get_conn():
+    conn = getattr(g, '_database', None)
+    if conn is None:
+        conn = g._database = sqlite3.connect(database)
+    return conn
+
 def valid_auth(username, password):
     conn = get_conn()
     cursor = conn.cursor()
@@ -96,14 +102,7 @@ def generate_userid():
             if user_id not in used_ids:
                 used_ids.add(user_id)
                 return user_id
-
-
-def get_conn():
-    conn = getattr(g, '_database', None)
-    if conn is None:
-        conn = g._database = sqlite3.connect(database)
-    return conn
-
+            
 
 
 @app.teardown_appcontext
@@ -142,6 +141,7 @@ def init_bio_processor():
 
 # Routes
 
+# General routes
 @app.route('/', methods=['GET', 'POST', 'DELETE'])
 def index():
     conn = get_conn()
@@ -151,6 +151,30 @@ def index():
 
     return render_template('index.html', items=items)
 
+@app.route('/search/<search_query>', methods=['GET'])
+def search(search_query):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute('''
+                SELECT items.item_id, items.title, items.price, images.path
+                FROM items
+                JOIN images ON items.item_id = images.product_id
+                WHERE items.title LIKE ? AND images.displayOrder = 1
+                ''', ('%' + search_query + '%',))
+    items = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    items = [dict(zip(columns, item)) for item in items]
+    return jsonify(items)
+
+@app.route('/settings') # Remove this route, put the darkmode in header
+def settings():
+    user = get_user()
+    if user:
+        return render_template('settings.html')
+    else:
+        return redirect(url_for('login'))
+
+# User routes
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':
@@ -190,7 +214,6 @@ def check_username():
     else:
         return jsonify({'success': False})
 
-
 @app.route('/login', methods=["GET", 'POST'])
 def login():
     if request.method == 'POST':
@@ -212,11 +235,10 @@ def login():
         
     return render_template('login.html')
 
-@app.route('/logout', methods=['GET', 'POST', 'DELETE'])
+@app.route('/logout', methods=['GET', 'DELETE'])
 def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
-
 
 @app.route('/profile', methods=['GET', 'PUT'])
 def profile():
@@ -246,6 +268,46 @@ def profile():
 
 @app.route('/cart')
 def cart():
+    return render_template('cart.html')
+
+@app.route('/order_history')
+def order_history():
+    user = get_user()
+    if user != None:
+        orders = get_orders(user['user_id'])
+        return render_template('order_history.html', user=user, orders=orders)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/search_orders')
+def search_orders():
+    user = get_user()
+    if user:
+        query = request.args.get('query')
+        orders = get_orders(user['user_id'])
+        filtered_orders = []
+        if query:
+            for order in orders:
+                if query.lower() in order['title'].lower():
+                    filtered_orders.append(order)
+        else:
+            filtered_orders = orders
+        return jsonify(filtered_orders)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/checkout')
+def checkout():
+    user = get_user()
+    if user: 
+        orders = get_orders(user['user_id'])
+        return render_template('checkout.html', orders=orders)
+    else:
+        return redirect(url_for('login'))
+
+# User specific product routes
+@app.route('/cart')
+def cart():
     user = get_user()
     if user:
         return render_template('cart.html')
@@ -260,19 +322,35 @@ def order_history():
         return render_template('order_history.html', user=user, orders=orders)
     else:
         return redirect(url_for('login'))
-    
-@app.route('/delete_user', methods=['DELETE'])
-def delete_user():
+
+@app.route('/search_orders')
+def search_orders():
     user = get_user()
     if user:
-        conn = get_conn()
-        cur = conn.cursor()
-        cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
-        conn.commit()
-        return redirect(url_for('logout'))
+        query = request.args.get('query')
+        orders = get_orders(user['user_id'])
+        filtered_orders = []
+        if query:
+            for order in orders:
+                if query.lower() in order['title'].lower():
+                    filtered_orders.append(order)
+        else:
+            filtered_orders = orders
+        return jsonify(filtered_orders)
     else:
         return redirect(url_for('login'))
 
+@app.route('/checkout')
+def checkout():
+    user = get_user()
+    if user: 
+        orders = get_orders(user['user_id'])
+        return render_template('checkout.html', orders=orders)
+    else:
+        return redirect(url_for('login'))
+
+
+# Product routes
 @app.route('/product/<product_id>') 
 def product(product_id):
     conn = get_conn()
@@ -292,106 +370,41 @@ def product(product_id):
 
     return render_template('product.html', item=item, images=images)
 
-@app.route('/new_product', methods=['GET'])
+@app.route('/new_product', methods=['GET', 'POST'])
 def new_product():
     user = get_user()
     if user:
-        return render_template('new_product.html')
-    else:
-        return redirect(url_for('login'))
+        if request.method == 'GET':
+            return render_template('new_product.html')
+        elif request.method == 'POST':
+            conn = get_conn()
+            cursor = conn.cursor()
         
-@app.route('/handle_upload', methods=['POST'])
-def handle_upload():
-    conn = get_conn()
-    cursor = conn.cursor()
-
-    title = request.form['title']
-    description = request.form['description']
-    price = request.form['price']
-    images = request.files.getlist('imageValues[]')
-    test = request.form.getlist('imageValues[]')
-    imagePaths = []
-    n = 0
-    for image in images:
-        imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
-        image.save(imagePaths[n])
-        n += 1
-    owner_id = get_user().get('user_id')
-    item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
-    cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
-
-    i = 1
-    n = 0
-    for image in images:
-        cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + imagePaths[n], i))
-        i += 1
-        n += 1
-    conn.commit()
-
-    return redirect(url_for('index')) # Does not work for some reason
-
-@app.route('/test', methods=['POST'])
-def test():
-    conn = get_conn()
-    cursor = conn.cursor()
-    #cursor.execute('DELETE FROM items WHERE ROWID BETWEEN 4 AND 39')
-    try:
-        #cursor.execute('DELETE FROM images WHERE ROWID BETWEEN 6 AND 11')
-        #cursor.execute('DELETE FROM images WHERE product_id NOT IN (?, ?, ?)', (1, 2, 3))
-        #conn.commit()
-        print(cursor.rowcount, "rows deleted")
-        return "hello"
-    except Exception as e:
-        print("Error:", e)
-        return "Error: " + str(e)
-
-@app.route('/search_orders', methods=['GET'])
-def search_orders():
-    user = get_user()
-    if user:
-        query = request.args.get('query')
-        orders = get_orders(user['user_id'])
-        filtered_orders = []
-        if query:
-            for order in orders:
-                if query.lower() in order['title'].lower():
-                    filtered_orders.append(order)
-        else:
-            filtered_orders = orders
-        return jsonify(filtered_orders)
-    else:
-        return redirect(url_for('login'))
-
-
-@app.route('/search/<search_query>', methods=['GET'])
-def search(search_query):
-    conn = get_conn()
-    cursor = conn.cursor()
-    cursor.execute('''
-                SELECT items.item_id, items.title, items.price, images.path
-                FROM items
-                JOIN images ON items.item_id = images.product_id
-                WHERE items.title LIKE ? AND images.displayOrder = 1
-                ''', ('%' + search_query + '%',))
-    items = cursor.fetchall()
-    columns = [column[0] for column in cursor.description]
-    items = [dict(zip(columns, item)) for item in items]
-    return jsonify(items)
-
-@app.route('/checkout')
-def checkout():
-    user = get_user()
-    if user: 
-        orders = get_orders(user['user_id'])
-        return render_template('checkout.html', orders=orders)
-    else:
-        return redirect(url_for('login'))
-
-@app.route('/settings')
-def settings():
-    user = get_user()
-    if user:
-        return render_template('settings.html')
+            title = request.form['title']
+            description = request.form['description']
+            price = request.form['price']
+            images = request.files.getlist('imageValues[]')
+            imagePaths = []
+            n = 0
+            for image in images:
+                imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
+                image.save(imagePaths[n])
+                n += 1
+            owner_id = get_user().get('user_id')
+            item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
+            cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
+        
+            i = 1
+            n = 0
+            for image in images:
+                cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + imagePaths[n], i))
+                i += 1
+                n += 1
+            conn.commit()
+        
+            return redirect(url_for('index'))
+          
+        else: return redirect(url_for('index')) # Just in case :)   
     else:
         return redirect(url_for('login'))
 
