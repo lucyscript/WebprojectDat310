@@ -67,6 +67,11 @@ nav li {
 	margin-right: 80px;
 }
 
+nav li:nth-child(2) {
+	padding: 0;
+	margin: 0;
+}
+
 nav li span {
 	font-size: 12px;
 	font-weight: 300;
