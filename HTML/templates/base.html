@@ -23,13 +23,21 @@
   <header>
     <nav>
       <ul>
-        <li class="side_menu_button">
-          <img src="https://cdn-icons-png.flaticon.com/512/2801/2801909.png" width="20px" onclick="side_menu_open()">
-        </li>
         <li class="logo">
           <a href="/">
             <img src="https://icon-library.com/images/trade-icon-transparent/trade-icon-transparent-7.jpg" width="55px">
           </a>
+        </li>
+        <li>
+          <div class="slider">
+            <input type="checkbox" id="toggle" class="checkbox">
+            <label for="toggle" class="switch">
+                <div class="indicator"></div>
+                <div class="circle"></div>
+                <img src="https://static.thenounproject.com/png/4514193-200.png" class="lightmode-image">
+                <img src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png" class="darkmode-image">
+            </label>
+          </div>
         </li>
         <li class="center-search">
           <form id="searchbar-form" class="search-form" action="#" method="get">
