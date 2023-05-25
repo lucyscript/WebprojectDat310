@@ -246,7 +246,11 @@ def profile():
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    user = get_user()
+    if user:
+        return render_template('cart.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/order_history')
 def order_history():
