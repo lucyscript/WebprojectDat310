@@ -53,7 +53,7 @@ search.addEventListener("input", function(event){
             const item = items[i];
             tr.innerHTML = "";
             tr.onclick = function() {
-                window.location.href = "/product/" + item.id;
+                window.location.href = "/product/" + item.item_id;
             }
             img.src = item.path;
             td1.appendChild(img);
