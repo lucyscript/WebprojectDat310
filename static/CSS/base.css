@@ -67,11 +67,16 @@ nav li {
 	margin-right: 80px;
 }
 
+@media (max-width: 900px) {
+	nav li:nth-child(1) {
+		margin-right: auto; /* Updated margin-right to "auto" */
+	}
+}
+
 nav li:nth-child(2) {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0;
 	margin: 0;
 }
 
@@ -83,7 +88,7 @@ nav li span {
 	line-height: 20px;
 }
 
-nav li a {
+  nav li a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -504,6 +509,14 @@ nav .side_menu_button {
 
 .darkmode-image {
     opacity: 0;
+    right: 0;
+}
+
+.lightmode-image {
+    opacity: 1;
+    left: 0;
+}
+opacity: 0;
     right: 0;
 }
 
