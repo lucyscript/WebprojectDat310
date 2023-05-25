@@ -83,7 +83,7 @@ nav li span {
 	line-height: 20px;
 }
 
-  nav li a {
+nav li a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -511,3 +511,4 @@ nav .side_menu_button {
     opacity: 1;
     left: 0;
 }
+
