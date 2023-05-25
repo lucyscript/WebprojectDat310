@@ -308,11 +308,7 @@ def checkout():
 # User specific product routes
 @app.route('/cart')
 def cart():
-    user = get_user()
-    if user:
-        return render_template('cart.html')
-    else:
-        return redirect(url_for('login'))
+    return render_template('cart.html')
 
 @app.route('/order_history')
 def order_history():
