@@ -1,10 +1,18 @@
 #new_product_content {
+	display: flex;
+	justify-content: space-evenly;
 	width: 100%;
 	height: 100%;
 	background-color: var(--background-color);
     color: var(--text-color);
 }
 
+.form-ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
 
 .image_preview_image {
 	object-fit: cover;
