@@ -62,8 +62,8 @@
           </a>
           <div class="dropdown-content">
             <div class="column">
-              <div class="box"><a href="{{ url_for('cart') }}">View Cart</a></div>
-              <div class="box"><a href="{{ url_for('checkout') }}">Checkout</a></div>
+              <div class="dropdown-box"><a href="{{ url_for('cart') }}">View Cart</a></div>
+              <div class="dropdown-box"><a href="{{ url_for('checkout') }}">Checkout</a></div>
             </div>
           </div>
         </li>            
@@ -84,14 +84,14 @@
           </div>
           <div class="dropdown-content">
             <div class="column">
-              <div class="box">
+              <div class="dropdown-box">
                 {% if session %}
                     <a href="{{ url_for('logout') }}">Log out</a>
                 {% else %}
                     <a href="{{ url_for('login') }}">Log in</a>
                 {% endif %}
               </div>
-              <div class="box">
+              <div class="dropdown-box">
                 {% if 'userid' in session and user %}
                   <a href="{{ url_for('profile') }}">
                 {% else %}
@@ -100,9 +100,9 @@
                 Profile</a>
               </div>
               {% if 'userid' in session and user %}
-                <div class="box"><a href="{{ url_for('order_history') }}">Order history</a></div>
+                <div class="dropdown-box"><a href="{{ url_for('order_history') }}">Order history</a></div>
               {% else %}
-                <div class="box"><a href="{{ url_for('login') }}">Order history</a></div>
+                <div class="dropdown-box"><a href="{{ url_for('login') }}">Order history</a></div>
               {% endif %}
             </div>
           </div>
@@ -110,9 +110,6 @@
       </ul>
     </nav>
   </header>      
-  <div id="side_menu">
-    <img class="side_menu_button" src="https://cdn-icons-png.flaticon.com/512/7693/7693271.png" width="40px" onclick="side_menu_close()">
-  </div>
 
   <main>
     {% block content %}

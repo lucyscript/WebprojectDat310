@@ -1,0 +1,32 @@
+/* INDEX PRODUCTS */
+#product-grid {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	width: 100%;
+	margin: 0;	
+	box-sizing: border-box;
+}
+
+.product-box {
+	height: 300px;
+    width: 215px;
+	padding: 20px;
+	border: 2px rgb(246,85,82);
+	border-radius: 24px;
+}
+.product-box img {
+	width: 215px;
+	height: 215px;
+	border: 1px solid rgb(246,85,82);
+	border-radius: 10px;
+}
+.product-box h3 {
+	width: 240px;
+	margin-right: 0;
+	color: var(--text-color);
+}
+.product-box:hover {
+	background-color: rgb(246,85,82);
+	cursor: pointer;
+}
