@@ -262,6 +262,8 @@ def profile():
                 return jsonify({'message': 'No data received'})
         else:
             orders = get_orders(user['user_id'])
+            user['user_id'] = ""
+            user['password'] = ""
             return render_template('profile.html', user=user, orders=orders)
 
     return redirect(url_for('login'))
@@ -288,7 +290,7 @@ def order_history():
     user = get_user()
     if user != None:
         orders = get_orders(user['user_id'])
-        return render_template('order_history.html', user=user, orders=orders)
+        return render_template('order_history.html', username=user['username'], orders=orders)
     else:
         return redirect(url_for('login'))
 
@@ -299,12 +301,13 @@ def search_orders():
         query = request.args.get('query')
         orders = get_orders(user['user_id'])
         filtered_orders = []
-        if query:
-            for order in orders:
-                if query.lower() in order['title'].lower():
-                    filtered_orders.append(order)
-        else:
-            filtered_orders = orders
+        if orders != None:
+            if query:
+                for order in orders:
+                    if query.lower() in order['title'].lower():
+                        filtered_orders.append(order)
+            else:
+                filtered_orders = orders
         return jsonify(filtered_orders)
     else:
         return redirect(url_for('login'))
@@ -359,7 +362,7 @@ def new_product():
                 imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
                 image.save(imagePaths[n])
                 n += 1
-            owner_id = get_user().get('user_id')
+            owner_id = user['user_id'] if user else None
             item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
             cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
         

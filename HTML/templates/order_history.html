@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ user.username }}'s Orders
+    {{ username }}'s Orders
 {% endblock %}
 
 {% block head %}
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ user.username }}'s order history</h2>
+    <h2>{{ username }}'s order history</h2>
 
     <div class="search-bar">
         <form class="order-search">
