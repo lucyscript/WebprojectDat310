@@ -354,6 +354,8 @@ def cart():
             return render_template('cart.html', cart_items=cart_items)
         else:  
             return redirect(url_for('login'))
+        
+    return redirect(url_for('index'))
 
 
 
@@ -409,11 +411,11 @@ def checkout():
                 clear_cart(user['user_id'])
                 
                 return redirect(url_for('index')) 
-                
             except:
                 pass
     else:
         return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 
 # Product routes
