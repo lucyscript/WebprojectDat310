@@ -25,6 +25,7 @@
 
 #slide-box-box {
 	display: block;
+	margin: auto;
 	position: relative;
 	width: 500px;
 	height: 400px;
@@ -72,6 +73,8 @@
     color: var(--text-color);
 	padding:10px;
 	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
 }
+
 
 
