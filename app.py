@@ -129,7 +129,7 @@ def clear_cart(user_id):
         conn.commit()
         conn.close()
     except:
-        pass  
+        pass 
 
 def generate_userid():
         while True:
@@ -357,8 +357,6 @@ def cart():
         
     return redirect(url_for('index'))
 
-
-
 @app.route('/orders')
 def orders():
     user = get_user()
@@ -394,6 +392,7 @@ def checkout():
         if request.method == 'GET':
             return render_template('checkout.html', cart_items=cart_items)
         if request.method == 'POST':
+            clear_cart(user['user_id'])
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
             try:
                 conn = get_conn()
@@ -407,8 +406,6 @@ def checkout():
                 
                 conn.commit()
                 conn.close()
-                
-                clear_cart(user['user_id'])
                 
                 return redirect(url_for('index')) 
             except:
