@@ -195,9 +195,12 @@ def registration():
 
         username = request.form.get("username")
         password = request.form.get("password")
-        if not username or not password:
+        if not username or not password or username == "" or password == "":
             return render_template('registration.html', error="Please fill out all fields.")
+        if len(username.strip()) <= 4 or len(password.strip()) <= 5:
+            return render_template('registration.html', error="Username and password must be at least 5 characters long.")
         
+
         hash = generate_password_hash(password)
 
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
