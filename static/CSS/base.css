@@ -72,11 +72,16 @@ nav li {
 	margin-right: 80px;
 }
 
+@media (max-width: 900px) {
+	nav li:nth-child(1) {
+		margin-right: auto; /* Updated margin-right to "auto" */
+	}
+}
+
 nav li:nth-child(2) {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0;
 	margin: 0;
 }
 
