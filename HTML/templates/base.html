@@ -100,7 +100,7 @@
                 Profile</a>
               </div>
               {% if 'userid' in session and user %}
-                <div class="dropdown-box"><a href="{{ url_for('order_history') }}">Order history</a></div>
+                <div class="dropdown-box"><a href="{{ url_for('orders') }}">Order history</a></div>
               {% else %}
                 <div class="dropdown-box"><a href="{{ url_for('login') }}">Order history</a></div>
               {% endif %}
