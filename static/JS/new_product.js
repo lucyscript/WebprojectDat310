@@ -44,9 +44,6 @@ function add_image_preview(upload) {
             container.appendChild(removeButton);
             upload_container.appendChild(container);
 
-            console.log("Uploaded image:", image);
-            console.log("All uploaded images:", uploadedImages);
-            console.log("input form values:", image_upload.value);
             loadedImages++;
             if (loadedImages === images.length) {
             //    onload_complete();
@@ -84,10 +81,12 @@ form.addEventListener("submit", function (e) {
 });
 
 
-function remove_image_preview(image) {
-    image.parentNode.remove();
-    const index = uploadedImages.indexOf(image.src);
-    uploadedImages.splice(index, 1);
+function remove_image_preview(button) {
+    const image = button.parentNode.firstChild;
+    const parent = image.parentNode.parentNode;
+    const index = Array.prototype.indexOf.call(parent.childNodes, image.parentNode);
+    parent.removeChild(image.parentNode);
+    uploadedImages.splice(index-1, 1);
 }
 
 function dataURLtoFile(dataurl, filename) {
