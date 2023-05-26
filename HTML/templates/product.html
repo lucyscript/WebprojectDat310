@@ -26,12 +26,12 @@
 </div>
 
 <div id="title-box">
-    <h1 id="title">Title: {{ item.title }}</h1>
-    <h2 id="price">Price: {{ item.price }} kr</h2>
+    <h1 id="title">{{ item.title }}</h1>
 </div>
 <div id="description-box">
-    <p id="description">Description: {{ item.description }}</p>
+    <p id="description">{{ item.description }}</p>
 </div>
+<h2 id="price">{{ item.price }},-</h2>
 
 {% if session %}
 <form action="/cart" method="POST">
