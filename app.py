@@ -392,6 +392,7 @@ def checkout():
         if request.method == 'GET':
             return render_template('checkout.html', cart_items=cart_items)
         if request.method == 'POST':
+            clear_cart(user['user_id'])
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
             try:
                 conn = get_conn()
@@ -405,8 +406,6 @@ def checkout():
                 
                 conn.commit()
                 conn.close()
-                
-                clear_cart(user['user_id'])
                 
                 return redirect(url_for('index')) 
             except:
