@@ -116,13 +116,27 @@ def get_cart(user_id):
     except:
         return None
 
+def clear_cart(user_id):
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        
+        cur.execute("""
+            DELETE FROM cart
+            WHERE user_id = ?
+        """, (user_id,))
+        
+        conn.commit()
+        conn.close()
+    except:
+        pass  
+
 def generate_userid():
         while True:
             user_id = random.randint(100000, 999999)
             if user_id not in used_ids:
                 used_ids.add(user_id)
                 return user_id
-            
 
 
 @app.teardown_appcontext
@@ -295,30 +309,50 @@ def cart():
     if request.method == 'POST':
         if user:
             product_id = request.form['product_id']
+            existing_items = get_cart(user['user_id'])
             conn = get_conn()
             cursor = conn.cursor()
-            cursor.execute('''
-                SELECT items.item_id, items.title, items.description, items.price, images.path
-                FROM items
-                JOIN images ON items.item_id = images.product_id
-                WHERE items.item_id = ? AND images.displayOrder = 1
-            ''', (product_id,))
-            cart_item = cursor.fetchone()
-            if cart_item:
-                columns = [column[0] for column in cursor.description]
-                product = dict(zip(columns, cart_item))
+
+            if existing_items:
+                for existing_item in existing_items:
+                    if int(existing_item['item_id']) == int(product_id):
+                        new_quantity = int(existing_item['quantity']) + 1
+                        new_price = float(existing_item['price']) * 2
+                        cursor.execute('''
+                            UPDATE cart
+                            SET quantity = ?, price = ?
+                            WHERE user_id = ? AND item_id = ?
+                        ''', (new_quantity, new_price, user['user_id'], existing_item['item_id']))
+                        break
+                else:
+                    cursor.execute('''
+                        INSERT INTO cart (user_id, item_id, title, description, price, image_path, quantity)
+                        SELECT ?, items.item_id, items.title, items.description, items.price, images.path, 1
+                        FROM items
+                        JOIN images ON items.item_id = images.product_id
+                        WHERE items.item_id = ? AND images.displayOrder = 1
+                    ''', (user['user_id'], product_id))
+            else:
                 cursor.execute('''
-                    INSERT INTO cart (user_id, item_id, title, description, price, image_path)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                ''', (user['user_id'], product['item_id'], product['title'], product['description'], product['price'], product['path']))
-                conn.commit()
-                conn.close()
-                return redirect(url_for('index'))
-    if user:
-        cart_items = get_cart(user['user_id'])
-        return render_template('cart.html', cart_items=cart_items)
-    else:  
-        return redirect(url_for('login'))
+                    INSERT INTO cart (user_id, item_id, title, description, price, image_path, quantity)
+                    SELECT ?, items.item_id, items.title, items.description, items.price, images.path, 1
+                    FROM items
+                    JOIN images ON items.item_id = images.product_id
+                    WHERE items.item_id = ? AND images.displayOrder = 1
+                ''', (user['user_id'], product_id))
+
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
+
+    if request.method == 'GET':
+        if user:
+            cart_items = get_cart(user['user_id'])
+            return render_template('cart.html', cart_items=cart_items)
+        else:  
+            return redirect(url_for('login'))
+
+
 
 @app.route('/orders')
 def orders():
@@ -347,12 +381,34 @@ def search_orders():
     else:
         return redirect(url_for('login'))
 
-@app.route('/checkout')
+@app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     user = get_user()
+    cart_items = get_cart(user['user_id'])
     if user: 
-        orders = get_orders(user['user_id'])
-        return render_template('checkout.html', orders=orders)
+        if request.method == 'GET':
+            return render_template('checkout.html', cart_items=cart_items)
+        if request.method == 'POST':
+            purchase_date = datetime.now().date().strftime("%Y-%m-%d")
+            try:
+                conn = get_conn()
+                cur = conn.cursor()
+                
+                for cart_item in cart_items:
+                    cur.execute("""
+                        INSERT INTO orders (order_date, user_id, product_id, quantity, total_amount)
+                        VALUES (?, ?, ?, ?, ?)
+                    """, (purchase_date, user['user_id'], cart_item['item_id'], cart_item['quantity'], cart_item['price']))
+                
+                conn.commit()
+                conn.close()
+                
+                clear_cart(user['user_id'])
+                
+                return redirect(url_for('index')) 
+                
+            except:
+                pass
     else:
         return redirect(url_for('login'))
 

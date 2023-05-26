@@ -10,6 +10,7 @@
     <table>
         <tr>
             <th>Item ID</th>
+            <th>Quantity</th>
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
@@ -18,6 +19,7 @@
         {% for cart_item in cart_items %}
         <tr>
             <td>{{ cart_item.item_id }}</td>
+            <td>{{ cart_item.quantity }}</td>
             <td>{{ cart_item.title }}</td>
             <td>{{ cart_item.description }}</td>
             <td>${{ cart_item.price }}</td>
@@ -26,5 +28,5 @@
         {% endfor %}
     </table>
     {% endif %}
-    <button>Checkout</button>
+    <button><a href="{{ url_for('checkout')}}">Checkout</a></button>
 {% endblock %}
