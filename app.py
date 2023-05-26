@@ -312,42 +312,42 @@ def cart():
     if request.method == 'POST':
         if user:
             product_id = request.form['product_id']
+            quantity = int(request.form['quantity'])
             existing_items = get_cart(user['user_id'])
             conn = get_conn()
             cursor = conn.cursor()
+            product = get_product(product_id)
 
+            in_cart = False
             if existing_items:
                 for existing_item in existing_items:
                     if int(existing_item['item_id']) == int(product_id):
-                        new_quantity = int(existing_item['quantity']) + 1
-                        new_price = float(existing_item['price']) * 2
+                        new_quantity = int(existing_item['quantity']) + quantity
+                        new_price = float(existing_item['price']) * new_quantity
                         cursor.execute('''
                             UPDATE cart
                             SET quantity = ?, price = ?
                             WHERE user_id = ? AND item_id = ?
                         ''', (new_quantity, new_price, user['user_id'], existing_item['item_id']))
+                        in_cart = True
                         break
-                else:
-                    cursor.execute('''
-                        INSERT INTO cart (user_id, item_id, title, description, price, image_path, quantity)
-                        SELECT ?, items.item_id, items.title, items.description, items.price, images.path, 1
-                        FROM items
-                        JOIN images ON items.item_id = images.product_id
-                        WHERE items.item_id = ? AND images.displayOrder = 1
-                    ''', (user['user_id'], product_id))
-            else:
+
+            if not in_cart:
+                quantity_price = int(product['price']) * quantity
                 cursor.execute('''
                     INSERT INTO cart (user_id, item_id, title, description, price, image_path, quantity)
-                    SELECT ?, items.item_id, items.title, items.description, items.price, images.path, 1
+                    SELECT ?, items.item_id, items.title, items.description, ?, images.path, ?
                     FROM items
                     JOIN images ON items.item_id = images.product_id
                     WHERE items.item_id = ? AND images.displayOrder = 1
-                ''', (user['user_id'], product_id))
+                ''', (user['user_id'], quantity_price, quantity, product_id))
 
             conn.commit()
             conn.close()
             return redirect(url_for('index'))
-
+        else:
+            return redirect(url_for('login'))
+        
     if request.method == 'GET':
         if user:
             cart_items = get_cart(user['user_id'])
