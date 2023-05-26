@@ -73,6 +73,7 @@ sql_create_cart_table = """CREATE TABLE IF NOT EXISTS cart (
                                 description TEXT NOT NULL,
                                 price REAL NOT NULL,
                                 image_path TEXT NOT NULL,
+                                quantity INTEGER NOT NULL,
                                 FOREIGN KEY(user_id) REFERENCES users(user_id),
                                 FOREIGN KEY(item_id) REFERENCES items(item_id)
                             );"""
