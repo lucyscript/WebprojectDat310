@@ -18,8 +18,8 @@ username.addEventListener('input', function() {
 });
 
 password.addEventListener('input', function() {
-    if (password.value.length < 5) {
-        password_error.innerHTML = "Password must be at least 5 characters long";
+    if (password.value.length < 5 || password.value.includes(" ")) {
+        password_error.innerHTML = "Password must be at least 5 characters long and without spaces";
     } else {
         password_error.innerHTML = "";
     }
@@ -46,23 +46,30 @@ $(document).ready(function() {
             method: 'GET',
             data: {username: new_username},
             success: function(response) {
-                if (response.success) {
-                    usernameTaken = false;
-                    if (new_username.length > 3) {
-                        $('#username-taken').text('');
-                        $('#username-available').text('Username is available');
-                    } else {
-                        $('#username-taken').text('');
-                        $('#username-available').text('');
-                    }
-                } else {
+                if (new_username.includes(" ")) {
                     usernameTaken = true;
-                    if (new_username.length > 3) {
-                        $('#username-available').text('');
-                        $('#username-taken').text('Username is already taken.');
+                    $('#username-taken').text('Username cannot contain spaces.');
+                    $('#username-available').text('');
+                }
+                else {
+                    if (response.success) {
+                        usernameTaken = false;
+                        if (new_username.length > 3) {
+                            $('#username-taken').text('');
+                            $('#username-available').text('Username is available');
+                        } else {
+                            $('#username-taken').text('');
+                            $('#username-available').text('');
+                        }
                     } else {
-                        $('#username-taken').text('');
-                        $('#username-available').text('');
+                        usernameTaken = true;
+                        if (new_username.length > 3) {
+                            $('#username-available').text('');
+                            $('#username-taken').text('Username is already taken.');
+                        } else {
+                            $('#username-taken').text('');
+                            $('#username-available').text('');
+                        }
                     }
                 }
                 updateRegisterBtn(); 
@@ -77,7 +84,7 @@ $(document).ready(function() {
 
 function updateRegisterBtn() {
     const register_btn = document.getElementById('btn');
-    if (username.value.length < 4 || password.value.length < 5 || password.value !== confirm_password.value || usernameTaken) {
+    if (username.value.length < 4 || password.value.length < 5 || password.value !== confirm_password.value || usernameTaken || username.value.includes(" ") || password.value.includes(" ")) {
         register_btn.disabled = true;
     } else {
         register_btn.disabled = false;

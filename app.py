@@ -209,9 +209,12 @@ def registration():
 
         username = request.form.get("username")
         password = request.form.get("password")
-        if not username or not password:
-            return render_template('registration.html', error="Please fill out all fields.")
+        if not username or not password or username == "" or password == "":
+            return render_template('registration.html')
+        if len(username.strip()) < 4 or len(password.strip()) < 5:
+            return render_template('registration.html')
         
+
         hash = generate_password_hash(password)
 
         cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
@@ -352,6 +355,8 @@ def cart():
             return render_template('cart.html', cart_items=cart_items)
         else:  
             return redirect(url_for('login'))
+        
+    return redirect(url_for('index'))
 
 
 
@@ -407,11 +412,11 @@ def checkout():
                 clear_cart(user['user_id'])
                 
                 return redirect(url_for('index')) 
-                
             except:
                 pass
     else:
         return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 
 # Product routes
