@@ -3,6 +3,9 @@
 {% block title %}
     Cart - Hokeren
 {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/cart.css') }}">
+{% endblock %}
 
 {% block content %}
     <h1>Your cart:</h1>

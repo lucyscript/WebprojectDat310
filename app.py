@@ -343,6 +343,7 @@ def cart():
 
             conn.commit()
             conn.close()
+            clear_cart(user['user_id'])
             return redirect(url_for('index'))
 
     if request.method == 'GET':
