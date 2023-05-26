@@ -130,6 +130,7 @@ nav li a {
     cursor: pointer;
     overflow: hidden;
 	opacity: 0.5;
+	z-index: 4;
 	background-color: #fff;
 }
 
