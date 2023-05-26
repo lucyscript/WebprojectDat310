@@ -20,7 +20,7 @@ $(document).ready(function() {
         event.preventDefault();
         let username = $('#username').val();
         let password = $('#password').val();
-        $('#loading img').attr('src', 'https://gregoryuniversityuturu.edu.ng/portal/assets/scholars/images/ajax-loader.gif');
+        $('#loading img').attr('src', 'https://sales.ufaber.com/public/static/img/loader-orange.gif');
         $('#loading img').show();
         $.ajax({
             method: 'POST',

@@ -66,6 +66,17 @@ sql_create_images_table = """CREATE TABLE IF NOT EXISTS images (
                                 FOREIGN KEY(product_id) REFERENCES items(item_id)
                             );"""
 
+sql_create_cart_table = """CREATE TABLE IF NOT EXISTS cart (
+                                user_id INTEGER NOT NULL,
+                                item_id INTEGER NOT NULL,
+                                title TEXT NOT NULL,
+                                description TEXT NOT NULL,
+                                price REAL NOT NULL,
+                                image_path TEXT NOT NULL,
+                                FOREIGN KEY(user_id) REFERENCES users(user_id),
+                                FOREIGN KEY(item_id) REFERENCES items(item_id)
+                            );"""
+
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
     :param conn: Connection object
@@ -219,6 +230,7 @@ def setup():
         create_table(conn, sql_create_items_table)
         create_table(conn, sql_create_orders_table)
         create_table(conn, sql_create_images_table)
+        create_table(conn, sql_create_cart_table)
         init_users(conn)
         init_items(conn)
         init_orders(conn)

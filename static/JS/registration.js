@@ -42,7 +42,7 @@ $(document).ready(function() {
             $('#username').css('background-image', 'url("https://sales.ufaber.com/public/static/img/loader-orange.gif")');
         }
         $.ajax({
-            url: '/check_username',
+            url: '/username',
             method: 'GET',
             data: {username: new_username},
             success: function(response) {

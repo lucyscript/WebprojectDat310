@@ -5,6 +5,26 @@
 {% endblock %}
 
 {% block content %}
-    <h1> Your cart: </h1>
-    <button> Pay </button>
+    <h1>Your cart:</h1>
+    {% if cart_items %}
+    <table>
+        <tr>
+            <th>Item ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+        </tr>
+        {% for cart_item in cart_items %}
+        <tr>
+            <td>{{ cart_item.item_id }}</td>
+            <td>{{ cart_item.title }}</td>
+            <td>{{ cart_item.description }}</td>
+            <td>${{ cart_item.price }}</td>
+            <td><img src="{{ cart_item.path }}" width="100px"></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <button>Checkout</button>
 {% endblock %}

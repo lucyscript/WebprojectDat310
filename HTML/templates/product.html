@@ -29,6 +29,12 @@
     <p id="description">Description: {{ item.description }}</p>
 </div>
 
+<form action="/cart" method="POST">
+    <!-- Other form fields -->
+    <input type="hidden" name="product_id" value="{{ item.item_id }}">
+    <button type="submit">Add to Cart</button>
+</form>
+
 <!-- </div> -->
 </div>
 {% endblock %}

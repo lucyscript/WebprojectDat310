@@ -31,7 +31,7 @@ function confirmDelete(user_id) {
 }
   
 function deleteUser() {
-    fetch('/delete_user', {
+    fetch('/profile', {
         method: 'DELETE'
     })
     .then(function(response) {

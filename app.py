@@ -96,6 +96,26 @@ def get_images(product_id):
     except:
         return None
 
+def get_cart(user_id):
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT cart.*, images.path
+            FROM cart
+            INNER JOIN images ON cart.item_id = images.product_id
+            WHERE cart.user_id = ? AND images.displayOrder = 1
+        """, (user_id,))
+        rows = cur.fetchall()
+        columns = [column[0] for column in cur.description]
+        cart_items = []
+        for row in rows:
+            cart_item = dict(zip(columns, row))
+            cart_items.append(cart_item)
+        return cart_items
+    except:
+        return None
+
 def generate_userid():
         while True:
             user_id = random.randint(100000, 999999)
@@ -166,14 +186,6 @@ def search(search_query):
     items = [dict(zip(columns, item)) for item in items]
     return jsonify(items)
 
-@app.route('/settings') # Remove this route, put the darkmode in header
-def settings():
-    user = get_user()
-    if user:
-        return render_template('settings.html')
-    else:
-        return redirect(url_for('login'))
-
 # User routes
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -202,8 +214,8 @@ def registration():
                 
     return render_template('registration.html')
 
-@app.route('/check_username')
-def check_username():
+@app.route('/username')
+def username():
     username = request.args.get("username")
     conn = get_conn()
     cursor = conn.cursor()
@@ -240,7 +252,7 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile', methods=['GET', 'PUT'])
+@app.route('/profile', methods=['GET', 'PUT', 'DELETE'])
 def profile():
     user = get_user()
     if user:
@@ -260,31 +272,54 @@ def profile():
                 return jsonify({'message': 'Profile content updated successfully'})
             else:
                 return jsonify({'message': 'No data received'})
+            
+        elif request.method == 'DELETE':
+            conn = get_conn()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
+            conn.commit()
+            return redirect(url_for('logout'))
+        
         else:
             orders = get_orders(user['user_id'])
             return render_template('profile.html', user=user, orders=orders)
 
     return redirect(url_for('login'))
 
-@app.route('/delete_user', methods=['DELETE'])
-def delete_user():
+# User specific product routes
+@app.route('/cart', methods=['GET', 'POST'])
+def cart():
     user = get_user()
+    if request.method == 'POST':
+        if user:
+            product_id = request.form['product_id']
+            conn = get_conn()
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT items.item_id, items.title, items.description, items.price, images.path
+                FROM items
+                JOIN images ON items.item_id = images.product_id
+                WHERE items.item_id = ? AND images.displayOrder = 1
+            ''', (product_id,))
+            cart_item = cursor.fetchone()
+            if cart_item:
+                columns = [column[0] for column in cursor.description]
+                product = dict(zip(columns, cart_item))
+                cursor.execute('''
+                    INSERT INTO cart (user_id, item_id, title, description, price, image_path)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                ''', (user['user_id'], product['item_id'], product['title'], product['description'], product['price'], product['path']))
+                conn.commit()
+                conn.close()
+                return redirect(url_for('index'))
     if user:
-        conn = get_conn()
-        cur = conn.cursor()
-        cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
-        conn.commit()
-        return redirect(url_for('logout'))
-    else:
+        cart_items = get_cart(user['user_id'])
+        return render_template('cart.html', cart_items=cart_items)
+    else:  
         return redirect(url_for('login'))
 
-# User specific product routes
-@app.route('/cart')
-def cart():
-    return render_template('cart.html')
-
-@app.route('/order_history')
-def order_history():
+@app.route('/orders')
+def orders():
     user = get_user()
     if user != None:
         orders = get_orders(user['user_id'])
@@ -376,7 +411,6 @@ def new_product():
         else: return redirect(url_for('index')) # Just in case :)   
     else:
         return redirect(url_for('login'))
-
 
 if __name__ == '__main__': 
     app.run(debug=True)
