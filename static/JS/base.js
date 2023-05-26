@@ -6,6 +6,15 @@ $('#search').on('keydown', function(event) {
 });
 const search = document.getElementById("searchbar-form");
 search.addEventListener("input", function(event){
+
+    const input = event.target.value.trim();
+    if (input === "") {
+        // Handle empty input
+        const container = document.getElementById("drop-down-suggestion");
+        container.innerHTML = "";
+        return;
+      }
+
     const xhttp = new XMLHttpRequest();
     xhttp.responseType = "json";
     xhttp.onload = function() {
@@ -14,29 +23,33 @@ search.addEventListener("input", function(event){
         container.innerHTML = "";
 
         const table = document.createElement("table");
-
-        for (let i = 0; i < items.length; i++) {
-            const tr = document.createElement("tr");
-            const td1 = document.createElement("td");
-            const td2 = document.createElement("td");
-            const th = document.createElement("th");
-            const img = document.createElement("img");
-            
-            const item = items[i];
-            tr.innerHTML = "";
-            tr.onclick = function() {
-                window.location.href = "/product/" + item.item_id;
+        try {
+            for (let i = 0; i < items.length; i++) {
+                const tr = document.createElement("tr");
+                const td1 = document.createElement("td");
+                const td2 = document.createElement("td");
+                const th = document.createElement("th");
+                const img = document.createElement("img");
+                
+                const item = items[i];
+                tr.innerHTML = "";
+                tr.onclick = function() {
+                    window.location.href = "/product/" + item.item_id;
+                }
+                img.src = item.path;
+                td1.appendChild(img);
+                th.innerHTML = item.title;
+                td2.innerHTML = item.price;
+                
+                tr.appendChild(td1);
+                tr.appendChild(th);
+                tr.appendChild(td2);
+                
+                table.appendChild(tr);
             }
-            img.src = item.path;
-            td1.appendChild(img);
-            th.innerHTML = item.title;
-            td2.innerHTML = item.price;
-            
-            tr.appendChild(td1);
-            tr.appendChild(th);
-            tr.appendChild(td2);
-            
-            table.appendChild(tr);
+        }
+        catch (err) {
+            return;
         }
         container.appendChild(table);
       }
