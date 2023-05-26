@@ -12,7 +12,6 @@
 {% block content %}
 
 <div class="content-box">
-<!-- <div id="product-content-page"> -->
 <div id="slide-box-box">
 <div id="slide-box">
     {% for image in images %}
@@ -39,7 +38,7 @@
     <label for="quantity">Quantity:</label>
     <input type="number" name="quantity" value="1" min="1" max="100">
     <input type="hidden" name="product_id" value="{{ item.item_id }}">
-    <button type="submit">Add to Cart</button>
+    <button type="submit" class="add_to_cart">Add to Cart</button>
 </form>
 {% endif %}
 </div>
