@@ -12,12 +12,19 @@ table {
 th, td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #f2f2f2;
-    color: #333;
+    border-bottom: 1px solid rgb(246,85,82);
+}
+
+td {
+    border-bottom: 1px solid #52F3F6;
+}
+
+.del {
+    padding: 0;
+    cursor: pointer;
 }
 
 img {
@@ -25,24 +32,31 @@ img {
     max-height: 100px;
 }
 
-button {
-    display: block;
-    width: 150px;
-    height: 40px;
-    margin: 20px auto;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button a {
-    color: #fff;
+a {
     text-decoration: none;
 }
 
-button:hover {
-    background-color: #45a049;
+.button {
+    display: block;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px auto;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--text-color);
+    background-color: rgb(246, 85, 82);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+.button:hover {
+    background-color: #52f3f6;
+}
+  
+.remove-icon {
+    width: 25px;
 }

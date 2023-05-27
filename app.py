@@ -356,6 +356,23 @@ def cart():
         
     return redirect(url_for('index'))
 
+@app.route('/cart/<int:item_id>', methods=['DELETE'])
+def delete_cart_item(item_id):
+    user = get_user()
+    if user:
+        try:
+            conn = get_conn()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM cart WHERE user_id = ? AND item_id = ?', (user['user_id'], item_id))
+            conn.commit()
+            conn.close()
+            return ''
+        except:
+            pass
+    else:
+        return redirect(url_for('login'))
+
+
 @app.route('/orders')
 def orders():
     user = get_user()

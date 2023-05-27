@@ -70,6 +70,7 @@
 	background-color: var(--background-color);
 	cursor: pointer;
     color: var(--text-color);
+	font-weight: bold;
 }
 
 .add_to_cart:hover {
