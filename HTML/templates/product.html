@@ -34,12 +34,14 @@
 <h2 id="price">{{ item.price }},-</h2>
 
 {% if session %}
-<form action="/cart" method="POST">
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" value="1" min="1" max="100">
-    <input type="hidden" name="product_id" value="{{ item.item_id }}">
-    <button type="submit" class="add_to_cart">Add to Cart</button>
-</form>
+    <form id="cart-form">
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" value="1" min="1" max="100">
+        <input type="hidden" name="product_id" value="{{ item.item_id }}">
+        <button type="submit" class="add_to_cart">Add to Cart</button>
+        <div id="response-message"></div>
+        <div id="loading"><img src="" width="25px"></div>
+    </form>
 {% endif %}
 </div>
 {% endblock %}

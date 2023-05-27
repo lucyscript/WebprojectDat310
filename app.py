@@ -3,7 +3,6 @@ import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-import logging
 used_ids = set()
 
 app = Flask(__name__, template_folder='HTML/templates')
@@ -344,7 +343,7 @@ def cart():
 
             conn.commit()
             conn.close()
-            return redirect(url_for('index'))
+            return jsonify({'message': 'Item added to cart successfully.'})
         else:
             return redirect(url_for('login'))
         
