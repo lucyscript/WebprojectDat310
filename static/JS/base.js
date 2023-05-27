@@ -39,7 +39,7 @@ search.addEventListener("input", function(event){
                 img.src = item.path;
                 td1.appendChild(img);
                 th.innerHTML = item.title;
-                td2.innerHTML = item.price;
+                td2.innerHTML = `$${item.price}`;
                 
                 tr.appendChild(td1);
                 tr.appendChild(th);
