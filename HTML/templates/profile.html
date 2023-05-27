@@ -28,18 +28,28 @@
                     <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
                 {% else %}
                     <p>{{ get_init_bio(user_page.created_at) }}</p> 
-                    <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
+                    <input type="text" id="bio-input" value="" hidden>
                 {% endif %}
             </div>
             <div class="info-section" id="address">
                 <h3>Address</h3>
-                <p>{{ user_page.address }}</p>
-                <input type="text" id="address-input" value="{{ user.address }}" hidden>
+                {% if user_page.address is not none %}
+                    <p>{{ user_page.address }}</p>
+                    <input type="text" id="address-input" value="{{ user.address }}" hidden>
+                {% else %}
+                    <p>No one knows!</p>
+                    <input type="text" id="address-input" value="" hidden>
+                {% endif %}
             </div>
             <div class="info-section" id="phone">
                 <h3>Phone Number</h3>
-                <p>{{ user_page.phone }}</p>
-                <input type="text" id="phone-input" value="{{ user.phone }}" hidden>
+                {% if user_page.phone is not none %}
+                    <p>{{ user_page.phone }}</p>
+                    <input type="text" id="phone-input" value="{{ user.phone }}" hidden>
+                {% else %}
+                    <p>No one knows!</p>
+                    <input type="text" id="phone-input" value="" hidden>
+                {% endif %}
             </div>
         </div>
         <div class="transaction-table">

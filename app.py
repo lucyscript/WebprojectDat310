@@ -281,12 +281,12 @@ def profile(username):
 
         orders = get_orders(user['user_id'])
         if session.get('userid') == user['user_id']:
+            user['user_id'] = ""
+            user['password'] = ""
             return render_template('profile.html', user_page=user, orders=orders, logged_in=True)
         
         user['user_id'] = ""
         user['password'] = ""
-        curr_user = get_user()
-
         return render_template('profile.html', user_page=user, orders=orders, logged_in=False)
 
     user = get_user()
@@ -303,7 +303,13 @@ def profile(username):
                 bio = data['bio']
                 address = data['address']
                 phone = data['phone']
-
+                
+                if bio == "None" or bio == "":
+                    bio = None
+                if address == "None" or address == "":
+                    address = None
+                if phone == "None" or phone == "":
+                    phone = None
                 # Update current logged in user's profile which in itself is a security measure
                 cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user['user_id']))
                 conn.commit()
