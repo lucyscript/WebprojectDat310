@@ -3,7 +3,7 @@ import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-
+import logging
 used_ids = set()
 
 app = Flask(__name__, template_folder='HTML/templates')
@@ -120,17 +120,17 @@ def clear_cart(user_id):
     try:
         conn = get_conn()
         cur = conn.cursor()
-        
+
         cur.execute("""
             DELETE FROM cart
             WHERE user_id = ?
         """, (user_id,))
-        
+
         conn.commit()
         conn.close()
     except:
-        pass 
-
+        pass
+ 
 def generate_userid():
         while True:
             user_id = random.randint(100000, 999999)
@@ -392,12 +392,10 @@ def checkout():
         if request.method == 'GET':
             return render_template('checkout.html', cart_items=cart_items)
         if request.method == 'POST':
-            clear_cart(user['user_id'])
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
             try:
                 conn = get_conn()
                 cur = conn.cursor()
-                
                 for cart_item in cart_items:
                     cur.execute("""
                         INSERT INTO orders (order_date, user_id, product_id, quantity, total_amount)
@@ -405,8 +403,8 @@ def checkout():
                     """, (purchase_date, user['user_id'], cart_item['item_id'], cart_item['quantity'], cart_item['price']))
                 
                 conn.commit()
+                clear_cart(user['user_id'])
                 conn.close()
-                
                 return redirect(url_for('index')) 
             except:
                 pass
