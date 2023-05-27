@@ -79,7 +79,7 @@ nav li {
 
 @media (max-width: 900px) {
 	nav li:nth-child(1) {
-		margin-right: auto; /* Updated margin-right to "auto" */
+		margin-right: auto;
 	}
 }
 
