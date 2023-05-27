@@ -3,7 +3,6 @@ import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-
 used_ids = set()
 
 app = Flask(__name__, template_folder='HTML/templates')
@@ -120,17 +119,17 @@ def clear_cart(user_id):
     try:
         conn = get_conn()
         cur = conn.cursor()
-        
+
         cur.execute("""
             DELETE FROM cart
             WHERE user_id = ?
         """, (user_id,))
-        
+
         conn.commit()
         conn.close()
     except:
-        pass 
-
+        pass
+ 
 def generate_userid():
         while True:
             user_id = random.randint(100000, 999999)
@@ -344,7 +343,7 @@ def cart():
 
             conn.commit()
             conn.close()
-            return redirect(url_for('index'))
+            return jsonify({'message': 'Item added to cart successfully.'})
         else:
             return redirect(url_for('login'))
         
@@ -356,6 +355,23 @@ def cart():
             return redirect(url_for('login'))
         
     return redirect(url_for('index'))
+
+@app.route('/cart/<int:item_id>', methods=['DELETE'])
+def delete_cart_item(item_id):
+    user = get_user()
+    if user:
+        try:
+            conn = get_conn()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM cart WHERE user_id = ? AND item_id = ?', (user['user_id'], item_id))
+            conn.commit()
+            conn.close()
+            return ''
+        except:
+            pass
+    else:
+        return redirect(url_for('login'))
+
 
 @app.route('/orders')
 def orders():
@@ -392,12 +408,10 @@ def checkout():
         if request.method == 'GET':
             return render_template('checkout.html', cart_items=cart_items)
         if request.method == 'POST':
-            clear_cart(user['user_id'])
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
             try:
                 conn = get_conn()
                 cur = conn.cursor()
-                
                 for cart_item in cart_items:
                     cur.execute("""
                         INSERT INTO orders (order_date, user_id, product_id, quantity, total_amount)
@@ -405,8 +419,8 @@ def checkout():
                     """, (purchase_date, user['user_id'], cart_item['item_id'], cart_item['quantity'], cart_item['price']))
                 
                 conn.commit()
+                clear_cart(user['user_id'])
                 conn.close()
-                
                 return redirect(url_for('index')) 
             except:
                 pass

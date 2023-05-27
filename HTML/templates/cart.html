@@ -5,6 +5,7 @@
 {% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/cart.css') }}">
+    <script src="{{ url_for('static', filename='JS/cart.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,16 +21,19 @@
             <th>Image</th>
         </tr>
         {% for cart_item in cart_items %}
-        <tr>
+        <tr id="row-{{ cart_item.item_id }}">
             <td>{{ cart_item.item_id }}</td>
             <td>{{ cart_item.quantity }}</td>
             <td>{{ cart_item.title }}</td>
             <td>{{ cart_item.description }}</td>
             <td>${{ cart_item.price }}</td>
             <td><img src="{{ cart_item.path }}" width="100px"></td>
+            <td class="del" data-item-id="{{ cart_item.item_id }}"><img src="https://cdn-icons-png.flaticon.com/512/1345/1345874.png" class="remove-icon"></td>
         </tr>
         {% endfor %}
     </table>
     {% endif %}
-    <button><a href="{{ url_for('checkout')}}">Checkout</a></button>
+    <a href="{{ url_for('checkout') }}">
+        <div class="button">Checkout</div>
+    </a>
 {% endblock %}

@@ -57,6 +57,9 @@ search.addEventListener("input", function(event){
     xhttp.send();
 });
 
+
+// Darkmode
+
 document.addEventListener("DOMContentLoaded", function() {
     const toggle = document.getElementById("toggle");
     const root = document.documentElement;
@@ -65,18 +68,24 @@ document.addEventListener("DOMContentLoaded", function() {
     function applyColorScheme() {
         const isDarkMode = toggle.checked;
         const header_icons = document.getElementsByClassName("header_icon");
+        const remove_icons = document.getElementsByClassName("remove-icon");
 
         if (isDarkMode) {
             root.classList.add("dark-theme");
             for (let i = 0; i < header_icons.length; i++) {
                 header_icons[i].style.filter = "invert(1)";
               }
-
+              for (let i = 0; i < remove_icons.length; i++) {
+                remove_icons[i].style.filter = "invert(1)";
+            }
         } else {
             root.classList.remove("dark-theme");
             for (let i = 0; i < header_icons.length; i++) {
                 header_icons[i].style.filter = "invert(0)";
               }
+              for (let i = 0; i < remove_icons.length; i++) {
+                remove_icons[i].style.filter = "invert(0)";
+            }
         }
 
         localStorage.setItem("colorScheme", isDarkMode ? "dark" : "light");

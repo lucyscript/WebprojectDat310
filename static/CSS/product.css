@@ -5,7 +5,6 @@
 	margin-left: 20px;
 	height: fit-content;
 	text-align: center;
-	background-color: var(--background-color);
     color: var(--text-color);
 }
 
@@ -71,6 +70,7 @@
 	background-color: var(--background-color);
 	cursor: pointer;
     color: var(--text-color);
+	font-weight: bold;
 }
 
 .add_to_cart:hover {
@@ -78,3 +78,6 @@
 	border-color: rgb(246,85,82);
 }
 
+#response-message {
+	color: rgb(0, 255, 0)
+}
