@@ -81,3 +81,23 @@
 #response-message {
 	color: rgb(0, 255, 0)
 }
+
+#owner-box {
+	margin-top: 10px;
+}
+
+#owner {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	background-color: var(--background-color);
+	cursor: pointer;
+    color: var(--text-color);
+	font-weight: bold;
+	text-decoration: none;
+}
+#owner:hover {
+	border-width: 1px;
+	border-color: rgb(246,85,82);
+}

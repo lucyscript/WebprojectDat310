@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ user.username }}'s Profile
+    {{ user_page.username }}'s Profile
 {% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/profile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/delete_button.css') }}">
-    <script src="{{ url_for('static', filename='JS/delete_button.js') }}"></script>
-    <script src="{{ url_for('static', filename='JS/edit_profile.js') }}"></script>
+    {% if logged_in %}
+        <script src="{{ url_for('static', filename='JS/profile.js') }}"></script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -16,27 +16,29 @@
         <div class="profile-content">
             <div class="profile-header">
                 <img src="https://pixlok.com/wp-content/uploads/2021/10/User-Profile-Icon-9mces.png">
-                <h1>{{ user.username }}</h1>
-                <div class="edit-button" id="edit-button">Edit profile</div>
+                <h1>{{ user_page.username }}</h1>
+                {% if logged_in %}
+                    <div class="edit-button" id="edit-button">Edit profile</div>
+                {% endif %}
             </div>
             <div class="info-section" id="bio">
                 <h3>Bio</h3>
-                {% if user.bio is not none %}
-                    <p>{{ user.bio }}</p>
+                {% if user_page.bio is not none %}
+                    <p>{{ user_page.bio }}</p>
                     <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
                 {% else %}
-                    <p>{{ get_init_bio(user.created_at) }}</p> 
+                    <p>{{ get_init_bio(user_page.created_at) }}</p> 
                     <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
                 {% endif %}
             </div>
             <div class="info-section" id="address">
                 <h3>Address</h3>
-                <p>{{ user.address }}</p>
+                <p>{{ user_page.address }}</p>
                 <input type="text" id="address-input" value="{{ user.address }}" hidden>
             </div>
             <div class="info-section" id="phone">
                 <h3>Phone Number</h3>
-                <p>{{ user.phone }}</p>
+                <p>{{ user_page.phone }}</p>
                 <input type="text" id="phone-input" value="{{ user.phone }}" hidden>
             </div>
         </div>
@@ -62,5 +64,7 @@
             </table>
         </div>
     </div>
-    <div class="delete-button" onclick="confirmDelete()">Delete Account</div>
+    {% if logged_in %}
+        <div class="delete-button" onclick="confirmDelete()">Delete Account</div>
+    {% endif %}
 {% endblock %}

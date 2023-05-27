@@ -268,11 +268,33 @@ def logout():
     session.pop('userid', None)
     return redirect(url_for('index'))
 
-@app.route('/profile', methods=['GET', 'PUT', 'DELETE'])
-def profile():
+@app.route('/profile/<username>', methods=['GET', 'PUT', 'DELETE'])
+def profile(username):
+    if request.method == 'GET':
+        conn = get_conn()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+
+        user_raw = cursor.fetchone()
+        columns = [column[0] for column in cursor.description]
+        user = dict(zip(columns, user_raw))
+
+        orders = get_orders(user['user_id'])
+        if session.get('userid') == user['user_id']:
+            return render_template('profile.html', user_page=user, orders=orders, logged_in=True)
+        
+        user['user_id'] = ""
+        user['password'] = ""
+        curr_user = get_user()
+
+        return render_template('profile.html', user_page=user, orders=orders, logged_in=False)
+
     user = get_user()
     if user:
         if request.method == 'PUT':
+            if user['username'] != username:
+                return redirect(url_for('index'))
+            
             conn = get_conn()
             cursor = conn.cursor()
 
@@ -282,6 +304,7 @@ def profile():
                 address = data['address']
                 phone = data['phone']
 
+                # Update current logged in user's profile which in itself is a security measure
                 cursor.execute('UPDATE users SET bio = ?, address = ?, phone = ? WHERE user_id = ?', (bio, address, phone, user['user_id']))
                 conn.commit()
 
@@ -290,17 +313,14 @@ def profile():
                 return jsonify({'message': 'No data received'})
             
         elif request.method == 'DELETE':
+            if user['username'] != username:
+                return redirect(url_for('index'))
             conn = get_conn()
             cur = conn.cursor()
+            # Delete current logged in user's profile
             cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
             conn.commit()
             return redirect(url_for('logout'))
-        
-        else:
-            orders = get_orders(user['user_id'])
-            user['user_id'] = ""
-            user['password'] = ""
-            return render_template('profile.html', user=user, orders=orders)
 
     return redirect(url_for('login'))
 
@@ -446,8 +466,9 @@ def product(product_id):
     images = []
     for path in images_raw:
         images.append(path[0])
+    owner = cursor.execute('SELECT username FROM users WHERE user_id = ?', (item['owner_id'],)).fetchone()[0]
 
-    return render_template('product.html', item=item, images=images)
+    return render_template('product.html', item=item, images=images, owner=owner)
 
 @app.route('/new_product', methods=['GET', 'POST'])
 def new_product():

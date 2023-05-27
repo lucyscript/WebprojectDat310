@@ -134,9 +134,9 @@ def add_item(conn, item_id, title, description, price, owner_id):
         print(e)
 
 def init_items(conn):
-    init = [(1, "Fancy sofa", "Beautiful sofa for the whole family", 1000, 111111),
-            (2, "Cool chair", "Used as a stool as i have no butt", 500, 222222),
-            (3, "Table", "A table for two or just for you my friend", 2000, 333333)]
+    init = [(1, "Fancy sofa", "Beautiful sofa for the whole family", 1000, 293565),
+            (2, "Cool chair", "Used as a stool as i have no butt", 500, 293565),
+            (3, "Table", "A table for two or just for you my friend", 2000, 293565)]
     for i in init:
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
 

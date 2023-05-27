@@ -70,7 +70,7 @@
         <li class="dropdown">
           <div id="profile">
             {% if 'userid' in session and user %}
-              <a href="{{ url_for('profile') }}">
+              <a href="{{ url_for('profile', username=user.username) }}">
             {% else %}
               <a href="{{ url_for('login') }}">
             {% endif %}
@@ -93,7 +93,7 @@
               </div>
               <div class="dropdown-box">
                 {% if 'userid' in session and user %}
-                  <a href="{{ url_for('profile') }}">
+                  <a href="{{ url_for('profile', username=user.username) }}">
                 {% else %}
                   <a href="{{ url_for('login') }}">
                 {% endif %}
