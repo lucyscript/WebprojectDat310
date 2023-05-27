@@ -109,7 +109,8 @@ def add_user(conn, user_id, username, password, created_at):
         print(e)
 
 def init_users(conn):
-    init = [(969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad", "2023-05-19")]
+    init = [(969001, "elza", "pbkdf2:sha256:260000$l4XlAvApLYlgJTpe$3519a342c351d894f2a60ee0f54fadb41d383682ec3be86587fae7e0afd4e3ad", "2023-05-19"),
+            (293565, "test", "pbkdf2:sha256:260000$R0qGKyB5kzJCIh01$7fb2d81d3dfd0f7460e5a20745b8038cdc509bd90a7df635f0ca327f0e7be442", "2023-05-19")]
     for u in init:
         add_user(conn, u[0], u[1], u[2], u[3])
 
@@ -133,9 +134,9 @@ def add_item(conn, item_id, title, description, price, owner_id):
         print(e)
 
 def init_items(conn):
-    init = [(1, "Sofa", "En fin sofa", 1000, 111111),
-            (2, "Stol", "En fin stol", 500, 222222),
-            (3, "Bord", "Et fint bord", 2000, 333333)]
+    init = [(1, "Fancy sofa", "Beautiful sofa for the whole family", 1000, 111111),
+            (2, "Cool chair", "Used as a stool as i have no butt", 500, 222222),
+            (3, "Table", "A table for two or just for you my friend", 2000, 333333)]
     for i in init:
         add_item(conn, i[0], i[1], i[2], i[3], i[4])
 

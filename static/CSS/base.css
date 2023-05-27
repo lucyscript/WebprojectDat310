@@ -14,8 +14,18 @@
 }
 
 html {
-	background-color: var(--background-color);
-	color: var(--text-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    /*background: url();*/
+	/*
+	Tileable gifs for fun:
+	https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2E0NmJkMWFjNDVmY2ZmOTNiYzY0YWZjNDQ5MzBhYWVkN2NiYTg5NyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/xTiTnfwDbTH7RtlxUA/giphy.gif
+	https://images.squarespace-cdn.com/content/v1/52d2ba05e4b08a76249f37d6/1588043547772-GWJP0IFIGABI0ES8WSBY/Morocco-01.gif
+	https://media3.giphy.com/media/KVZWZQoS0yqfIiTAKq/200w.gif?cid=6c09b9525bv1x0rr9p30brtfczkayk6mso0i2zfbfba39wx2&ep=v1_gifs_search&rid=200w.gif&ct=g
+	https://media4.giphy.com/media/26gR0HbARPWqF5i6s/200w.gif?cid=6c09b9528rcwor09fi2xwp1o62oh21puvkd91wrtikadn9y4&ep=v1_gifs_search&rid=200w.gif&ct=g
+	https://media2.giphy.com/media/ehssta24116nk9VWyN/giphy.gif
+	https://media2.giphy.com/media/ZZfuSkipcG9rpS3Ank/200w.gif?cid=6c09b9526jpuind16aejsfxtrxmp6cawtgr0z6mrt0sk27z0&ep=v1_gifs_search&rid=200w.gif&ct=g
+	*/
 }
 
 body {
