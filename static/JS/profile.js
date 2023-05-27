@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const editButton = document.getElementById('edit-button');
     const bioElement = document.getElementById('bio');
-    const addressElement = document.getElementById('address');
+     const addressElement = document.getElementById('address');
     const phoneElement = document.getElementById('phone');
 
     editButton.addEventListener('click', function() {

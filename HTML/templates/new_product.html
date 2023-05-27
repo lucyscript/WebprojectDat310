@@ -8,47 +8,34 @@
 {% endblock %}
 
 {% block content %}
-    <div id="new_product_content">
-        <form id="new_product_form" method="post" name="new_product_form" enctype="multipart/form-data">
-            <ul class="form-ul">
-                <li>
-                    <div class="title_input">
-                        <h3>Title:</h3>
-                        <input class="title_imput_container input_element_border" type="text" name="title">
-                    </div>
-                </li>
-                <li>
-                    <div class="description_input">
-                        <h3>Description:</h3>
-                        <input class="description_input_container input_element_border" type="text" name="description">
-                    </div>
-                </li>
-                <li>
-                    <div class="price_input">
-                        <h3>Price:</h3>
-                        <input class="price_input_container input_element_border" type="text" name="price">
-                    </div>
-                </li>
-                <li>
-                    <div class="image_input">
-                        <h3>Add images:</h3>
-                        <input id="image_upload" class="image_input_container input_element_border" data-image-input type="file" name="image" accept="image/*" oninput="add_image_preview(event)" multiple>
-                    </div>
-                </li>
-                <li>
-                    <div id="image_preview">
-                        <h3>Image preview:</h3>
-                        <div id="image_preview_container">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="submit_button">
-                        <input class="submit_button_container" type="submit" value="Upload">
-                    </div>
-                </li>
-            </ul>
-        </form>
-    </div>
+    <form id="new_product_form" method="post" name="new_product_form" enctype="multipart/form-data">
+        <div class="title_input">
+            <h3>Title:</h3>
+        </div>
+        <input type="text" name="title">
+        <div>
+            <h3>Description:</h3>
+        </div>
+        <span id="description_input" role="textbox" contenteditable spellcheck="false"></span>
+        <div class="price_input">
+            <h3>Price in $:</h3>
+        </div>
+        <input id="price_input" type="number" name="price">
+        <div id="image_input_box">
+            <div id="upload_button">
+                <label for="image_upload" class="upload_button_text">Add image</label>
+                <input id="image_upload" data-image-input type="file" name="image" accept="image/*" 
+                oninput="add_image_preview(event)" multiple>
+            </div>
+        </div>
+        <div id="image_preview">
+            <h3>Image preview:</h3>
+            <div id="image_preview_container">
+            </div>
+        </div>
+        <div class="submit_button">
+            <input class="submit_button_container" type="submit" value="Upload">
+        </div>
+    </form>
     <script src="{{ url_for('static', filename='JS/new_product.js') }}"></script>
 {% endblock %}

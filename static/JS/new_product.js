@@ -39,9 +39,30 @@ function add_image_preview(upload) {
             removeButton.addEventListener("click", function () { 
                 remove_image_preview(this);
             });
+
+            const arrowsDiv = document.createElement("div");
+            arrowsDiv.classList.add("arrows");
+
+            const leftArrow = document.createElement("button");
+            leftArrow.classList.add("arrow");
+            leftArrow.classList.add("left");
+            leftArrow.setAttribute("type", "button");
+            leftArrow.setAttribute("aria-label", "Move left");
+            leftArrow.innerHTML = "<span aria-hidden='true'>&#10094;</span>";
+
+            const rightArrow = document.createElement("button");
+            rightArrow.classList.add("arrow");
+            rightArrow.classList.add("right");
+            rightArrow.setAttribute("type", "button");
+            rightArrow.setAttribute("aria-label", "Move right");
+            rightArrow.innerHTML = "<span aria-hidden='true'>&#10095;</span>";
+
+            arrowsDiv.appendChild(leftArrow);
+            arrowsDiv.appendChild(rightArrow);
             
             container.appendChild(img);
             container.appendChild(removeButton);
+            container.appendChild(arrowsDiv);
             upload_container.appendChild(container);
 
             loadedImages++;
@@ -53,6 +74,21 @@ function add_image_preview(upload) {
     } // For end
 } // Function end
 
+$('.arrow').on('click', function() {
+    var container = document.getElementById("image_preview_container");
+    var direction = $(this).hasClass('right') ? -1 : 1;
+    var siblings = container.siblings('.image_preview_image_container');
+    var index = container.index();
+    var newIndex = index + direction;
+  
+    if (newIndex >= 0 && newIndex < siblings.length + 1) {
+      if (direction === -1) {
+        container.insertBefore(siblings.eq(newIndex));
+      } else {
+        container.insertAfter(siblings.eq(newIndex - 1));
+      }
+    }
+  });
 
 const form = document.getElementById("new_product_form");
 form.addEventListener("submit", function (e) {
