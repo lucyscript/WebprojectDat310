@@ -25,32 +25,32 @@
                 <h3>Bio</h3>
                 {% if user_page.bio is not none %}
                     <p>{{ user_page.bio }}</p>
-                    <input type="text" id="bio-input" value="{{ user.bio }}" hidden>
+                    <span id="bio-input" role="textbox" data-value="{{ user.bio }}" contenteditable spellcheck="false" hidden>{{ user.bio }}</span>
                 {% else %}
                     <p>{{ get_init_bio(user_page.created_at) }}</p> 
-                    <input type="text" id="bio-input" value="" hidden>
+                    <span id="bio-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
             </div>
             <div class="info-section" id="address">
                 <h3>Address</h3>
                 {% if user_page.address is not none %}
                     <p>{{ user_page.address }}</p>
-                    <input type="text" id="address-input" value="{{ user.address }}" hidden>
+                    <span id="address-input" role="textbox" data-value="{{ user.address }}" contenteditable spellcheck="false" hidden>{{ user.address }}</span>
                 {% else %}
-                    <p>No one knows!</p>
-                    <input type="text" id="address-input" value="" hidden>
+                    <p>No address provided</p> 
+                    <span id="address-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
             </div>
             <div class="info-section" id="phone">
-                <h3>Phone Number</h3>
+                <h3>Phone</h3>
                 {% if user_page.phone is not none %}
                     <p>{{ user_page.phone }}</p>
-                    <input type="text" id="phone-input" value="{{ user.phone }}" hidden>
+                    <span id="phone-input" role="textbox" data-value="{{ user.phone }}" contenteditable spellcheck="false" hidden>{{ user.phone }}</span>
                 {% else %}
-                    <p>No one knows!</p>
-                    <input type="text" id="phone-input" value="" hidden>
+                    <p>No phone number provided</p> 
+                    <span id="phone-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
-            </div>
+            </div>                     
         </div>
         <div class="transaction-table">
             <h2>Transaction History</h2>

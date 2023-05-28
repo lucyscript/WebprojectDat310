@@ -60,6 +60,7 @@
     margin-top: 10px;
     background-color: var(--background-color);
     color: var(--text-color);
+    max-width: 450px;
 }
 
 .info-section h3 {
@@ -109,22 +110,30 @@
     float: left;
 }
 
-input {
-	padding: 5px; 
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
-    background-color: #888;
+.info-section span {
+    padding: 5px;
+    max-width: 430px;
+    border: 1px solid rgb(246, 85, 82);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     color: var(--text-color);
-	font-size: 16px;
-	outline: none;
-	width: 100%;
-    box-sizing: border-box;
+    overflow: auto;
+    resize: vertical;
+    min-height: 40px;
+    line-height: 20px;
+    font-size: 16px;
+    outline: none;
+    white-space: pre-wrap;
     word-wrap: break-word;
+    display: none; 
 }
 
-input:focus {
-	border: 1px solid #52F3F6; 
+.info-section span:not([hidden]) {
+    display: block;
+}
+
+.info-section span:focus {
+    border: 1px solid #52F3F6;
     background-color: var(--background-color);
     color: var(--text-color);
 }
