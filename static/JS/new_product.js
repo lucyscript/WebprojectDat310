@@ -74,6 +74,18 @@ function add_image_preview(upload) {
     } // For end
 } // Function end
 
+description_box = document.getElementById("description_input");
+description_error = document.getElementById("description_error");
+description_box.addEventListener("input", function (event) {
+    if (event.target.textContent.length > 500) {
+        description_error.style.display = "block";
+    }
+    else {
+        description_error.style.display = "none";
+    }
+});
+
+
 function arrowChange(element) {
     var container = document.getElementById("image_preview_container");
     var container_list = Array.from(container.children)
@@ -84,7 +96,6 @@ function arrowChange(element) {
     var newIndex = index + direction;
   
     if (newIndex >= 0 && newIndex <= container_list.length) {
-        console.log("in if");
         var nextImage = container_list[newIndex];
         if (direction === -1) {
             container.insertBefore(image, nextImage);

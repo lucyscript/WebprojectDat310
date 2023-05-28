@@ -53,7 +53,7 @@ def get_product(product_id):
     try:
         conn = get_conn()
         cursor = conn.cursor()
-        cursor.execute(queryItems, product_id)
+        cursor.execute(queryItems, (product_id,))
         product_raw = cursor.fetchone()
         columns = [column[0] for column in cursor.description]
         product = dict(zip(columns, product_raw))
@@ -86,7 +86,7 @@ def get_images(product_id):
     try:
         conn = get_conn()
         cursor = conn.cursor()
-        cursor.execute(queryImages, product_id)
+        cursor.execute(queryImages, (product_id,))
         images_raw = cursor.fetchall()
         images = []
         for path in images_raw:
@@ -358,7 +358,7 @@ def cart():
                         break
 
             if not in_cart:
-                quantity_price = int(product['price']) * quantity
+                quantity_price = float(product['price']) * quantity
                 cursor.execute('''
                     INSERT INTO cart (user_id, item_id, title, description, price, image_path, quantity)
                     SELECT ?, items.item_id, items.title, items.description, ?, images.path, ?
@@ -500,6 +500,10 @@ def new_product():
         
             title = request.form['title']
             description = request.form['description']
+
+            if len(title) > 22 or len(description) > 500:
+                return render_template('new_product.html')
+            
             price = request.form['price']
             images = request.files.getlist('imageValues[]')
             imagePaths = []

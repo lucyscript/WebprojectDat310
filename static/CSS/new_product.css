@@ -11,6 +11,11 @@ input {
 	width: 120px;
 }
 
+#title_input {
+	width: 150px;
+	font-weight: bold;
+}
+
 #description_input {
 	display: block;
 	width: 350px;
@@ -165,4 +170,12 @@ input {
 .submit_button_container:hover {
 	border-width: 1px;
 	border-color: rgb(246,85,82);
+}
+
+.error {
+	display: none;
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 5px;
 }

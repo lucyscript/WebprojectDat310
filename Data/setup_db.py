@@ -37,10 +37,6 @@ sql_create_items_table = """CREATE TABLE IF NOT EXISTS items (
                                 price REAL NOT NULL,
                                 owner_id TEXT NOT NULL,
 
-                                -- Parameters for selecting etc.
-                                size TEXT,
-                                stock INT,
-
                                 PRIMARY KEY(item_id),
                                 FOREIGN KEY(owner_id) REFERENCES users(user_id)
                             );"""
