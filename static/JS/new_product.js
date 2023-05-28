@@ -47,15 +47,15 @@ function add_image_preview(upload) {
             leftArrow.classList.add("arrow");
             leftArrow.classList.add("left");
             leftArrow.setAttribute("type", "button");
-            leftArrow.setAttribute("aria-label", "Move left");
-            leftArrow.innerHTML = "<span aria-hidden='true'>&#10094;</span>";
+            leftArrow.setAttribute("onclick", "arrowChange(this)");
+            leftArrow.innerHTML = "<span>&#10094;</span>";
 
             const rightArrow = document.createElement("button");
             rightArrow.classList.add("arrow");
             rightArrow.classList.add("right");
             rightArrow.setAttribute("type", "button");
-            rightArrow.setAttribute("aria-label", "Move right");
-            rightArrow.innerHTML = "<span aria-hidden='true'>&#10095;</span>";
+            rightArrow.setAttribute("onclick", "arrowChange(this)");
+            rightArrow.innerHTML = "<span>&#10095;</span>";
 
             arrowsDiv.appendChild(leftArrow);
             arrowsDiv.appendChild(rightArrow);
@@ -74,27 +74,40 @@ function add_image_preview(upload) {
     } // For end
 } // Function end
 
-$('.arrow').on('click', function() {
+function arrowChange(element) {
     var container = document.getElementById("image_preview_container");
-    var direction = $(this).hasClass('right') ? -1 : 1;
-    var siblings = container.siblings('.image_preview_image_container');
-    var index = container.index();
+    var container_list = Array.from(container.children)
+
+    var image = element.parentNode.parentNode;
+    var direction = element.classList.contains('left') ? -1 : 1;
+    var index = container_list.indexOf(image);
     var newIndex = index + direction;
   
-    if (newIndex >= 0 && newIndex < siblings.length + 1) {
-      if (direction === -1) {
-        container.insertBefore(siblings.eq(newIndex));
-      } else {
-        container.insertAfter(siblings.eq(newIndex - 1));
+    if (newIndex >= 0 && newIndex <= container_list.length) {
+        console.log("in if");
+        var nextImage = container_list[newIndex];
+        if (direction === -1) {
+            container.insertBefore(image, nextImage);
+            image_file = uploadedImages.splice(index, 1)[0];
+            uploadedImages.splice(newIndex, 0, image_file);
+
+          } else if (newIndex != container_list.length) {
+                container.insertBefore(nextImage, image);
+                image_file = uploadedImages.splice(index, 1)[0];
+                uploadedImages.splice(newIndex, 0, image_file);
       }
     }
-  });
+  };
 
 const form = document.getElementById("new_product_form");
 form.addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const textInputs = form.querySelectorAll("input[type=text]");
+    const textInputs = [];
+    textInputs.push(document.getElementById("title_input"));
+    textInputs.push(document.getElementById("price_input"));
+
+    formData.append("description", document.getElementById("description_input").textContent);
 
     for (let i = 0; i < textInputs.length; i++) {
         const input = textInputs[i];
