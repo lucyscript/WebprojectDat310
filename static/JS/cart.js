@@ -6,12 +6,13 @@ $(document).ready(function() {
 });
 
 function removeCartItem(itemID) {
+    let totalPrice = document.getElementById('total_price');
     $.ajax({
         url: '/cart/' + itemID,
-        type: 'DELETE',
+        method: 'DELETE',
         success: function(response) {
-            console.log(response.message);
             $('#row-' + itemID).remove();
+            totalPrice.textContent = response.total_price;
         }
     });
 }

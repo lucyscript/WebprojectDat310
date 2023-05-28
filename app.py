@@ -394,13 +394,19 @@ def delete_cart_item(item_id):
             cur = conn.cursor()
             cur.execute('DELETE FROM cart WHERE user_id = ? AND item_id = ?', (user['user_id'], item_id))
             conn.commit()
+            cart_items = get_cart(user['user_id'])
             conn.close()
-            return ''
+            if cart_items:
+                total_price = 0
+                for item in cart_items:
+                    total_price += item['price']
+                return jsonify({'total_price': total_price})
+            else:
+                return jsonify({'total_price': None})
         except:
             pass
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/orders')
 def orders():
