@@ -376,7 +376,10 @@ def cart():
     if request.method == 'GET':
         if user:
             cart_items = get_cart(user['user_id'])
-            return render_template('cart.html', cart_items=cart_items)
+            total_price = 0
+            for item in cart_items:
+                total_price += item['price']
+            return render_template('cart.html', cart_items=cart_items, total_price=total_price)
         else:  
             return redirect(url_for('login'))
         
@@ -432,7 +435,10 @@ def checkout():
     cart_items = get_cart(user['user_id'])
     if user: 
         if request.method == 'GET':
-            return render_template('checkout.html', cart_items=cart_items)
+            total_price = 0
+            for item in cart_items:
+                total_price += item['price']
+            return render_template('checkout.html', cart_items=cart_items, total_price=total_price)
         if request.method == 'POST':
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
             try:

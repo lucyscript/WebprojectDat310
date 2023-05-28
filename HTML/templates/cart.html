@@ -31,8 +31,14 @@
             <td class="del" data-item-id="{{ cart_item.item_id }}"><img src="https://cdn-icons-png.flaticon.com/512/1345/1345874.png" class="remove-icon"></td>
         </tr>
         {% endfor %}
+        <tr>
+            <td>
+                <h3>Total amount: ${{ total_price }}</h3>
+            </td>
+        </tr>
     </table>
     {% endif %}
+    
     <a href="{{ url_for('checkout') }}">
         <div class="button">Checkout</div>
     </a>
