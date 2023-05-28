@@ -74,10 +74,10 @@
 
 .transaction-table {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     color: var(--text-color);
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .transaction-table h2 {
@@ -94,10 +94,15 @@
 .transaction-table td {
     padding: 10px;
     text-align: center;
+    white-space: nowrap;
 }
 
 .transaction-table th {
-    border-bottom: 1px solid rgb(246,85,82);
+    border-bottom: 1px solid rgb(246, 85, 82);
+    position: sticky;
+    top: 0;
+    z-index: 0.5;
+    background-color: var(--background-color);
 }
 
 .transaction-table td {
