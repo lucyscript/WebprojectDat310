@@ -127,6 +127,7 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     display: none; 
+    user-select: none;
 }
 
 .info-section span:not([hidden]) {

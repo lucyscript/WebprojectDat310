@@ -161,3 +161,23 @@ function dataURLtoFile(dataurl, filename) {
     return new File([u8arr], filename, { type: mime });
 }
 
+const title_input = document.getElementById("title_input");
+const price_input = document.getElementById("price_input");
+const upload_button = document.getElementById("submit_button");
+
+title_input.addEventListener("input", toggleSubmitButton);
+price_input.addEventListener("input", toggleSubmitButton);
+
+function toggleSubmitButton() {
+    const isTitleEmpty = title_input.value.trim() === "";
+    const isPriceEmpty = price_input.value.trim() === "";
+
+    if (isTitleEmpty || isPriceEmpty) {
+        upload_button.disabled = true;
+        upload_button.classList.remove("enabled")
+    }
+    else {
+        upload_button.disabled = false;
+        upload_button.classList.add("enabled")
+    }
+  }

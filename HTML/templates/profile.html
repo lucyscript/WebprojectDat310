@@ -25,30 +25,30 @@
                 <h3>Bio</h3>
                 {% if user_page.bio is not none %}
                     <p>{{ user_page.bio }}</p>
-                    <span id="bio-input" role="textbox" data-value="{{ user.bio }}" contenteditable spellcheck="false" hidden>{{ user.bio }}</span>
+                    <span id="bio-input" role="textbox" contenteditable spellcheck="false" hidden>{{ user.bio }}</span>
                 {% else %}
                     <p>{{ get_init_bio(user_page.created_at) }}</p> 
-                    <span id="bio-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
+                    <span id="bio-input" role="textbox" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
             </div>
             <div class="info-section" id="address">
                 <h3>Address</h3>
                 {% if user_page.address is not none %}
                     <p>{{ user_page.address }}</p>
-                    <span id="address-input" role="textbox" data-value="{{ user.address }}" contenteditable spellcheck="false" hidden>{{ user.address }}</span>
+                    <span id="address-input" role="textbox" contenteditable spellcheck="false" hidden>{{ user.address }}</span>
                 {% else %}
                     <p>No address provided</p> 
-                    <span id="address-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
+                    <span id="address-input" role="textbox" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
             </div>
             <div class="info-section" id="phone">
                 <h3>Phone</h3>
                 {% if user_page.phone is not none %}
                     <p>{{ user_page.phone }}</p>
-                    <span id="phone-input" role="textbox" data-value="{{ user.phone }}" contenteditable spellcheck="false" hidden>{{ user.phone }}</span>
+                    <span id="phone-input" role="textbox" contenteditable spellcheck="false" hidden>{{ user.phone }}</span>
                 {% else %}
                     <p>No phone number provided</p> 
-                    <span id="phone-input" role="textbox" data-value="" contenteditable spellcheck="false" hidden></span>
+                    <span id="phone-input" role="textbox" contenteditable spellcheck="false" hidden></span>
                 {% endif %}
             </div>                     
         </div>

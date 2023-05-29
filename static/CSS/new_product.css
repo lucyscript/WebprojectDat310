@@ -27,6 +27,7 @@ input {
 	resize: vertical;
 	min-height: 40px;
 	line-height: 20px;
+	user-select: none;
 }
 
 .image_preview_image {
@@ -161,15 +162,16 @@ input {
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	background-color: var(--background-color);
-	cursor: pointer;
 	color: var(--text-color);
 	font-weight: bold;
 	text-decoration: none;
 }
 
-.submit_button_container:hover {
+.enabled:hover {
 	border-width: 1px;
 	border-color: rgb(246,85,82);
+
+	cursor: pointer;
 }
 
 .error {
@@ -178,4 +180,9 @@ input {
     font-weight: bold;
     font-size: 12px;
     margin-top: 5px;
+}
+
+#submit_info {
+	display: block;
+	padding: 10px;
 }
