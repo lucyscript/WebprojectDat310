@@ -443,8 +443,8 @@ def search_orders():
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     user = get_user()
-    cart_items = get_cart(user['user_id'])
     if user: 
+        cart_items = get_cart(user['user_id'])
         if request.method == 'GET':
             total_price = 0
             for item in cart_items:
@@ -452,7 +452,7 @@ def checkout():
             return render_template('checkout.html', cart_items=cart_items, total_price=total_price)
         if request.method == 'POST':
             purchase_date = datetime.now().date().strftime("%Y-%m-%d")
-            try:
+            if cart_items != None:
                 conn = get_conn()
                 cur = conn.cursor()
                 for cart_item in cart_items:
@@ -460,13 +460,11 @@ def checkout():
                         INSERT INTO orders (order_date, user_id, product_id, quantity, total_amount)
                         VALUES (?, ?, ?, ?, ?)
                     """, (purchase_date, user['user_id'], cart_item['item_id'], cart_item['quantity'], cart_item['price']))
-                
+
                 conn.commit()
                 clear_cart(user['user_id'])
                 conn.close()
                 return redirect(url_for('index')) 
-            except:
-                pass
     else:
         return redirect(url_for('login'))
     return redirect(url_for('index'))
