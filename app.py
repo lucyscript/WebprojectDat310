@@ -185,6 +185,26 @@ def index():
 
     return render_template('index.html', items=items)
 
+@app.route('/sort/<sortBy>', methods=['GET'])
+def sort(sortBy):
+    user = get_user()
+    if user:
+        if request.method == 'GET':
+            conn = get_conn()
+            cursor = conn.cursor()
+
+            if sortBy == 'default':
+                cursor.execute('SELECT items.item_id, items.title, images.path FROM items JOIN images ON items.item_id = images.product_id WHERE images.displayOrder = 1')
+            elif sortBy == 'owner':
+                cursor.execute('SELECT items.item_id, items.title, images.path, items.owner_id FROM items JOIN images ON items.item_id = images.product_id WHERE images.displayOrder = 1 AND items.owner_id = ?', (user['user_id'],))
+            
+            items = cursor.fetchall()
+            
+            return jsonify({'items': items})
+
+
+
+
 @app.route('/search/<search_query>', methods=['GET'])
 def search(search_query):
     conn = get_conn()

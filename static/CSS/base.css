@@ -280,7 +280,6 @@ nav li a {
 	border: 1px #52F3F6 solid;
 	background-color: var(--background-color);
     color: var(--text-color);	
-	opacity: 0.95;
 	border-spacing: 0px;
 }
 
@@ -366,6 +365,31 @@ nav li a {
 	opacity: 1;
 	visibility: visible;
 }
+
+#sorting-options {
+  margin-bottom: 20px;
+}
+
+#sorting-options label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#sorting-options select {
+	background-color: var(--text-color);
+	color: var(--background-color);
+	padding: 5px;
+	font-size: 16px;
+	border-radius: 4px;
+}
+
+#sorting-options select:focus {
+	border: 1px solid #52F3F6;
+	outline: none;
+	background-color: var(--text-color);
+	color: var(--background-color);
+  }
+  
 
 /* For WebKit based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
