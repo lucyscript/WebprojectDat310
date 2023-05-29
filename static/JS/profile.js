@@ -54,15 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         bioElement.querySelector('p').textContent = bioValue;
-        bioElement.querySelector('span').setAttribute('data-value', bioValue);
         bioElement.querySelector('p').hidden = false;
         bioElement.querySelector('span').hidden = true;
         addressElement.querySelector('p').textContent = addressValue;
-        addressElement.querySelector('span').setAttribute('data-value', addressValue);
         addressElement.querySelector('p').hidden = false;
         addressElement.querySelector('span').hidden = true;
         phoneElement.querySelector('p').textContent = phoneValue;
-        phoneElement.querySelector('span').setAttribute('data-value', phoneValue);
         phoneElement.querySelector('p').hidden = false;
         phoneElement.querySelector('span').hidden = true;
 
@@ -131,3 +128,28 @@ function deleteUser() {
         }
     });
 }
+
+
+// SPAN was stupid and copied its own element ??? Easy fiks
+document.addEventListener('DOMContentLoaded', function() {
+    const bioInput = document.getElementById("bio-input");
+    bioInput.addEventListener("copy", function(event) {
+      const copiedText = bioInput.textContent;
+      event.clipboardData.setData("text/plain", copiedText);
+      event.preventDefault();
+    });
+    const addressInput = document.getElementById("address-input");
+    addressInput.addEventListener("copy", function(event) {
+        const copiedText = addressInput.textContent;
+        event.clipboardData.setData("text/plain", copiedText);
+        event.preventDefault();
+        }
+    );
+    const phoneInput = document.getElementById("phone-input");
+    phoneInput.addEventListener("copy", function(event) {
+        const copiedText = phoneInput.textContent;
+        event.clipboardData.setData("text/plain", copiedText);
+        event.preventDefault();
+        }
+    );
+});

@@ -490,31 +490,40 @@ def new_product():
         if request.method == 'GET':
             return render_template('new_product.html')
         elif request.method == 'POST':
-            conn = get_conn()
-            cursor = conn.cursor()
-        
             title = request.form['title']
             description = request.form['description']
 
             if len(title) > 22 or len(description) > 500:
                 return render_template('new_product.html')
-            
+
             price = request.form['price']
             images = request.files.getlist('imageValues[]')
+
+            if len(title.strip()) == 0 or len(str(price)) == 0:
+                return render_template('new_product.html')
+
             imagePaths = []
-            n = 0
-            for image in images:
-                imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
-                image.save(imagePaths[n])
-                n += 1
+            
+            if len(images) == 0:
+                imagePaths.append('static/images/ProductImages/no_image.jpg')
+            else:
+                n = 0
+                for image in images:
+                    imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
+                    image.save(imagePaths[n])
+                    n += 1
+
+            conn = get_conn()
+            cursor = conn.cursor()
+        
             owner_id = user['user_id'] if user else None
             item_id = cursor.execute('SELECT MAX(item_id) FROM items').fetchone()[0] + 1
             cursor.execute('INSERT INTO items (item_id, owner_id, title, description, price) VALUES (?, ?, ?, ?, ?)', (item_id, owner_id, title, description, price))
-        
+
             i = 1
             n = 0
-            for image in images:
-                cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + imagePaths[n], i))
+            for image in imagePaths:
+                cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + image, i))
                 i += 1
                 n += 1
             conn.commit()
