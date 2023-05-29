@@ -402,7 +402,7 @@ def delete_cart_item(item_id):
                     total_price += item['price']
                 return jsonify({'total_price': total_price})
             else:
-                return jsonify({'total_price': None})
+                return jsonify({'total_price': 0})
         except:
             pass
     else:
