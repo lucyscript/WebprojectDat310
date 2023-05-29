@@ -2,13 +2,6 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/cart.css') }}">
-    <script>
-        $(document).ready(function() {
-            setTimeout(function() {
-                $(".flash-message").fadeOut("slow");
-            }, 3000);
-        });
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -50,14 +43,5 @@
     <h1>No items to pay for!</h1><br>
     <p class="user-info">Put item(s) in your cart to enter checkout.</p>
 {% endif %}
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flash-message">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
 
 {% endblock %}
