@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const bioValue = bioElement.querySelector('span').textContent;
         const addressValue = addressElement.querySelector('span').textContent;
         const phoneValue = phoneElement.querySelector('span').textContent;
+        const responseDiv = document.getElementById('edit-response');
 
         fetch(window.location.pathname, {
             method: 'PUT',
@@ -35,12 +36,21 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         })
         .then(response => {
-            if (!response.ok) {
+            if (response.ok) {
+                return response.json();
+            } else {
                 throw new Error('Failed to update profile content.');
             }
         })
-        .catch(error => {
-            console.error(error);
+        .then(data => {
+            responseDiv.hidden = false;
+            responseDiv.textContent = data.message;
+        })
+        .finally(() => {
+            setTimeout(() => {
+                responseDiv.hidden = true;
+                responseDiv.textContent = '';
+            }, 3000);
         });
 
         bioElement.querySelector('p').textContent = bioValue;

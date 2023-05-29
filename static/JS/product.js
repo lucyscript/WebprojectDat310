@@ -30,7 +30,10 @@ $(document).ready(function() {
             method: 'POST',
             data: formdata,
             success: function(response) {
-                $('#response-message').text(response.message)
+                $('#response-message').text(response.message);
+                setTimeout(function() {
+                    $('#response-message').text('');
+                }, 3000);
             },
             complete: function() {
                 $('#loading img').hide();

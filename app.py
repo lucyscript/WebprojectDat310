@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, g, abort, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, g, jsonify, flash
 import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -315,21 +315,14 @@ def profile(username):
                 conn.commit()
 
                 return jsonify({'message': 'Profile content updated successfully'})
-            else:
-                return jsonify({'message': 'No data received'})
             
         elif request.method == 'DELETE':
             if user['username'] != username:
                 return redirect(url_for('index'))
             conn = get_conn()
             cur = conn.cursor()
-
-            # Delete current logged in user's profile and everything related
+            # Delete current logged in user's profile
             cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
-            cur.execute('DELETE FROM orders WHERE user_id = ?', (user['user_id'],))
-            cur.execute('DELETE FROM cart WHERE user_id = ?', (user['user_id'],))
-            cur.execute('DELETE FROM items WHERE owner_id = ?', (user['user_id'],))
-
             conn.commit()
             return redirect(url_for('logout'))
 
@@ -373,7 +366,6 @@ def cart():
                 ''', (user['user_id'], quantity_price, quantity, product_id))
 
             conn.commit()
-            conn.close()
             return jsonify({'message': 'Item added to cart successfully.'})
         else:
             return redirect(url_for('login'))
@@ -400,7 +392,6 @@ def delete_cart_item(item_id):
             cur.execute('DELETE FROM cart WHERE user_id = ? AND item_id = ?', (user['user_id'], item_id))
             conn.commit()
             cart_items = get_cart(user['user_id'])
-            conn.close()
             if cart_items:
                 total_price = 0
                 for item in cart_items:
@@ -409,7 +400,7 @@ def delete_cart_item(item_id):
             else:
                 return jsonify({'total_price': 0})
         except:
-            return redirect(url_for('cart'))
+            pass
     else:
         return redirect(url_for('login'))
 
@@ -463,7 +454,6 @@ def checkout():
 
                 conn.commit()
                 clear_cart(user['user_id'])
-                conn.close()
                 return redirect(url_for('index')) 
     else:
         return redirect(url_for('login'))
