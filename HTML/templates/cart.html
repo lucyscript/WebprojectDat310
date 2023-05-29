@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Your cart:</h1>
     {% if cart_items %}
+    <h1>Your cart</h1>
     <table>
         <tr>
             <th>Quantity</th>
@@ -35,9 +35,15 @@
             </td>
         </tr>
     </table>
-    {% endif %}
     
     <a href="{{ url_for('checkout') }}">
         <div class="button">Checkout</div>
     </a>
+
+    {% else %}
+        <h1>Cart is emty.</h1><br>
+        <p class="user-info">Put item(s) in your cart to continue shopping.</p>
+
+    {% endif %}
+
 {% endblock %}

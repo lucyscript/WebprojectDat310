@@ -60,3 +60,8 @@ a {
 .remove-icon {
     width: 25px;
 }
+
+.user-info {
+    display: flex;
+    justify-content: center;
+}

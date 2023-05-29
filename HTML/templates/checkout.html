@@ -6,9 +6,10 @@
 
 {% block content %}
 
+{% if cart_items %}
+
 <h1>Checkout</h1>
 
-{% if cart_items %}
 <table>
     <tr>
         <th>Item ID</th>
@@ -34,10 +35,13 @@
         </td>
     </tr>
 </table>
-{% endif %}
 
 <form action="/checkout" method="POST">
     <button class="button" type="submit">Purchase</button>
 </form>
+{% else %}
+    <h1>No items to pay for!</h1><br>
+    <p class="user-info">Put item(s) in your cart to enter checkout.</p>
+{% endif %}
 
 {% endblock %}

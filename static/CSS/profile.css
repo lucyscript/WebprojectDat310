@@ -29,12 +29,6 @@
     margin: 0;
 }
 
-.profile-header p {
-    font-size: 16px;
-    color: #888;
-    margin: 5px 0;
-}
-
 .edit-button,
 .delete-button {
     display: inline-block;
@@ -180,4 +174,10 @@
 
 .popup button:hover {
     background-color: #52F3F6;
+}
+
+@media (max-width: 1100px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
 }
