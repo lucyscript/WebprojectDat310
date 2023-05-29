@@ -21,7 +21,7 @@
         <div class="price_input">
             <h3>Price in $:</h3>
         </div>
-        <input id="price_input" type="number" name="price">
+        <input id="price_input" type="number" name="price" autocomplete="off">
         <div id="image_input_box">
             <div id="upload_button">
                 <label for="image_upload" class="upload_button_text">Add image</label>
@@ -41,5 +41,6 @@
             Please include a title and price before submitting
         </div>
     </form>
+    <button onclick="log()">Log</button>
     <script src="{{ url_for('static', filename='JS/new_product.js') }}"></script>
 {% endblock %}

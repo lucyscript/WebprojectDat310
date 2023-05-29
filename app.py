@@ -3,6 +3,7 @@ import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import os
 used_ids = set()
 
 app = Flask(__name__, template_folder='HTML/templates')
@@ -466,25 +467,59 @@ def checkout():
 
 
 # Product routes
-@app.route('/product/<product_id>') 
+@app.route('/product/<product_id>', methods=['GET', 'DELETE']) 
 def product(product_id):
-    conn = get_conn()
-    cursor = conn.cursor()
+    if request.method == 'GET':
+        conn = get_conn()
+        cursor = conn.cursor()
 
-    # Fetch product
-    cursor.execute(queryItems, (product_id,))
-    item_raw = cursor.fetchone()
-    columns = [column[0] for column in cursor.description]
-    item = dict(zip(columns, item_raw))
+        # Fetch product
+        cursor.execute(queryItems, (product_id,))
+        item_raw = cursor.fetchone()
+        if item_raw == None:
+            return redirect(url_for('index'))
+        columns = [column[0] for column in cursor.description]
+        item = dict(zip(columns, item_raw))
 
-    cursor.execute(queryImages, (product_id,))
-    images_raw = cursor.fetchall()
-    images = []
-    for path in images_raw:
-        images.append(path[0])
-    owner = cursor.execute('SELECT username FROM users WHERE user_id = ?', (item['owner_id'],)).fetchone()[0]
+        user = get_user()
+        user_is_owner = False
+        if user != None:
+            if int(item['owner_id']) == int(user['user_id']):
+                user_is_owner = True
 
-    return render_template('product.html', item=item, images=images, owner=owner)
+        cursor.execute(queryImages, (product_id,))
+        images_raw = cursor.fetchall()
+        images = []
+        for path in images_raw:
+            images.append(path[0])
+        owner = cursor.execute('SELECT username FROM users WHERE user_id = ?', (item['owner_id'],)).fetchone()[0]
+
+        return render_template('product.html', item=item, images=images, owner=owner, user_is_owner=user_is_owner)
+    elif request.method == 'DELETE':
+        user = get_user()
+        if user:
+            conn = get_conn()
+            cursor = conn.cursor()
+            owner_id = cursor.execute('SELECT owner_id FROM items WHERE item_id = ?', (product_id,)).fetchone()
+            if int(owner_id[0]) == int(user['user_id']):
+                cursor.execute('DELETE FROM items WHERE item_id = ?', (product_id,))
+                images = cursor.execute('SELECT path FROM images WHERE product_id = ?', (product_id,)).fetchall()
+                for image in images:
+                    filename = str(image[0])
+                    filename = filename.lstrip('/')
+                    try:
+                        os.remove(filename)
+                    except:
+                        print(f'\033[91mfile not found: + {filename}\033[0m')
+                cursor.execute('DELETE FROM images WHERE product_id = ?', (product_id,))
+                conn.commit()
+                return redirect(url_for('index'))
+            else:
+                # If user not the owner, send him home
+                return redirect(url_for('index'))
+        else:
+            return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route('/new_product', methods=['GET', 'POST'])
 def new_product():
@@ -512,10 +547,9 @@ def new_product():
             else:
                 n = 0
                 for image in images:
-                    imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(image.filename))
+                    imagePaths.append('static/images/ProductImages/' + str(datetime.now().strftime("%Y%m%d%H%M%S")) + str(n) + str(image.filename))
                     image.save(imagePaths[n])
                     n += 1
-
             conn = get_conn()
             cursor = conn.cursor()
         
@@ -526,6 +560,7 @@ def new_product():
             i = 1
             n = 0
             for image in imagePaths:
+                print(i, "i:", image)
                 cursor.execute('INSERT INTO images (product_id, path, displayOrder) VALUES (?, ?, ?)', (item_id, "/" + image, i))
                 i += 1
                 n += 1

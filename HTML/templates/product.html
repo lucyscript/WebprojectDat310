@@ -11,7 +11,7 @@
 
 {% block content %}
 
-<div class="content-box">
+<div class="content-box" id="product_page">
 <div id="slide-box-box">
 <div id="slide-box">
     {% for image in images %}
@@ -43,7 +43,14 @@
         <div id="loading"><img src="" width="25px"></div>
     </form>
 {% endif %}
-<div id="owner-box" >
-    <a href="/profile/{{ owner }}" id="owner" target="_blank">Seller: {{ owner }}</a>
+{% if user_is_owner %}
+    <div id="delete_product">
+        <button onclick="delete_product()">Delete Product</button>
+    </div>
+{% else %}
+    <div id="owner-box" >
+        <a href="/profile/{{ owner }}" id="owner" target="_blank">Seller: {{ owner }}</a>
+    </div>
+{% endif %}
 </div>
 {% endblock %}
