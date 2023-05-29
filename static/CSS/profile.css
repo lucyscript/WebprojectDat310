@@ -55,7 +55,7 @@
     margin-top: 10px;
     background-color: var(--background-color);
     color: var(--text-color);
-    max-width: 450px;
+    width: 450px;
 }
 
 .info-section h3 {
