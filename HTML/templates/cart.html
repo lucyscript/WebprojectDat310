@@ -13,7 +13,6 @@
     {% if cart_items %}
     <table>
         <tr>
-            <th>Item ID</th>
             <th>Quantity</th>
             <th>Title</th>
             <th>Description</th>
@@ -22,7 +21,6 @@
         </tr>
         {% for cart_item in cart_items %}
         <tr id="row-{{ cart_item.item_id }}">
-            <td>{{ cart_item.item_id }}</td>
             <td>{{ cart_item.quantity }}</td>
             <td>{{ cart_item.title }}</td>
             <td>{{ cart_item.description }}</td>

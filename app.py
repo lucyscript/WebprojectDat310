@@ -323,8 +323,13 @@ def profile(username):
                 return redirect(url_for('index'))
             conn = get_conn()
             cur = conn.cursor()
-            # Delete current logged in user's profile
+
+            # Delete current logged in user's profile and everything related
             cur.execute('DELETE FROM users WHERE user_id = ?', (user['user_id'],))
+            cur.execute('DELETE FROM orders WHERE user_id = ?', (user['user_id'],))
+            cur.execute('DELETE FROM cart WHERE user_id = ?', (user['user_id'],))
+            cur.execute('DELETE FROM items WHERE owner_id = ?', (user['user_id'],))
+
             conn.commit()
             return redirect(url_for('logout'))
 
@@ -404,7 +409,7 @@ def delete_cart_item(item_id):
             else:
                 return jsonify({'total_price': None})
         except:
-            pass
+            return redirect(url_for('cart'))
     else:
         return redirect(url_for('login'))
 
