@@ -315,8 +315,6 @@ def profile(username):
                 conn.commit()
 
                 return jsonify({'message': 'Profile content updated successfully'})
-            else:
-                return jsonify({'message': 'No data received'})
             
         elif request.method == 'DELETE':
             if user['username'] != username:

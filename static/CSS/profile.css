@@ -66,6 +66,11 @@
     margin: 0;
 }
 
+.edit-response {
+    color: rgb(0, 255, 0);
+    font-weight: bold;
+}
+
 .transaction-table {
     display: flex;
     flex-direction: column;
@@ -156,6 +161,7 @@
     padding: 20px;
     border-radius: 5px;
     text-align: center;
+    border: 1px solid var(--text-color);
 }
 
 .popup button {
