@@ -185,3 +185,24 @@ input {
 	display: block;
 	padding: 10px;
 }
+
+.submit_button_container {
+	position: relative;
+	display: inline-block;
+	margin-top: 30px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	background-color: var(--background-color);
+	color: var(--text-color);
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.enabled:hover {
+	border-width: 1px;
+	border-color: rgb(246,85,82);
+
+	cursor: pointer;
+}

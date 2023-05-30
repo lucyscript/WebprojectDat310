@@ -63,8 +63,9 @@ function delete_product() {
                 container.appendChild(messageElement);
                 
                 setTimeout(() => {
-                  container.removeChild(messageElement);
-                }, 5000);
+                    container.removeChild(messageElement);
+                    window.location.href = '/';
+                }, 3800);
             }
         });
     }

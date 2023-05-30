@@ -44,8 +44,8 @@
     </form>
 {% endif %}
 {% if user_is_owner %}
-    <div id="delete_product">
-        <button onclick="delete_product()">Delete Product</button>
+    <div>
+        <button onclick="delete_product()" id="delete_product">Delete Product</button>
     </div>
 {% else %}
     <div id="owner-box" >

@@ -201,6 +201,7 @@ def sort(sortBy):
             items = cursor.fetchall()
             
             return jsonify({'items': items})
+    return jsonify({'items': None})
 
 
 
@@ -427,8 +428,7 @@ def delete_cart_item(item_id):
                 return jsonify({'total_price': 0})
         except:
             pass
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 @app.route('/orders')
 def orders():
@@ -527,10 +527,12 @@ def product(product_id):
                 for image in images:
                     filename = str(image[0])
                     filename = filename.lstrip('/')
-                    try:
-                        os.remove(filename)
-                    except:
-                        print(f'\033[91mfile not found: + {filename}\033[0m')
+                    print(filename)
+                    if filename != 'static/images/ProductImages/no_image.jpg':
+                        try:
+                            os.remove(filename)
+                        except:
+                            print(f'\033[91mfile not found: + {filename}\033[0m')
                 cursor.execute('DELETE FROM images WHERE product_id = ?', (product_id,))
                 conn.commit()
                 return redirect(url_for('index'))

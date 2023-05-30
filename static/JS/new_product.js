@@ -181,7 +181,3 @@ function toggleSubmitButton() {
         upload_button.classList.add("enabled")
     }
   }
-
-function log() {
-    console.log(uploadedImages);
-}
