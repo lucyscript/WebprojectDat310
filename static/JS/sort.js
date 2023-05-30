@@ -28,7 +28,6 @@ function createProductBox(item) {
 
     let image = document.createElement('img');
     image.src = item[2];
-    image.alt = item[1];
     productBox.appendChild(image);
 
     let title = document.createElement('h3');

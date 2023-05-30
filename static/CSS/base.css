@@ -376,20 +376,20 @@ nav li a {
 }
 
 #sorting-options select {
-	background-color: var(--text-color);
-	color: var(--background-color);
+	border: none;
+	background-color: #52F3F6;
+	color: var(--text-color);
 	padding: 5px;
 	font-size: 16px;
 	border-radius: 4px;
 }
 
 #sorting-options select:focus {
-	border: 1px solid #52F3F6;
 	outline: none;
-	background-color: var(--text-color);
-	color: var(--background-color);
-  }
-  
+	background-color: #52F3F6;
+	color: var(--text-color);
+}
+
 
 /* For WebKit based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {

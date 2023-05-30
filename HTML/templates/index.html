@@ -10,13 +10,15 @@
 {% endblock %}
 
 {% block content %}
-    <div id="sorting-options">
-        <label for="sort-by">Sort by:</label>
-        <select id="sort-by" onchange="sortItems(this.value)">
-            <option value="default">All</option>
-            <option value="owner">Yours</option>
-        </select>
-    </div>
+    {% if session %}
+        <div id="sorting-options">
+            <label for="sort-by">Sort by:</label>
+            <select id="sort-by" onchange="sortItems(this.value)">
+                <option value="default">All</option>
+                <option value="owner">Yours</option>
+            </select>
+        </div>
+    {% endif %}
 
 
     <div id="product-grid">
