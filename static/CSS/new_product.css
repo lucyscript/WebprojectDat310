@@ -16,10 +16,11 @@ input {
 }
 
 #description_input {
+	padding: 5px;
 	display: block;
 	width: 350px;
-	border: 1px solid black;
-	background-color: white;
+	border: 1px solid rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
 	color: black;
 	outline: none;
 	overflow: hidden;

@@ -30,6 +30,7 @@
                 {% else %}
                     <p>{{ get_init_bio(user_page.created_at) }}</p> 
                     <span id="bio-input" role="textbox" contenteditable spellcheck="false" hidden></span>
+                    <div id="char-count"></div>
                 {% endif %}
             </div>
             <div class="info-section" id="address">
