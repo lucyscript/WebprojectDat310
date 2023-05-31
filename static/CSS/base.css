@@ -376,8 +376,8 @@ nav li a {
 }
 
 #sorting-options select {
-	border: none;
-	background-color: #52F3F6;
+	border: 1px solid var(--text-color);
+	background-color: var(--background-color);
 	color: var(--text-color);
 	padding: 5px;
 	font-size: 16px;
@@ -386,7 +386,7 @@ nav li a {
 
 #sorting-options select:focus {
 	outline: none;
-	background-color: #52F3F6;
+	background-color: var(--background-color);
 	color: var(--text-color);
 }
 

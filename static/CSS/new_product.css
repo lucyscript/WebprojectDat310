@@ -8,6 +8,9 @@
 
 input {
 	width: 120px;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	border: 1px solid var(--text-color);
 }
 
 #title_input {
@@ -19,9 +22,9 @@ input {
 	padding: 5px;
 	display: block;
 	width: 350px;
-	border: 1px solid rgb(0, 0, 0);
-	background-color: rgb(255, 255, 255);
-	color: black;
+	border: 1px solid var(--text-color);
+	background-color: var(--background-color);
+	color: var(--text-color);
 	outline: none;
 	overflow: hidden;
 	resize: vertical;
