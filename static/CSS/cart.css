@@ -68,6 +68,7 @@ a {
 
 .success-msg {
     color: rgb(0, 255, 0);
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;

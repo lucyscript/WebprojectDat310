@@ -207,6 +207,5 @@ input {
 .enabled:hover {
 	border-width: 1px;
 	border-color: rgb(246,85,82);
-
 	cursor: pointer;
 }

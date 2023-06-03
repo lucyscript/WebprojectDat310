@@ -1,5 +1,4 @@
 function handleSubmit(event) {
-    console.log('TF')
     event.preventDefault();
 
     let button = document.getElementById('purchaseBtn');
