@@ -65,3 +65,10 @@ a {
     display: flex;
     justify-content: center;
 }
+
+.success-msg {
+    color: rgb(0, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
