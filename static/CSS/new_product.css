@@ -186,8 +186,11 @@ input {
 }
 
 #submit_info {
-	display: block;
+	display: none;
 	padding: 10px;
+	color: rgb(255, 0, 0);
+	font-size: 13px;
+	font-weight: bold;
 }
 
 .submit_button_container {
