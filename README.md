@@ -52,11 +52,13 @@ Start the application by running `app.py`.
 - View transactions and personal details in the profile
 - Edit profile information
 - Search for ordered items in the order history
+- Upload and remove image(s) when creating new AD
+- Swich order of the images
 - Post a new advertisement
 - View all advertisements (sorted by "All")
 - View user-specific advertisements (sorted by "Yours")
 - Click on an advertisement to view details
-
+- Shuffle through images from an advertisment
 - View seller profile and transaction history
 - Delete user account
 - Verify that the deleted account's information is no longer accessible
