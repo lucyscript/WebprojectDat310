@@ -27,6 +27,8 @@ Start the application by running `app.py`.
 20. Go to your own profile and click "Delete Account" at the bottom.
 21. Log back in as elza and observe that everything from the other account is deleted.
 
+
+
 ## List of all functionality
 
 ### Login/register
