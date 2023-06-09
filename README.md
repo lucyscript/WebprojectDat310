@@ -34,16 +34,18 @@ Start the application by running `app.py`.
 <br/><br/>
 
 ### Login/register
->- The database table users stores user_id, username, password hash, time of creation, bio, adress, phone number.
+>- The database table "users" stores user_id, username, password hash, time of creation, and adds bio, adress, phone number on profile edit.
 >
 > #### Register as a new user
 > - Username and password require atleast 4 and 5 characters respectivly. This is validated by JS and the server. Using AJAX it checks if the username is already taken, if it is not, then green text stating that the name is available will appear. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
 > - When creating a password, the user has to write it two times, and if the passwords dont match, there is red text telling the user that they dont match. 
 > - The user is automatically logged in when the user is created.
+> - AJAX request on submit (with loading gif)
 > <br/><br/>
 >
 > #### Login as an existing user
 > - Error is displayed when there are empty fields, and if they are empty then the button for login is disabled and a error-message appears. The username and password is validated on the server-side, and if everything is correct, then it adds the user-id to the session. If not, an error message that says "Invalid login credentials"
+> - AJAX request on submit (with loading gif)
 
 <br/><br/>
 
@@ -90,7 +92,7 @@ Start the application by running `app.py`.
 >- Default init data for bio, address, and phone number
 >- Edit profile with all changes stored in the database using AJAX
 >- Success message on submit with a timeout (within the same AJAX call)
->- Delete account with popup
+>- Delete account with popup using AJAX on delete
 >- Transaction history for all purchases made by the user
 >- Scrollbar appears if the transaction history is too long
 
