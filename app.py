@@ -203,9 +203,6 @@ def sort(sortBy):
             return jsonify({'items': items})
     return jsonify({'items': None})
 
-
-
-
 @app.route('/search/<search_query>', methods=['GET'])
 def search(search_query):
     conn = get_conn()
@@ -527,7 +524,6 @@ def product(product_id):
                 for image in images:
                     filename = str(image[0])
                     filename = filename.lstrip('/')
-                    print(filename)
                     if filename != 'static/images/ProductImages/no_image.jpg':
                         try:
                             os.remove(filename)
