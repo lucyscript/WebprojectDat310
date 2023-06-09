@@ -76,28 +76,38 @@ Start the application by running `app.py`.
 
 <br/><br/>
 
-## Profile, cart and order-history
->- 
+##Header
+>-Logo for the website redirects to index when clicked
+>- Enable or disable dark mode through the toggle slider button. Preference stored in local storage
+>- Search using AJAX
+>- New AD lets you create a new AD, but will redirect you to login if not logged in
+>- Click on or hover over Cart or "View Cart" to view your cart. Checkout redirects to the checkout. This only works when logged in
+>- Username displayed under profile icon if user is logged in. If not, it says "Profile"
+>- Click on or hover over Profile or "Profile" to view your profile. Redirects to log in if not logged in
+>- Hover over profile and click "Order history" to view order history. Redirects to log in if not logged in
 
+##Profile
+>- Default init data for bio, address, and phone number
+>- Edit profile with all changes stored in the database using AJAX
+>- Success message on submit with a timeout (within the same AJAX call)
+>- Delete account with popup
+>- Transaction history for all purchases made by the user
+>- Scrollbar appears if the transaction history is too long
 
+##Cart
+>- View items added to cart
+>- Total cost of cart items updated with AJAX
+>- Delete individual cart items with AJAX
+>- Checkout button redirecting to checkout
+>- Purchase button with AJAX giving a success message with a timeout and inserting cart items into the "orders" table. Redirects to index after timeout
 
-- Enable dark mode
+##Order History
+>- View orders made by the user
+>- Search for orders by title using AJAX (with loading gif)
 
-- Add items to the cart
-- Remove items from the cart
-- Total cost of cart items updated with ajax
-- Proceed to checkout and purchase items
-- View transactions and personal details in the profile
-- Search for ordered items in the order history
-
-- View seller profile and transaction history
-- Edit profile information
-
-- View all advertisements (sorted by "All")
-- View user-specific advertisements (sorted by "Yours")
-
-- Delete user account
-- Verify that the deleted account's information is no longer accessible
+##Sort
+>- View all advertisements (sorted by "All")
+>- View user-specific advertisements (sorted by "Yours")
 
 <br></br>
 
