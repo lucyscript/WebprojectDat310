@@ -47,6 +47,7 @@ Start the application by running `app.py`.
 - Search for items in the header search bar
 - Add items to the cart
 - Remove items from the cart
+- Total cost of cart items updated with ajax
 - Proceed to checkout and purchase items
 - View transactions and personal details in the profile
 - Edit profile information
