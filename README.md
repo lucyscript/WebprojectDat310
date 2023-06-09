@@ -30,7 +30,7 @@ Start the application by running `app.py`.
 
 ------
 <br/><br/>
-## List of all functionality
+# List of all functionality
 <br/><br/>
 
 ### Login/register
@@ -45,16 +45,17 @@ Start the application by running `app.py`.
 > #### Login as an existing user
 > - Error is displayed when there are empty fields, and if they are empty then the button for login is disabled and a error-message appears. The username and password is validated on the server-side, and if everything is correct, then it adds the user-id to the session. If not, an error message that says "Invalid login credentials"
 
-<br/><br/><br/><br/>
+<br/><br/>
 
 ## Products
->- The database table items stores item_id, title, description, price and owner_id
+>- The database table "items" stores item_id, title, description, price and owner_id. The table "images" stores the image path, display order and the product-id the images are for.
 >
 >### Viewing listed products
 >- You can view products through the index-page and through searching for products using the search feature.
 >- The index-page shows a grid of products where each product has an image of the product (or a placeholder image if there is no images for the product), the title and the price of the product. The search-bar shows the same information. 
 >- The search bar uses ajax to show the user products that match with the search, which show up in a drop-down with clickable elements.
 >- On the product page the user can cycle through pictures using the arrows on the sides, view the amount of pictures, see all the information about the products and add a choosen amount of the product to the cart. This can only be done if the user is logged in.
+><br/><br/>
 >
 >### Creating new product
 >- Only logged-in users can access this page.
@@ -67,6 +68,18 @@ Start the application by running `app.py`.
 >- The upload button is disabled until the product has a title and a price. If there is no image, it will use a stock-image for the product. 
 >- When the product is being uploaded, a new formData is created in JS. The images and the text all get appended to this formData for further validation on the backend This is done through AJAX.
 >- When the formData is sent to the backend, the text-inputs get validated and the images are handled. The image-path, and the image file is created, where the image-path and order is saved to the database, and the image is saved in the images folder. The item's creator is determined by the current logged in users id. 
+><br/><br/>
+>
+>### Deleting product
+>- When on a product-page the current user has created, the button "delete-product" appears. This prompts a confirmation pop-up that asks if the user wants to delete the product. If the user presses yes, and everything works, the product gets permanently deleted and the message "product successfully deleted" is shown on the screen with a time-out that redirects to the index after 3 seconds.
+>- The backend gets the current logged in user, (which in itself protects products being deleted by users who shouldnt be able to delete the product), and gets the item from the database. This deletes the item, and also the images from the image table. The image-files also get deleted from the server.
+
+<br/><br/>
+
+## Profile, cart and order-history
+>- 
+
+
 
 - Enable dark mode
 
@@ -75,16 +88,21 @@ Start the application by running `app.py`.
 - Total cost of cart items updated with ajax
 - Proceed to checkout and purchase items
 - View transactions and personal details in the profile
-
-- Edit profile information
 - Search for ordered items in the order history
-- Upload and remove image(s) when creating new AD
-- Swich order of the images
-- Post a new advertisement
+
+- View seller profile and transaction history
+- Edit profile information
+
 - View all advertisements (sorted by "All")
 - View user-specific advertisements (sorted by "Yours")
-- Click on an advertisement to view details
-- Shuffle through images from an advertisment
-- View seller profile and transaction history
+
 - Delete user account
 - Verify that the deleted account's information is no longer accessible
+
+
+## User table
+| User_id | username | password         | created_at  | bio           | adress       | phone      |
+|---------|----------|------------------|-------------|---------------|--------------|------------|
+| 293565  | test     | 2:sha256:2600... | 31 May 2023 | Funny guy     |              | 90957421   |
+| 431988  | asdf     | 73faa39965639... | 30 May 2023 |               | Stavanger 29 |            |
+| 915324  | woop     | CPuMItKEKdqBd... | 29 May 2023 | dsfsdfsdfsfsf | Hell         | 666 66 666 |
