@@ -77,7 +77,7 @@ Start the application by running `app.py`.
 <br/><br/>
 
 ## Header
->-Logo for the website redirects to index when clicked
+>- Logo for the website redirects to index when clicked
 >- Enable or disable dark mode through the toggle slider button. Preference stored in local storage
 >- Search using AJAX
 >- New AD lets you create a new AD, but will redirect you to login if not logged in
