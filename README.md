@@ -11,7 +11,7 @@ Start the application by running `app.py`.
 4. Select a desired quantity and click "Add to Cart".
 5. Click on the icon in the top left corner, click on another item, and add it to cart.
 6. Go to your cart and remove the sofa item.
-7. Click "Checkout and Purchase".
+7. Click "Checkout" then "Purchase".
 8. Go to your profile and observe your transactions displayed, as well as your bio, address, and phone details.
 9. Click "Edit profile" and edit the respective fields as you wish.
 10. Go to the order history and search for an item you ordered.
