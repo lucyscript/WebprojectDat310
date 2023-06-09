@@ -101,7 +101,6 @@ Start the application by running `app.py`.
 
 
 ## Tables used:
-<br></br>
 
 ### User table
 | User_id | username | password         | created_at  | bio           | adress       | phone      |
