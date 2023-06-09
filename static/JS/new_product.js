@@ -164,6 +164,7 @@ function dataURLtoFile(dataurl, filename) {
 const title_input = document.getElementById("title_input");
 const price_input = document.getElementById("price_input");
 const upload_button = document.getElementById("submit_button");
+const submitInfo = document.getElementById('submit_info');
 
 title_input.addEventListener("input", toggleSubmitButton);
 price_input.addEventListener("input", toggleSubmitButton);
@@ -174,10 +175,13 @@ function toggleSubmitButton() {
 
     if (isTitleEmpty || isPriceEmpty) {
         upload_button.disabled = true;
-        upload_button.classList.remove("enabled")
+        upload_button.classList.remove("enabled");
+        submitInfo.style.display = 'block';
     }
     else {
         upload_button.disabled = false;
-        upload_button.classList.add("enabled")
+        upload_button.classList.add("enabled");
+        submitInfo.style.display = 'none';
+
     }
   }

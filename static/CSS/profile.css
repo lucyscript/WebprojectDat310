@@ -190,3 +190,7 @@
         grid-template-columns: 1fr;
     }
 }
+
+#char-count {
+    color: red;
+}

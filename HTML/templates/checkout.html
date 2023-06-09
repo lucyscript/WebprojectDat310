@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/cart.css') }}">
+    <script src="{{ url_for('static', filename='JS/checkout.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -36,8 +37,9 @@
     </tr>
 </table>
 
-<form action="/checkout" method="POST">
-    <button class="button" type="submit">Purchase</button>
+<form action="/checkout" method="POST" onsubmit="handleSubmit(event)">
+    <button class="button" id="purchaseBtn" type="submit">Purchase</button>
+    <div class="success-msg" id="successMsg" style="display: none;">Purchase successful!</div>
 </form>
 {% else %}
     <h1>No items to pay for!</h1><br>

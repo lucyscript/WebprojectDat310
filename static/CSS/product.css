@@ -79,7 +79,8 @@
 }
 
 #response-message {
-	color: rgb(0, 255, 0)
+	color: rgb(0, 255, 0);
+	font-weight: bold;
 }
 
 #owner-box {
@@ -116,4 +117,11 @@
 #delete_product:hover {
 	border-width: 1px;
 	border-color: rgb(246,85,82);
+}
+
+input {
+	background-color: var(--background-color);
+    color: var(--text-color);
+	border: 1px solid var(--text-color);
+	font-weight: bold;
 }

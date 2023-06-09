@@ -586,7 +586,7 @@ def new_product():
         
             return redirect(url_for('index'))
           
-        else: return redirect(url_for('index')) # Just in case :)   
+        else: return redirect(url_for('index'))
     else:
         return redirect(url_for('login'))
 
