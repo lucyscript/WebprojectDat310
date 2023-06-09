@@ -100,9 +100,48 @@ Start the application by running `app.py`.
 - Verify that the deleted account's information is no longer accessible
 
 
-## User table
+## Tables used:
+<br></br>
+
+### User table
 | User_id | username | password         | created_at  | bio           | adress       | phone      |
 |---------|----------|------------------|-------------|---------------|--------------|------------|
 | 293565  | test     | 2:sha256:2600... | 31 May 2023 | Funny guy     |              | 90957421   |
 | 431988  | asdf     | 73faa39965639... | 30 May 2023 |               | Stavanger 29 |            |
 | 915324  | woop     | CPuMItKEKdqBd... | 29 May 2023 | dsfsdfsdfsfsf | Hell         | 666 66 666 |
+
+<br></br>
+
+### Items table
+| item_id | title      | description                               | price | owner_id |
+|---------|------------|-------------------------------------------|-------|----------|
+| 1       | Fancy sofa | Beautiful sofa for the whole family       | 1000  | 293565   |
+| 2       | Cool chair | Used as a stool as i have no butt         | 500   | 293565   |
+| 3       | Table      | A table for two or just for you my friend | 2000  | 653129   |
+
+<br></br>
+
+### Orders table
+| order_id | order_date | user_id | product_id | quantity | total_amount |
+|----------|------------|---------|------------|----------|--------------|
+| 1        | 2023-06-09 | 531596  | 2          | 1        | 500          |
+| 2        | 2023-06-09 | 531596  | 3          | 14       | 28000        |
+| 3        | 2023-06-09 | 531596  | 1          | 4        | 4000         |
+
+<br></br>
+
+### Images table
+| path                                    | displayOrder | product_id |
+|-----------------------------------------|--------------|------------|
+| /static/Images/ProductImages/stol.jpg   | 1            | 1          |
+| /static/Images/ProductImages/sofa.jpeg  | 1            | 2          |
+| /static/Images/ProductImages/sofa2.jpeg | 2            | 2          |
+
+<br></br>
+
+### Cart table
+| user_id | item_id | title      | description                               | price | image_path                            | quantity |
+|---------|---------|------------|-------------------------------------------|-------|---------------------------------------|----------|
+| 531596  | 2       | Cool chair | Used as a stool as i have no butt         | 2000  | /static/Images/ProductImages/stol.jpg | 4        |
+| 531596  | 1       | Fancy sofa | Beautiful sofa for the whole family       | 3000  | /static/Images/ProductImages/sofa.jpg | 3        |
+| 531596  | 3       | Table      | A table for two or just for you my friend | 34000 | /static/Images/ProductImages/bord.jpg | 17       |
