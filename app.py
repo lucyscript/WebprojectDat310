@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, g, jsonify, flash
+from flask import Flask, render_template, request, redirect, url_for, session, g, jsonify
 import sqlite3
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
