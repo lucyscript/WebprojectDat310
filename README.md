@@ -33,11 +33,11 @@ Start the application by running `app.py`.
 
 ### Login/register
 
-> #### -Register as a new user
+> #### Register as a new user
 > - Has a minimum character limit for usernames and passwords. This is validated by JS and the server. Using AJAX it checks if the username is already taken. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
 > - The user is automatically logged in when the user is created.
-> 
-> #### -Login as an existing user
+> ---
+> #### Login as an existing user
 > - Error is displayed when there are empty fields, and if they are empty then the button for login is disabled and a error-message appears. The username and password is validated on the server-side, and if everything is correct, then it adds the user-id to the session. If not, an error message that says "Invalid login credentials"
 
 
