@@ -34,7 +34,7 @@ Start the application by running `app.py`.
 ### Login/register
 
 > #### Register as a new user
-> - Has a minimum character limit for usernames and passwords. This is validated by JS and the server. Using AJAX it checks if the username is already taken. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
+> - Username and password require atleast 4 and 5 characters respectivly. This is validated by JS and the server. Using AJAX it checks if the username is already taken. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
 > - The user is automatically logged in when the user is created.
 > ---
 > #### Login as an existing user
