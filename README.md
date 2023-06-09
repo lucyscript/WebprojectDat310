@@ -11,7 +11,7 @@ Start the application by running `app.py`.
 4. Select a desired quantity and click "Add to Cart".
 5. Click on the icon in the top left corner, click on another item, and add it to cart.
 6. Go to your cart and remove the sofa item.
-7. Click "Checkout and Purchase".
+7. Click "Checkout" then "Purchase".
 8. Go to your profile and observe your transactions displayed, as well as your bio, address, and phone details.
 9. Click "Edit profile" and edit the respective fields as you wish.
 10. Go to the order history and search for an item you ordered.
@@ -37,7 +37,7 @@ Start the application by running `app.py`.
 >- The database table users stores user_id, username, password hash, time of creation, bio, adress, phone number.
 >
 > #### Register as a new user
-> - Has a minimum character limit for usernames and passwords. This is validated by JS and the server. Using AJAX it checks if the username is already taken, if it is not, then green text stating that the name is available will appear. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
+> - Username and password require atleast 4 and 5 characters respectivly. This is validated by JS and the server. Using AJAX it checks if the username is already taken, if it is not, then green text stating that the name is available will appear. If the validation fails, an error in red text appears and tells you what is wrong. Once the user tries to register, the server does a last validation before creating the user. The username, password in hash-form, the time the user is created at and the user-id is then saved in the database. 
 > - When creating a password, the user has to write it two times, and if the passwords dont match, there is red text telling the user that they dont match. 
 > - The user is automatically logged in when the user is created.
 > <br/><br/>
@@ -72,16 +72,19 @@ Start the application by running `app.py`.
 
 - Add items to the cart
 - Remove items from the cart
+- Total cost of cart items updated with ajax
 - Proceed to checkout and purchase items
 - View transactions and personal details in the profile
 
 - Edit profile information
 - Search for ordered items in the order history
+- Upload and remove image(s) when creating new AD
+- Swich order of the images
 - Post a new advertisement
 - View all advertisements (sorted by "All")
 - View user-specific advertisements (sorted by "Yours")
 - Click on an advertisement to view details
-
+- Shuffle through images from an advertisment
 - View seller profile and transaction history
 - Delete user account
 - Verify that the deleted account's information is no longer accessible
