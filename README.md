@@ -2,7 +2,7 @@
 Start the application by running `app.py`.
 
 ## Instructions for Testing
-1. Hover over the profile and log in as an existing user.
+1. Hover over the profile and log in as an existing user.f
    - Existing users with example data:
      - Username: elza, Password: 12345
      - Username: nora, Password: 12345
