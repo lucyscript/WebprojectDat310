@@ -99,8 +99,9 @@ Start the application by running `app.py`.
 - Delete user account
 - Verify that the deleted account's information is no longer accessible
 
+<br></br>
 
-## Tables used:
+## Database tables used:
 
 ### User table
 | User_id | username | password         | created_at  | bio           | adress       | phone      |
